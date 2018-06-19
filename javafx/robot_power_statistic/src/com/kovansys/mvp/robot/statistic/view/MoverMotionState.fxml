@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.paint.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="com.kovansys.mvp.robot.statistic.view.MoverMotionStateController">
+   <children>
+      <ScrollPane layoutX="103.0" layoutY="98.0" prefViewportHeight="24.0" prefViewportWidth="84.0">
+         <content>
+            <ColorPicker layoutX="103.0" layoutY="98.0" />
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
