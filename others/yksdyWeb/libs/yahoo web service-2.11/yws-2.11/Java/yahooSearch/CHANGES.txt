@@ -1,0 +1,83 @@
+version 2.0.1 - February 9, 2007
+================================
+* Minor update, converting all yahoo.com hostnames to yahooapis.com in
+  anticipation of Yahoo! converting all of the service hosts.
+
+Version 2.0.0 - June 24, 2006
+=============================
+* Added the region and site parameters to web search.
+* Remove the type parameter (now absent from the YDN docs) from context
+  search and added the site parameter.
+* Changed the format parameter to now take multiple values and added
+  the site parameter to video search.
+* Added the site parameter to news search.
+* Added the site parameter to image search.
+* Added logic to XmlParser.getBigDecimal() to handle "NaN" values.
+* Local search upgraded to v3.
+* Added query by listing ID, by category, by omitting category and by minimum
+  rating to local search. Added listing ID, latitude, longitude and categories
+  to the local search response. Updated the ratings to use the new ratings
+  data structure in local search v3.
+* Removed the MyWeb 1.0 APIs.
+
+Version 1.1.1 - June 21, 2005
+=============================
+* Added WebSearchRequest.addSubscription() to support the new subscription
+  search feature.
+
+Version 1.1.0 - April 28, 2005
+==============================
+* Completely rewritten XML processing. No longer dependent upon JaxMe.
+* Service URL overriding no longer performed using properties. There's
+  now an explicit setRequestUrl() on every request object.
+* Added "coloration" parameter to image search requests.
+* Added parsing the ResultSetMapUrl value to local search responses.
+* Added context search to SearchClient.
+* Added term extraction to SearchClient (aka Content Analysis).
+* Added "license" parameter to web search requests.
+* API should now work with Java 1.2 (users will need to provide a JAXP
+  implementation, Xalan-J 2.6.0 worked fine during testing).
+* Added implementations of the new MyWeb services (ListFolders and
+  ListUrls).
+* HTTP calls now set a User-Agent header of the form
+  "Yahoo-Java-SDK/<version>" where the version specified is the version
+  of this API.
+* Requests will now utilize POST (instead of GET) if the request is too
+  large to safely use GET (anything with a request URI longer than 255
+  characters).
+* Added some code samples. One to show users how to get started with
+  the search service stuff and another to show how to get started with
+  the My Web service stuff.
+
+Version 1.0.2 - March 11, 2005
+==============================
+* Added latitude, longitude and sort to Local Search.
+* Added country to Web Search.
+* Revised documentation regarding JaxMe2. JaxMe2 is now the required JAXB
+  implementation since the generated code has dependencies on classes in
+  the JaxMe2 JAR files.
+
+Version 1.0.1 - March 6, 2005
+=============================
+* com.yahoo.search.SearchException changed to extend Exception instead
+  of Throwable.
+
+Version 1.0 FCS - February 27, 2005
+===================================
+* Code cleanup. Using IDEA's built-in code inspector for cleanup suggestions.
+* Source package building.
+* Packages now explode into a directory named
+  yahoo_search_sdk-[bin|src]-${implversion} instead of exploding into the
+  current directory.
+* Schemas are now stored locally instead of being downloaded from
+  api.search.yahoo.com at build time. Connectivity issues were causing
+  builds to be too much of a hastle.
+
+Version 1.0 RC2 - February 24, 2005
+===================================
+* Updated documentation to point to the new developer site
+  (http://developer.yahoo.net/).
+
+Version 1.0 RC1 - February 23, 2005
+===================================
+* Initial release.

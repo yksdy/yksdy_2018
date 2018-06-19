@@ -1,0 +1,426 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module yahoo.search.parser</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="yahoo.html"><font color="#ffffff">yahoo</font></a>.<a href="yahoo.search.html"><font color="#ffffff">search</font></a>.parser</strong></big></big> (version 1.4, Wed Oct 26 11:24:50 PDT 2005)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/leif/hack/pysearch/yahoo/search/parser.py">/home/leif/hack/pysearch/yahoo/search/parser.py</a></font></td></tr></table>
+    <p><tt>Base&nbsp;class&nbsp;for&nbsp;search&nbsp;results&nbsp;parsing<br>
+&nbsp;<br>
+This&nbsp;package&nbsp;implements&nbsp;the&nbsp;interface&nbsp;and&nbsp;base&nbsp;class&nbsp;that&nbsp;should&nbsp;be<br>
+used&nbsp;for&nbsp;all&nbsp;parsers&nbsp;of&nbsp;the&nbsp;web&nbsp;results.&nbsp;It&nbsp;is&nbsp;used&nbsp;by&nbsp;the&nbsp;DOM&nbsp;parsers<br>
+that&nbsp;we&nbsp;provide&nbsp;as&nbsp;defaults.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#dict">__builtin__.dict</a>(<a href="__builtin__.html#object">__builtin__.object</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="yahoo.search.parser.html#ResultDict">ResultDict</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="yahoo.search.parser.html#ResultParser">ResultParser</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="exceptions.html#Exception">exceptions.Exception</a>(<a href="exceptions.html#BaseException">exceptions.BaseException</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="yahoo.search.parser.html#Error">Error</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="yahoo.search.parser.html#ClassError">ClassError</a>
+</font></dt><dt><font face="helvetica, arial"><a href="yahoo.search.parser.html#XMLError">XMLError</a>
+</font></dt></dl>
+</dd>
+</dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="ClassError">class <strong>ClassError</strong></a>(<a href="yahoo.search.parser.html#Error">Error</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>This&nbsp;can&nbsp;only&nbsp;occur&nbsp;if&nbsp;the&nbsp;APIs&nbsp;aren't&nbsp;installed&nbsp;or&nbsp;configured<br>
+properly.&nbsp;If&nbsp;it&nbsp;happens,&nbsp;please&nbsp;contact&nbsp;the&nbsp;author.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="yahoo.search.parser.html#ClassError">ClassError</a></dd>
+<dd><a href="yahoo.search.parser.html#Error">Error</a></dd>
+<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
+<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data descriptors inherited from <a href="yahoo.search.parser.html#Error">Error</a>:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="exceptions.html#Exception">exceptions.Exception</a>:<br>
+<dl><dt><a name="ClassError-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#ClassError-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+
+<hr>
+Data and other attributes inherited from <a href="exceptions.html#Exception">exceptions.Exception</a>:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object at 0x4016dac0&gt;<dd><tt>T.<a href="#ClassError-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+<hr>
+Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><a name="ClassError-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#ClassError-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="ClassError-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#ClassError-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="ClassError-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#ClassError-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="ClassError-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="ClassError-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#ClassError-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="ClassError-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#ClassError-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<dl><dt><a name="ClassError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="ClassError-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#ClassError-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+<dl><dt><strong>message</strong></dt>
+<dd><tt>exception&nbsp;message</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Error">class <strong>Error</strong></a>(<a href="exceptions.html#Exception">exceptions.Exception</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Base&nbsp;class&nbsp;for&nbsp;all&nbsp;Yahoo&nbsp;DOM&nbsp;Parser&nbsp;exceptions.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="yahoo.search.parser.html#Error">Error</a></dd>
+<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
+<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="exceptions.html#Exception">exceptions.Exception</a>:<br>
+<dl><dt><a name="Error-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#Error-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+
+<hr>
+Data and other attributes inherited from <a href="exceptions.html#Exception">exceptions.Exception</a>:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object at 0x4016dac0&gt;<dd><tt>T.<a href="#Error-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+<hr>
+Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><a name="Error-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Error-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Error-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#Error-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Error-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#Error-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="Error-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="Error-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#Error-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="Error-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Error-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<dl><dt><a name="Error-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="Error-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#Error-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+<dl><dt><strong>message</strong></dt>
+<dd><tt>exception&nbsp;message</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="ResultDict">class <strong>ResultDict</strong></a>(<a href="__builtin__.html#dict">__builtin__.dict</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#ResultDict">ResultDict</a>&nbsp;-&nbsp;Simple&nbsp;class&nbsp;to&nbsp;wrap&nbsp;the&nbsp;results<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="yahoo.search.parser.html#ResultDict">ResultDict</a></dd>
+<dd><a href="__builtin__.html#dict">__builtin__.dict</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="ResultDict-__getattr__"><strong>__getattr__</strong></a>(self, key)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="__builtin__.html#dict">__builtin__.dict</a>:<br>
+<dl><dt><a name="ResultDict-__cmp__"><strong>__cmp__</strong></a>(...)</dt><dd><tt>x.<a href="#ResultDict-__cmp__">__cmp__</a>(y)&nbsp;&lt;==&gt;&nbsp;cmp(x,y)</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-__contains__"><strong>__contains__</strong></a>(...)</dt><dd><tt>D.<a href="#ResultDict-__contains__">__contains__</a>(k)&nbsp;-&gt;&nbsp;True&nbsp;if&nbsp;D&nbsp;has&nbsp;a&nbsp;key&nbsp;k,&nbsp;else&nbsp;False</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-__delitem__"><strong>__delitem__</strong></a>(...)</dt><dd><tt>x.<a href="#ResultDict-__delitem__">__delitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;del&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-__eq__"><strong>__eq__</strong></a>(...)</dt><dd><tt>x.<a href="#ResultDict-__eq__">__eq__</a>(y)&nbsp;&lt;==&gt;&nbsp;x==y</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-__ge__"><strong>__ge__</strong></a>(...)</dt><dd><tt>x.<a href="#ResultDict-__ge__">__ge__</a>(y)&nbsp;&lt;==&gt;&nbsp;x&gt;=y</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#ResultDict-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#ResultDict-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-__gt__"><strong>__gt__</strong></a>(...)</dt><dd><tt>x.<a href="#ResultDict-__gt__">__gt__</a>(y)&nbsp;&lt;==&gt;&nbsp;x&gt;y</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#ResultDict-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#ResultDict-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-__iter__"><strong>__iter__</strong></a>(...)</dt><dd><tt>x.<a href="#ResultDict-__iter__">__iter__</a>()&nbsp;&lt;==&gt;&nbsp;iter(x)</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-__le__"><strong>__le__</strong></a>(...)</dt><dd><tt>x.<a href="#ResultDict-__le__">__le__</a>(y)&nbsp;&lt;==&gt;&nbsp;x&lt;=y</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-__len__"><strong>__len__</strong></a>(...)</dt><dd><tt>x.<a href="#ResultDict-__len__">__len__</a>()&nbsp;&lt;==&gt;&nbsp;len(x)</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-__lt__"><strong>__lt__</strong></a>(...)</dt><dd><tt>x.<a href="#ResultDict-__lt__">__lt__</a>(y)&nbsp;&lt;==&gt;&nbsp;x&lt;y</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-__ne__"><strong>__ne__</strong></a>(...)</dt><dd><tt>x.<a href="#ResultDict-__ne__">__ne__</a>(y)&nbsp;&lt;==&gt;&nbsp;x!=y</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#ResultDict-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-__setitem__"><strong>__setitem__</strong></a>(...)</dt><dd><tt>x.<a href="#ResultDict-__setitem__">__setitem__</a>(i,&nbsp;y)&nbsp;&lt;==&gt;&nbsp;x[i]=y</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-clear"><strong>clear</strong></a>(...)</dt><dd><tt>D.<a href="#ResultDict-clear">clear</a>()&nbsp;-&gt;&nbsp;None.&nbsp;&nbsp;Remove&nbsp;all&nbsp;items&nbsp;from&nbsp;D.</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-copy"><strong>copy</strong></a>(...)</dt><dd><tt>D.<a href="#ResultDict-copy">copy</a>()&nbsp;-&gt;&nbsp;a&nbsp;shallow&nbsp;copy&nbsp;of&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-get"><strong>get</strong></a>(...)</dt><dd><tt>D.<a href="#ResultDict-get">get</a>(k[,d])&nbsp;-&gt;&nbsp;D[k]&nbsp;if&nbsp;k&nbsp;in&nbsp;D,&nbsp;else&nbsp;d.&nbsp;&nbsp;d&nbsp;defaults&nbsp;to&nbsp;None.</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-has_key"><strong>has_key</strong></a>(...)</dt><dd><tt>D.<a href="#ResultDict-has_key">has_key</a>(k)&nbsp;-&gt;&nbsp;True&nbsp;if&nbsp;D&nbsp;has&nbsp;a&nbsp;key&nbsp;k,&nbsp;else&nbsp;False</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-items"><strong>items</strong></a>(...)</dt><dd><tt>D.<a href="#ResultDict-items">items</a>()&nbsp;-&gt;&nbsp;list&nbsp;of&nbsp;D's&nbsp;(key,&nbsp;value)&nbsp;pairs,&nbsp;as&nbsp;2-tuples</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-iteritems"><strong>iteritems</strong></a>(...)</dt><dd><tt>D.<a href="#ResultDict-iteritems">iteritems</a>()&nbsp;-&gt;&nbsp;an&nbsp;iterator&nbsp;over&nbsp;the&nbsp;(key,&nbsp;value)&nbsp;items&nbsp;of&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-iterkeys"><strong>iterkeys</strong></a>(...)</dt><dd><tt>D.<a href="#ResultDict-iterkeys">iterkeys</a>()&nbsp;-&gt;&nbsp;an&nbsp;iterator&nbsp;over&nbsp;the&nbsp;keys&nbsp;of&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-itervalues"><strong>itervalues</strong></a>(...)</dt><dd><tt>D.<a href="#ResultDict-itervalues">itervalues</a>()&nbsp;-&gt;&nbsp;an&nbsp;iterator&nbsp;over&nbsp;the&nbsp;values&nbsp;of&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-keys"><strong>keys</strong></a>(...)</dt><dd><tt>D.<a href="#ResultDict-keys">keys</a>()&nbsp;-&gt;&nbsp;list&nbsp;of&nbsp;D's&nbsp;keys</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-pop"><strong>pop</strong></a>(...)</dt><dd><tt>D.<a href="#ResultDict-pop">pop</a>(k[,d])&nbsp;-&gt;&nbsp;v,&nbsp;remove&nbsp;specified&nbsp;key&nbsp;and&nbsp;return&nbsp;the&nbsp;corresponding&nbsp;value<br>
+If&nbsp;key&nbsp;is&nbsp;not&nbsp;found,&nbsp;d&nbsp;is&nbsp;returned&nbsp;if&nbsp;given,&nbsp;otherwise&nbsp;KeyError&nbsp;is&nbsp;raised</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-popitem"><strong>popitem</strong></a>(...)</dt><dd><tt>D.<a href="#ResultDict-popitem">popitem</a>()&nbsp;-&gt;&nbsp;(k,&nbsp;v),&nbsp;remove&nbsp;and&nbsp;return&nbsp;some&nbsp;(key,&nbsp;value)&nbsp;pair&nbsp;as&nbsp;a<br>
+2-tuple;&nbsp;but&nbsp;raise&nbsp;KeyError&nbsp;if&nbsp;D&nbsp;is&nbsp;empty</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-setdefault"><strong>setdefault</strong></a>(...)</dt><dd><tt>D.<a href="#ResultDict-setdefault">setdefault</a>(k[,d])&nbsp;-&gt;&nbsp;D.<a href="#ResultDict-get">get</a>(k,d),&nbsp;also&nbsp;set&nbsp;D[k]=d&nbsp;if&nbsp;k&nbsp;not&nbsp;in&nbsp;D</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-update"><strong>update</strong></a>(...)</dt><dd><tt>D.<a href="#ResultDict-update">update</a>(E,&nbsp;**F)&nbsp;-&gt;&nbsp;None.&nbsp;&nbsp;Update&nbsp;D&nbsp;from&nbsp;E&nbsp;and&nbsp;F:&nbsp;for&nbsp;k&nbsp;in&nbsp;E:&nbsp;D[k]&nbsp;=&nbsp;E[k]<br>
+(if&nbsp;E&nbsp;has&nbsp;keys&nbsp;else:&nbsp;for&nbsp;(k,&nbsp;v)&nbsp;in&nbsp;E:&nbsp;D[k]&nbsp;=&nbsp;v)&nbsp;then:&nbsp;for&nbsp;k&nbsp;in&nbsp;F:&nbsp;D[k]&nbsp;=&nbsp;F[k]</tt></dd></dl>
+
+<dl><dt><a name="ResultDict-values"><strong>values</strong></a>(...)</dt><dd><tt>D.<a href="#ResultDict-values">values</a>()&nbsp;-&gt;&nbsp;list&nbsp;of&nbsp;D's&nbsp;values</tt></dd></dl>
+
+<hr>
+Data and other attributes inherited from <a href="__builtin__.html#dict">__builtin__.dict</a>:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object at 0x40174240&gt;<dd><tt>T.<a href="#ResultDict-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+<dl><dt><strong>fromkeys</strong> = &lt;built-in method fromkeys of type object at 0x92cf5dc&gt;<dd><tt><a href="__builtin__.html#dict">dict</a>.<a href="#ResultDict-fromkeys">fromkeys</a>(S[,v])&nbsp;-&gt;&nbsp;New&nbsp;<a href="__builtin__.html#dict">dict</a>&nbsp;with&nbsp;keys&nbsp;from&nbsp;S&nbsp;and&nbsp;values&nbsp;equal&nbsp;to&nbsp;v.<br>
+v&nbsp;defaults&nbsp;to&nbsp;None.</tt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="ResultParser">class <strong>ResultParser</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Yahoo&nbsp;Search&nbsp;Web&nbsp;Service&nbsp;Results&nbsp;-&nbsp;base&nbsp;class<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;the&nbsp;base&nbsp;class&nbsp;for&nbsp;all&nbsp;Yahoo&nbsp;Search&nbsp;Web&nbsp;Service&nbsp;result&nbsp;parsers.<br>
+If&nbsp;you&nbsp;build&nbsp;your&nbsp;own&nbsp;result&nbsp;parser&nbsp;(e.g.&nbsp;non-DOM&nbsp;based),&nbsp;please&nbsp;sub-<br>
+class&nbsp;<a href="#ResultParser">ResultParser</a>.&nbsp;&nbsp;The&nbsp;following&nbsp;attributes&nbsp;are&nbsp;always&nbsp;available:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;total_results_available<br>
+&nbsp;&nbsp;&nbsp;&nbsp;total_results_returned<br>
+&nbsp;&nbsp;&nbsp;&nbsp;first_result_position<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results<br>
+&nbsp;<br>
+&nbsp;<br>
+Results&nbsp;are&nbsp;a&nbsp;list&nbsp;of&nbsp;dictionaries,&nbsp;which&nbsp;can&nbsp;be&nbsp;a&nbsp;custom&nbsp;class&nbsp;as<br>
+required.&nbsp;An&nbsp;interator&nbsp;generator&nbsp;is&nbsp;provided&nbsp;for&nbsp;easy&nbsp;access&nbsp;to&nbsp;the<br>
+list&nbsp;of&nbsp;results.&nbsp;For&nbsp;example,&nbsp;to&nbsp;iterate&nbsp;over&nbsp;all&nbsp;results,&nbsp;you&nbsp;would&nbsp;do<br>
+something&nbsp;like:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dom&nbsp;=&nbsp;ws.get_results()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;=&nbsp;ws.<a href="#ResultParser-parse_results">parse_results</a>(dom)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dom.unlink()<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;res&nbsp;in&nbsp;results:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;res['Url']<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;res.Summary<br>
+&nbsp;<br>
+&nbsp;<br>
+As&nbsp;you&nbsp;can&nbsp;see,&nbsp;each&nbsp;result&nbsp;is&nbsp;a&nbsp;customizable&nbsp;dictionary.&nbsp;The&nbsp;default<br>
+results&nbsp;<a href="__builtin__.html#dict">dict</a>&nbsp;supports&nbsp;accessing&nbsp;each&nbsp;key&nbsp;as&nbsp;a&nbsp;"property",&nbsp;like&nbsp;the<br>
+above&nbsp;example&nbsp;(res.Summary).<br>
+&nbsp;<br>
+You&nbsp;can&nbsp;also&nbsp;get&nbsp;the&nbsp;list&nbsp;of&nbsp;results&nbsp;directly,&nbsp;using&nbsp;the&nbsp;results<br>
+attribute.&nbsp;An&nbsp;optional&nbsp;res_dict&nbsp;argument&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;provide&nbsp;an<br>
+alternative&nbsp;dictionary&nbsp;implementation&nbsp;to&nbsp;use&nbsp;for&nbsp;the&nbsp;results.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="ResultParser-__init__"><strong>__init__</strong></a>(self, service, res_dict<font color="#909090">=&lt;class 'yahoo.search.parser.ResultDict'&gt;</font>)</dt></dl>
+
+<dl><dt><a name="ResultParser-__iter__"><strong>__iter__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="ResultParser-parse_results"><strong>parse_results</strong></a>(self, result_set)</dt><dd><tt>Parse&nbsp;the&nbsp;results.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>firstResultPosition</strong></dt>
+<dd><tt>The&nbsp;first&nbsp;result&nbsp;position</tt></dd>
+</dl>
+<dl><dt><strong>first_result_position</strong></dt>
+<dd><tt>The&nbsp;first&nbsp;result&nbsp;position</tt></dd>
+</dl>
+<dl><dt><strong>results</strong></dt>
+<dd><tt>The&nbsp;list&nbsp;of&nbsp;all&nbsp;results</tt></dd>
+</dl>
+<dl><dt><strong>service</strong></dt>
+<dd><tt>The&nbsp;Search&nbsp;Web&nbsp;Service&nbsp;object&nbsp;for&nbsp;this&nbsp;results&nbsp;parser</tt></dd>
+</dl>
+<dl><dt><strong>totalResultsAvailable</strong></dt>
+<dd><tt>Total&nbsp;number&nbsp;of&nbsp;results&nbsp;for&nbsp;the&nbsp;query</tt></dd>
+</dl>
+<dl><dt><strong>totalResultsReturned</strong></dt>
+<dd><tt>The&nbsp;number&nbsp;of&nbsp;results&nbsp;returned</tt></dd>
+</dl>
+<dl><dt><strong>total_results_available</strong></dt>
+<dd><tt>Total&nbsp;number&nbsp;of&nbsp;results&nbsp;for&nbsp;the&nbsp;query</tt></dd>
+</dl>
+<dl><dt><strong>total_results_returned</strong></dt>
+<dd><tt>The&nbsp;number&nbsp;of&nbsp;results&nbsp;returned</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="XMLError">class <strong>XMLError</strong></a>(<a href="yahoo.search.parser.html#Error">Error</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>This&nbsp;exception&nbsp;can&nbsp;occur&nbsp;if,&nbsp;and&nbsp;only&nbsp;if,&nbsp;Yahoo&nbsp;returns&nbsp;malformed<br>
+XML&nbsp;results.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="yahoo.search.parser.html#XMLError">XMLError</a></dd>
+<dd><a href="yahoo.search.parser.html#Error">Error</a></dd>
+<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
+<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data descriptors inherited from <a href="yahoo.search.parser.html#Error">Error</a>:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="exceptions.html#Exception">exceptions.Exception</a>:<br>
+<dl><dt><a name="XMLError-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XMLError-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+
+<hr>
+Data and other attributes inherited from <a href="exceptions.html#Exception">exceptions.Exception</a>:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object at 0x4016dac0&gt;<dd><tt>T.<a href="#XMLError-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+<hr>
+Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><a name="XMLError-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XMLError-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="XMLError-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#XMLError-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="XMLError-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#XMLError-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="XMLError-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="XMLError-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#XMLError-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="XMLError-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XMLError-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<dl><dt><a name="XMLError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="XMLError-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#XMLError-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+<dl><dt><strong>message</strong></dt>
+<dd><tt>exception&nbsp;message</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-string_to_bool"><strong>string_to_bool</strong></a>(string)</dt><dd><tt>Convert&nbsp;a&nbsp;string&nbsp;to&nbsp;a&nbsp;boolean&nbsp;value</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__author__</strong> = 'Leif Hedstrom &lt;leif@ogre.com&gt;'<br>
+<strong>__date__</strong> = 'Wed Oct 26 11:24:50 PDT 2005'<br>
+<strong>__revision__</strong> = '$Id: parser.py,v 1.4 2005/10/26 20:32:27 zwoop Exp $'<br>
+<strong>__version__</strong> = '$Revision: 1.4 $'</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Leif&nbsp;Hedstrom&nbsp;&lt;leif@ogre.com&gt;</td></tr></table>
+</body></html>

@@ -1,0 +1,5 @@
+
+JBoSS，Java EE 容器，可运行 EJB 3.0程序。注意不是所有的JBoss都支持EJB 3.0，要下载 Java EE 版本的 JBoss。
+
+
+下载地址：http://jboss.com/

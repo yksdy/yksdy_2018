@@ -1,0 +1,1972 @@
+<?xml version=1.0 encoding="utf-8"?>
+<?konfabulator xml-strict="true"?>
+<widget version="1.0" minimumVersion="3.0" id="com.yahoo.widget.search" name="Yahoo! Search">
+	<debug>off</debug>
+<!--
+	Yahoo! Search
+
+	High and low, up and down, here and there... where oh where?
+	
+
+	Copyright (C) 2005 - 2006 Yahoo! Inc. All Rights Reserved.
+-->
+	<window title="Yahoo! Search">
+		<name>mainWindow</name>
+		<width>437</width>
+		<height>44</height>
+		<visible>0</visible>
+		<shadow>0</shadow>
+		<onFirstDisplay>
+			mainWindow.hOffset = (screen.width/2) - 218;
+			mainWindow.vOffset = (screen.availHeight + screen.availTop) - 54;
+		</onFirstDisplay>
+
+		<image src="Images/innerFill.png">
+			<name>backgroundMid</name>
+			<vOffset>35</vOffset>
+			<height>0</height>
+		</image>
+
+		<frame name="itemList" hOffset="6" vOffset="35" width="425" height="0" vScrollBar="sb">
+			<image src="Images/noResults.png" name="noResults" hOffset="213" hAlign="center" vAlign="center" visible="false"/>
+		</frame>
+
+		<scrollbar name="sb" vOffset="40" hOffset="411" height="0" width="16" thumbColor="r:30; g:30; b:30" autoHide="true" opacity="0"/>
+
+		<image src="Images/topShadow.png">
+			<name>topShadow</name>
+			<hOffset>6</hOffset>
+			<vOffset>35</vOffset>
+			<width>425</width>
+			<clipRect>0,0,425,0</clipRect>
+		</image>
+
+		<image src="Images/bottomShadow.png">
+			<name>bottomShadow</name>
+			<hOffset>6</hOffset>
+			<vOffset>20</vOffset>
+			<width>425</width>
+		</image>
+
+		<image src="Images/expandedTop.png">
+			<name>backgroundTop</name>
+			<width>437</width>
+			<clipRect>0,0,437,20</clipRect>
+		</image>
+
+		<image src="Images/expandedBase.png">
+			<name>backgroundBase</name>
+			<width>437</width>
+			<vOffset>20</vOffset>
+		</image>
+
+		<image src="Images/logo.png">
+			<name>searchLogo</name>
+			<vOffset>9</vOffset>
+			<hOffset>14</hOffset>
+		</image>
+
+		<image src="Images/propertyPopup.png">
+			<name>propertyPopup</name>
+			<vOffset>8</vOffset>
+			<hOffset>108</hOffset>
+			<onMouseDown>
+			<![CDATA[
+				items = new Array;
+				
+				popupList = ["Web", "Images", "Local", "Video", "Shopping", "News"];
+				
+				for (menuCount = 0; menuCount < popupList.length; menuCount++)
+				{
+	
+					items[menuCount] = new MenuItem;
+					items[menuCount].title = popupList[menuCount];
+					items[menuCount].enabled = true;
+					
+					if ( popupList[menuCount] == preferences.searchPref.value )
+					{
+						items[menuCount].onSelect = "";
+						items[menuCount].checked = true;
+					}
+					else
+					{
+						items[menuCount].onSelect = "preferences.searchPref.value = '" + popupList[menuCount] + "'; searchType.data='" + popupList[menuCount].toUpperCase() + "'; doPropertySwitch('" + popupList[menuCount] + "')";
+						items[menuCount].checked = false;
+					}
+				}
+				popupMenu( items, propertyPopup.hOffset + 1, propertyPopup.vOffset + 20 );
+			]]>
+			</onMouseDown>
+		</image>
+
+		<text data="WEB" name="searchType" color="#ffffff" alignment="right" hOffset="175" vOffset="23" size="11" font="Arial Bold">
+			<shadow hOffset="0" vOffset="-1" opacity="128" />
+		</text>
+
+		<image src="Images/textArea.png">
+			<name>textBackground</name>
+			<vOffset>8</vOffset>
+			<hOffset>188</hOffset>
+		</image>
+
+		<image src="Images/localDivider.png">
+			<name>localDivider</name>
+			<vOffset>8</vOffset>
+			<hOffset>328</hOffset>
+			<opacity>255</opacity>
+			<visible>false</visible>
+		</image>
+
+		<image src="Images/locationFocus.png">
+			<name>locationFocus</name>
+			<vOffset>4</vOffset>
+			<hOffset>325</hOffset>
+			<opacity>0</opacity>
+		</image>
+
+		<image src="Images/recentSearches.png">
+			<name>recentSearches</name>
+			<vOffset>9</vOffset>
+			<hOffset>191</hOffset>
+			<onMouseDown>
+			<![CDATA[
+				if (preferences.lastSearchItems.value != "")
+				{
+					var items = new Array();
+					var mySearch = 0;
+					myItems = preferences.lastSearchItems.value.split("*a*");
+					
+					items[mySearch] = new MenuItem();
+					items[mySearch].title = "Recent Searches";
+					items[mySearch].enabled = 0;
+					mySearch++
+	
+					for (item in myItems)
+					{	
+						if (myItems[item] != "")
+						{
+							items[mySearch] = new MenuItem();
+							items[mySearch].title = myItems[item];
+							items[mySearch].onSelect = "searchText.data = '" + myItems[item].replace(/'/, "\\'") + "'; searchText.color = '#000000';";
+							mySearch++
+						}
+					}
+	
+					items[mySearch] = new MenuItem();
+					items[mySearch].title = "-";
+					items[mySearch].enabled = 0;
+					mySearch++;
+					items[mySearch] = new MenuItem();
+					items[mySearch].title = "Clear Recent Searches";
+					items[mySearch].onSelect = "preferences.lastSearchItems.value = '';";
+				}
+				else
+				{
+					var items = new Array();
+					
+					items[0] = new MenuItem();
+					items[0].title = "No Recent Searches";
+					items[0].enabled = 0;
+				}
+				
+				popupMenu( items, recentSearches.hOffset + 1, recentSearches.vOffset + 20 );
+			]]>
+			</onMouseDown>
+		</image>
+
+		<image src="Images/focus.png">
+			<name>textFocus</name>
+			<vOffset>4</vOffset>
+			<hOffset>104</hOffset>
+			<opacity>0</opacity>
+		</image>
+
+		<textarea data="Search">
+			<name>searchText</name>
+			<hOffset>207</hOffset>
+			<vOffset>13</vOffset>
+			<width>205</width>
+			<alignment>left</alignment>
+			<font>Arial</font>
+			<size>12</size>
+			<color>#bababa</color>
+			<lines>1</lines>
+			<scrollbar>false</scrollbar>
+			<onKeyPress>
+			
+				if ( system.event.key.charCodeAt(0) == 9 )
+				{
+					searchText.rejectKeyPress();
+					
+					if (preferences.searchPref.value == "Local")
+					{
+						searchText.select( 0, 0 );
+						locationText.focus();
+	
+						if ( locationText.data )
+							locationText.select( 0, -1 );
+					}
+				}
+			
+				if (system.event.keyString == "Return" || system.event.keyString == "Enter")
+				{
+					searchText.rejectKeyPress();
+					searchText.loseFocus();
+					if ( opening )
+						startEase();
+					updateNow();
+					doSearch(searchText.data);
+				}
+			</onKeyPress>
+			<onGainFocus>
+				if( searchText.data == "Search" )
+				{
+					searchText.data = "";
+					searchText.color = "#000000";
+				}
+				textFocus.opacity = 255;
+			</onGainFocus>
+			<onLoseFocus>
+				if( searchText.data == "" )
+				{
+					searchText.data = "Search";
+					searchText.color = "#bababa";
+				}
+				textFocus.opacity = 0;
+			</onLoseFocus>
+		</textarea>
+
+		<textarea data="Palo Alto, CA">
+			<name>locationText</name>
+			<hOffset>329</hOffset>
+			<vOffset>13</vOffset>
+			<width>85</width>
+			<alignment>left</alignment>
+			<font>Arial</font>
+			<size>12</size>
+			<color>#000000</color>
+			<lines>1</lines>
+			<scrollbar>false</scrollbar>
+<!--			<visible>false</visible>-->
+			<opacity>0</opacity>
+			<onKeyPress>
+			
+				if ( system.event.key.charCodeAt(0) == 9 )
+				{
+					locationText.rejectKeyPress();
+					
+					if (preferences.searchPref.value == "Local")
+					{
+						locationText.select( 0, 0 );
+						searchText.focus();
+	
+						if ( searchText.data )
+							searchText.select( 0, -1 );
+					}
+				}
+
+				if (system.event.keyString == "Return" || system.event.keyString == "Enter")
+				{
+					locationText.rejectKeyPress();
+					locationText.loseFocus();
+					if ( opening )
+						startEase();
+					updateNow();
+					doSearch(searchText.data);
+				}
+			</onKeyPress>
+			<onGainFocus>
+				if( locationText.data == "Location" )
+				{
+					locationText.data = "";
+					locationText.color = "#000000";
+				}
+				locationFocus.opacity = 255;
+			</onGainFocus>
+			<onLoseFocus>
+				if( locationText.data == "" )
+				{
+					locationText.data = "Location";
+					locationText.color = "#bababa";
+				}
+				locationFocus.opacity = 0;
+			</onLoseFocus>
+		</textarea>
+
+		<image src="Images/growHandle.png">
+			<name>growHandle</name>
+			<vOffset>21</vOffset>
+			<hOffset>414</hOffset>
+			<opacity>0</opacity>
+			<tracking>rectangle</tracking>
+			<onMouseDown>
+				myOffset = system.event.y;
+			</onMouseDown>
+			<onMouseMove>
+			<![CDATA[
+				
+				if ( !opening && system.event.vOffset > 100)
+					myNum = (system.event.vOffset - myOffset) - 20;
+				else
+					myNum = (100 - myOffset) - 20;
+				
+				backgroundBase.vOffset = myNum + 20;
+				growHandle.vOffset = myNum + 20;
+				bottomShadow.vOffset = myNum + 17;
+				moreResults.vOffset = myNum + 22;
+				hideResults.vOffset = myNum + 22;
+				
+				backgroundMid.height = myNum - 15;
+				itemList.height = myNum - 15;
+				if ( myNum < 55 )
+					sb.opacity = 0;
+				else
+					sb.opacity = 255;
+
+				sb.height = myNum - 25;
+				topShadow.clipRect = "x:0; y:0; width:425; height:" + (myNum - 20);
+				
+				noResults.vOffset = ( itemList.height / 2 );
+				
+				mainWindow.height = backgroundBase.vOffset + backgroundBase.height;
+			]]>
+			</onMouseMove>
+		</image>
+
+		<image src="Images/moreResults.png">
+			<name>moreResults</name>
+			<hOffset>135</hOffset>
+			<vOffset>22</vOffset>
+			<opacity>0</opacity>
+		</image>
+
+		<image src="Images/hideResults.png">
+			<name>hideResults</name>
+			<hOffset>235</hOffset>
+			<vOffset>22</vOffset>
+			<opacity>0</opacity>
+			<onMouseUp>
+				startEase();
+			</onMouseUp>
+		</image>
+
+	</window>
+	
+	<action trigger="onLoad">
+	<![CDATA[
+		
+		var bumpStamp = null;
+		var lastPosition = null;
+		var collapsedPosition = null;
+		var startStamp = null;
+		var opening = true;
+		var what = "";
+		var howMany = 20;
+		var url = new URL();
+		var storedSearchCount = 10;
+
+		var itemArray = new Array();
+		
+		var textShadow = new Shadow();
+		textShadow.hOffset = 0;
+		textShadow.vOffset = 1;
+		textShadow.color = "#ffffff";
+		textShadow.opacity = 190;
+
+		function doSearch(what)
+		{
+			noResults.visible = false;
+			
+			for ( a in itemArray )
+			{
+				itemArray[a].removeFromSuperview();
+			}
+			
+			reusedTerm = false;
+			mySearchList = preferences.lastSearchItems.value.split("*a*");
+
+			preferences.userLocation.value = locationText.data;
+
+			for (item in mySearchList)
+			{
+				if ( mySearchList[item] == what )
+					reusedTerm = true;
+			}
+			
+			if ( !reusedTerm )
+			{			
+				if (mySearchList.length == storedSearchCount)
+				{
+					mySearchList.splice(0,1);
+				}
+				
+				preferences.lastSearchItems.value = mySearchList.join("*a*") + "*a*" + what;
+			}
+			else
+				preferences.lastSearchItems.value = mySearchList.join("*a*");
+
+			switch (preferences.searchPref.value)
+			{
+				case "Web":
+					getWebSearch(what);
+					moreResults.onMouseUp = 'openURL("http://search.yahoo.com/search?fr=kon&ei=UTF-8&p=' + escape(what) + '")';
+					break;
+				case "Images":
+					getImageSearch(what);
+					moreResults.onMouseUp = 'openURL("http://images.search.yahoo.com/search/images?fr=kon&ei=UTF-8&p=' + escape(what) + '")';
+					break;
+				case "Local":
+					getLocalSearch(what);
+					moreResults.onMouseUp = 'openURL("http://local.yahoo.com/results?stx=' + escape(what) + '&csz=' + escape( locationText.data ) + '&fr=kon&ei=UTF-8")';
+					break;
+				case "Video":
+					getVideoSearch(what);
+					moreResults.onMouseUp = 'openURL("http://video.search.yahoo.com/search/video?fr=kon&ei=UTF-8&p=' + escape(what) + '")';
+					break;
+				case "Shopping":
+					getShoppingSearch(what);
+					moreResults.onMouseUp = 'openURL("http://shopping.yahoo.com/search?fr=kon&p=' + escape(what) + '&ei=UTF-8&cop=mss' + escape(what) + '")';
+					break;
+				case "News":
+					getNewsSearch(what);
+					moreResults.onMouseUp = 'openURL("http://news.search.yahoo.com/search/news?fr=kon&tab=News&ei=UTF-8&p=' + escape(what) + '")';
+					break;
+			}
+		}
+
+		function doPropertySwitch ( whichProperty )
+		{
+			searchText.focus();
+
+			if ( whichProperty == "Local" )
+			{
+				localDivider.visible = true;
+				textFocus.src="Images/localFocus.png";
+				searchText.width = 120;
+				//locationText.visible = true;
+				locationText.opacity = 255;
+			}
+			else
+			{
+				localDivider.visible = false;
+				textFocus.src="Images/focus.png";
+				searchText.width = 210;
+				//locationText.visible = false;
+				locationText.opacity = 0;
+			}
+		}
+
+		function getImageSearch ( what )
+		{
+		
+			mySearchData = url.fetch("http://search.yahooapis.com/ImageSearchService/V1/imageSearch?appid=Konfabulator&query=" + escape(what) + "&results=" + howMany);
+			var xml = XMLDOM.parse( mySearchData );
+			
+			var subItem = 0;
+			var itemsAdded = 0;
+			var results = xml.evaluate( "ResultSet/Result" );
+			
+			var heightOffset = 0;
+
+			itemArray = new Array();
+			itemList.scrollY = 0;
+			
+			maxWidth = 0;
+
+			if (results.length == 0)
+			{
+				noResults.visible = true;
+				return;
+			}
+
+			for (n = 0; n < results.length; n++)
+			{
+				var node = results.item(n);
+				if ( Number(node.evaluate( "string(Thumbnail/Width)" )) > maxWidth) maxWidth = Number(node.evaluate( "string(Thumbnail/Width)" ));
+			}
+
+			for (n = 0; n < results.length; n++)
+			{
+
+				var itemFrame = new Frame();
+				var itemFrameViews = new Array();
+				var image = null;
+				var text = null;
+				
+				var node = results.item(n);
+
+				frameHeight = Number(node.evaluate( "string(Thumbnail/Height)" )) + 16;
+				if ( frameHeight < 70 ) frameHeight = 70;
+
+				rightOffset = (maxWidth - Number(node.evaluate( "string(Thumbnail/Width)" )))/2;
+
+				itemFrame.width = 425;
+
+// -- START FRAME				
+
+				image = new Image();
+				image.hOffset = rightOffset + 5;
+				image.vOffset = 6;
+				image.src = "Images/imageBoxTopLeft.png";
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				image = new Image();
+				image.hOffset = rightOffset + 18;
+				image.vOffset = 6;
+				image.width = Number(node.evaluate( "string(Thumbnail/Width)" )) - 20;
+				image.src = "Images/imageBoxTop.png";
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				image = new Image();
+				image.hOffset = rightOffset + Number(node.evaluate( "string(Thumbnail/Width)" )) - 2;
+				image.vOffset = 6;
+				image.src = "Images/imageBoxTopRight.png";
+
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				image = new Image();
+				image.hOffset = rightOffset + 5;
+				image.vOffset = 18;
+				image.height = Number(node.evaluate( "string(Thumbnail/Height)" )) - 20;
+				image.src = "Images/imageBoxLeft.png";
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				image = new Image();
+				image.hOffset = rightOffset + 18;
+				image.vOffset = 18;
+				image.width = Number(node.evaluate( "string(Thumbnail/Width)" )) - 20;
+				image.height = Number(node.evaluate( "string(Thumbnail/Height)" )) - 20;
+				image.src = "Images/imageBoxFill.png";
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				image = new Image();
+				image.hOffset = rightOffset + Number(node.evaluate( "string(Thumbnail/Width)" )) - 2;
+				image.vOffset = 18;
+				image.height = Number(node.evaluate( "string(Thumbnail/Height)" )) - 20;
+				image.src = "Images/imageBoxRight.png";
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				image = new Image();
+				image.hOffset = rightOffset + 5;
+				image.vOffset = Number(node.evaluate( "string(Thumbnail/Height)" )) - 2;
+				image.src = "Images/imageBoxBottomLeft.png";
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				image = new Image();
+				image.hOffset = rightOffset + 18;
+				image.vOffset = Number(node.evaluate( "string(Thumbnail/Height)" )) - 2;
+				image.width = Number(node.evaluate( "string(Thumbnail/Width)" )) - 20;
+				image.src = "Images/imageBoxBottom.png";
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				image = new Image();
+				image.hOffset = rightOffset + Number(node.evaluate( "string(Thumbnail/Width)" )) - 2;
+				image.vOffset = Number(node.evaluate( "string(Thumbnail/Height)" )) - 2;
+				image.src = "Images/imageBoxBottomRight.png";
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+// -- END FRAME				
+
+				image = new Image();
+				image.hAlign = "center";
+				image.vAlign = "center";
+				image.hOffset = rightOffset + 8 + Math.floor(Number(node.evaluate( "string(Thumbnail/Width)" ))/2);
+				image.vOffset = 8 + Math.floor(Number(node.evaluate( "string(Thumbnail/Height)" ))/2);
+				image.remoteAsync = true;
+				image.loadingSrc = "Images/loading.png";
+				image.src = node.evaluate( "string(Thumbnail/Url)" );
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+
+				text = new Text();
+				text.color = "#000000";
+				text.font = "Arial Bold";
+				text.size = 14;
+				text.data = node.evaluate( "string(Title)" );
+				text.hOffset = maxWidth + 15;
+				text.vOffset = 16;
+				text.width = 245;
+				text.truncation = "end";
+				text.onMouseUp = "openURL(\"" + node.evaluate( "string(RefererUrl)" ) + "\");"
+				
+				itemFrame.addSubview( text );
+				itemFrameViews.title = text;
+
+				text = new TextArea();
+				text.color = "#616161";
+				text.font = "Arial";
+				text.size = 11;
+				text.data = node.evaluate( "string(Summary)" );
+				text.hOffset = maxWidth + 10;
+				text.vOffset = 22;
+				text.width = 240;
+				text.editable = false;
+				text.scrollbar = false;
+				tmpTextHeight = text.vOffset + text.height;
+
+				itemFrame.addSubview( text );
+				itemFrameViews.address = text;
+
+				text = new TextArea();
+				text.color = "#108409";
+				text.font = "Arial";
+				text.size = 11;
+				text.data = node.evaluate( "string(Url)" );
+				text.hOffset = maxWidth + 10;
+				text.vOffset = tmpTextHeight + 3;
+				text.width = 240;
+				text.editable = false;
+				text.scrollbar = false;
+				text.onMouseUp = "openURL(\"" + node.evaluate( "string(ClickUrl)" ) + "\");"
+
+				if ( (text.vOffset + text.height) > frameHeight )
+					frameHeight = text.vOffset + text.height + 10;
+
+				itemFrame.addSubview( text );
+				itemFrameViews.city = text;
+
+				// Our list item is complete, add it to the main frame in the right position
+				itemFrame.vOffset = heightOffset;
+
+				if ( subItem%2 )
+				{
+					image = new Image();
+					image.src = "Images/darkRow.png";
+					image.hOffset = 0;
+					image.vOffset = 0;
+					image.width = 425;
+					image.height = frameHeight;
+					image.zOrder = 0;
+					
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+				}
+
+				itemFrame.height = frameHeight;
+
+				heightOffset += frameHeight;
+				
+				itemArray[itemArray.length] = itemFrame; // hold onto this so it doesn't get garbage collected
+
+				itemList.addSubview( itemFrame );
+				
+				subItem++;
+				itemsAdded++;
+			}
+		}
+
+		function getShoppingSearch(what)
+		{
+			mySearchData = url.fetch("http://api.shopping.yahoo.com/ShoppingService/V1/productSearch?appid=Konfabulator&query=" + escape(what) + "&results=" + howMany);
+			var xml = XMLDOM.parse( mySearchData );
+			
+			var subItem = 0;
+			var itemsAdded = 0;
+			var results = xml.evaluate( "ResultSet/Result/Catalog | ResultSet/Result/Offer" );
+			
+			var heightOffset = 0;
+
+			itemArray = new Array();
+			itemList.scrollY = 0;
+			
+			maxWidth = 70;
+			merchantList = "";
+
+			if (results.length == 0)
+			{
+				noResults.visible = true;
+				return;
+			}
+
+			for (n = 0; n < results.length; n++)
+			{
+				var node = results.item(n);
+				if ( Number(node.evaluate( "string(Thumbnail/Width)" )) > maxWidth)
+					maxWidth = Number(node.evaluate( "string(Thumbnail/Width)" ));
+
+				if ( node.evaluate( "string(Merchant/@ID)" ).length == 7 )
+				{
+					merchantList += "&merchantid=" + node.evaluate( "string(Merchant/@ID)" );
+					print (node.evaluate( "string(Merchant/@ID)" ));
+				}
+			}
+
+
+			myMerchantData = url.fetch("http://api.shopping.yahoo.com/ShoppingService/v1/MerchantSearch?appid=Konfabulator" + merchantList);
+			print ("http://api.shopping.yahoo.com/ShoppingService/v1/MerchantSearch?appid=Konfabulator" + merchantList);
+			print (myMerchantData);
+			var merchantXml = XMLDOM.parse( myMerchantData );
+
+			for (n = 0; n < results.length; n++)
+			{
+
+				var itemFrame = new Frame();
+				var itemFrameViews = new Array();
+				var image = null;
+				var text = null;
+				
+				var node = results.item(n);
+
+				itemFrame.width = 425;
+
+// -- START FRAME				
+
+				if ( node.evaluate( "string(Thumbnail/Height)" ) )
+				{
+					frameHeight = Number(node.evaluate( "string(Thumbnail/Height)" )) + 16;
+					if ( frameHeight < 70 ) frameHeight = 70;
+	
+					rightOffset = (maxWidth - Number(node.evaluate( "string(Thumbnail/Width)" )))/2;
+				
+					image = new Image();
+					image.hOffset = rightOffset + 5;
+					image.vOffset = 6;
+					image.src = "Images/imageBoxTopLeft.png";
+					
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+	
+					image = new Image();
+					image.hOffset = rightOffset + 18;
+					image.vOffset = 6;
+					image.width = Number(node.evaluate( "string(Thumbnail/Width)" )) - 20;
+					image.src = "Images/imageBoxTop.png";
+					
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+	
+					image = new Image();
+					image.hOffset = rightOffset + Number(node.evaluate( "string(Thumbnail/Width)" )) - 2;
+					image.vOffset = 6;
+					image.src = "Images/imageBoxTopRight.png";
+	
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+	
+					image = new Image();
+					image.hOffset = rightOffset + 5;
+					image.vOffset = 18;
+					image.height = Number(node.evaluate( "string(Thumbnail/Height)" )) - 20;
+					image.src = "Images/imageBoxLeft.png";
+					
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+	
+					image = new Image();
+					image.hOffset = rightOffset + 18;
+					image.vOffset = 18;
+					image.width = Number(node.evaluate( "string(Thumbnail/Width)" )) - 20;
+					image.height = Number(node.evaluate( "string(Thumbnail/Height)" )) - 20;
+					image.src = "Images/imageBoxFill.png";
+					
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+	
+					image = new Image();
+					image.hOffset = rightOffset + Number(node.evaluate( "string(Thumbnail/Width)" )) - 2;
+					image.vOffset = 18;
+					image.height = Number(node.evaluate( "string(Thumbnail/Height)" )) - 20;
+					image.src = "Images/imageBoxRight.png";
+					
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+	
+					image = new Image();
+					image.hOffset = rightOffset + 5;
+					image.vOffset = Number(node.evaluate( "string(Thumbnail/Height)" )) - 2;
+					image.src = "Images/imageBoxBottomLeft.png";
+					
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+	
+					image = new Image();
+					image.hOffset = rightOffset + 18;
+					image.vOffset = Number(node.evaluate( "string(Thumbnail/Height)" )) - 2;
+					image.width = Number(node.evaluate( "string(Thumbnail/Width)" )) - 20;
+					image.src = "Images/imageBoxBottom.png";
+					
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+	
+					image = new Image();
+					image.hOffset = rightOffset + Number(node.evaluate( "string(Thumbnail/Width)" )) - 2;
+					image.vOffset = Number(node.evaluate( "string(Thumbnail/Height)" )) - 2;
+					image.src = "Images/imageBoxBottomRight.png";
+					
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+					
+					image = new Image();
+					image.hAlign = "center";
+					image.vAlign = "center";
+					image.width = node.evaluate( "string(Thumbnail/Width)" );
+					image.height = node.evaluate( "string(Thumbnail/Height)" );
+					image.hOffset = rightOffset + 8 + Math.floor(Number(node.evaluate( "string(Thumbnail/Width)" ))/2);
+					image.vOffset = 8 + Math.floor(Number(node.evaluate( "string(Thumbnail/Height)" ))/2);
+					image.remoteAsync = true;
+					//image.loadingSrc = "Images/loading.png";
+					image.src = node.evaluate( "string(Thumbnail/Url)" );
+					
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+				}
+				else
+				{
+
+					frameHeight = 72;	
+					rightOffset = (maxWidth/2);
+					image = new Image();
+					image.hAlign = "center";
+					image.vAlign = "center";
+					image.hOffset = rightOffset + 8;
+					image.vOffset = 33;
+					image.src = "Images/noImage.png";
+					
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+				}
+
+// -- END FRAME				
+
+				text = new Text();
+				text.color = "#0000c1";
+				text.font = "Arial Bold";
+				text.size = 14;
+				text.data = node.evaluate( "string(ProductName)" );
+				text.hOffset = maxWidth + 15;
+				text.vOffset = 16;
+				text.width = 385 - maxWidth;
+				text.truncation = "end";
+				text.onMouseUp = "openURL(\"" + node.evaluate( "string(Url)" ) + "\");"
+				
+				itemFrame.addSubview( text );
+				itemFrameViews.title = text;
+				
+				if ( node.evaluate( "string(Price)" ))
+				{
+					text = new Text();
+					text.color = "#000000";
+					text.font = "Arial Bold";
+					text.size = 12;
+					text.data = "$" + node.evaluate( "string(Price)" );
+					text.hOffset = maxWidth + 15;
+					text.vOffset = 32;
+
+					tempHpos = text.width + text.hOffset + 6;
+					
+					itemFrame.addSubview( text );
+					itemFrameViews.title = text;
+
+					text = new Text();
+					text.color = "#108409";
+					text.font = "Arial";
+					text.size = 12;
+					text.data = node.evaluate( "string(Merchant/Name)" );
+					text.hOffset = tempHpos;
+					text.vOffset = 32;
+					
+					itemFrame.addSubview( text );
+					itemFrameViews.title = text;
+				}
+				else
+				{
+					text = new Text();
+					text.color = "#000000";
+					text.font = "Arial Bold";
+					text.size = 12;
+					text.data = "$" + node.evaluate( "string(PriceFrom)" ) + " - $" + node.evaluate( "string(PriceTo)" ) ;
+					text.hOffset = maxWidth + 15;
+					text.vOffset = 32;
+
+					tempHpos = text.width + text.hOffset + 10;
+					
+					itemFrame.addSubview( text );
+					itemFrameViews.title = text;
+				}
+
+				ratingIsThere = false;
+
+				if ( node.evaluate( "string(Merchant)" ) )
+				{
+					if ( node.evaluate( "string(Merchant/@ID)" ).length == 7 )
+					{
+						try // This needs to be here thanks to a bug in the Shopping API.
+						{
+							var merchantResults = merchantXml.evaluate( 'MerchantResultSet/Merchant[@ID="' + node.evaluate( "string(Merchant/@ID)" ) + '"]' );
+							var merchantNode = merchantResults.item(0);
+							
+							if ( merchantNode.evaluate( "string(Rating/NumRatings)" ) != "0" )
+								ratingValue = ( Math.floor( ( Number( merchantNode.evaluate( "string(Rating/OverallRating)" ) ) * 2 ) ) ) / 2;
+							else
+								ratingValue = "none";
+							
+							image = new Image();
+							image.src = "Images/" + ratingValue + ".png";
+							image.hOffset = maxWidth + 15;
+							image.vOffset = 38;
+							image.onMouseUp = "openURL('" + node.evaluate( "string(Rating/RatingUrl)" ) + "')";
+
+							itemFrame.addSubview( image );
+							itemFrameViews.background = image;
+							
+							text = new Text();
+							text.color = "#000000";
+							text.font = "Arial";
+							text.size = 11;
+							text.data = "Merchant Rating" ;
+							text.hOffset = maxWidth + 85;
+							text.vOffset = 48;
+							text.onMouseUp = "openURL('" + node.evaluate( "string(Rating/RatingUrl)" ) + "')";
+
+							itemFrame.addSubview( text );
+							itemFrameViews.title = text;
+							
+							ratingIsThere = true;
+							
+						}
+						catch ( e )
+						{
+							// Nothing to do here.
+						}
+
+					}
+				}
+				else
+				{
+					if ( node.evaluate( "string(UserRating/NumRatings)" ) != "0" )
+						ratingValue = ( Math.floor( ( Number( node.evaluate( "string(UserRating/AverageRating)" ) ) * 2 ) ) ) / 2;
+					else
+						ratingValue = "none";
+
+					image = new Image();
+					image.src = "Images/" + ratingValue + ".png";
+					image.hOffset = maxWidth + 15;
+					image.vOffset = 38;
+					image.onMouseUp = "openURL('" + node.evaluate( "string(UserRating/RatingUrl)" ) + "')";
+					
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+					
+					text = new Text();
+					text.color = "#000000";
+					text.font = "Arial";
+					text.size = 11;
+					text.data = "Product Reviews (" + node.evaluate( "string(UserRating/NumRatings)" ) + ")";
+					text.hOffset = maxWidth + 85;
+					text.vOffset = 48;
+					text.onMouseUp = "openURL('" + node.evaluate( "string(UserRating/RatingUrl)" ) + "')";
+
+					itemFrame.addSubview( text );
+					itemFrameViews.title = text;
+					
+					ratingIsThere = true;
+				}
+
+				text = new TextArea();
+				text.color = "#616161";
+				text.font = "Arial";
+				text.size = 11;
+				text.data = node.evaluate( "string(Summary)" );
+				text.hOffset = maxWidth + 10;
+				if ( ratingIsThere )
+					text.vOffset = 54;
+				else
+					text.vOffset = 40;
+					
+				text.width = 385 - maxWidth;
+				text.editable = false;
+				text.scrollbar = false;
+				tmpTextHeight = text.vOffset + text.height;
+
+				itemFrame.addSubview( text );
+				itemFrameViews.address = text;
+
+				if ( (text.vOffset + text.height) > frameHeight )
+					frameHeight = text.vOffset + text.height + 10;
+
+				itemFrame.addSubview( text );
+				itemFrameViews.city = text;
+
+				// Our list item is complete, add it to the main frame in the right position
+				itemFrame.vOffset = heightOffset;
+
+				if ( subItem%2 )
+				{
+					image = new Image();
+					image.src = "Images/darkRow.png";
+					image.hOffset = 0;
+					image.vOffset = 0;
+					image.width = 425;
+					image.height = frameHeight;
+					image.zOrder = 0;
+					
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+				}
+
+				itemFrame.height = frameHeight;
+
+				heightOffset += frameHeight;
+				
+				itemArray[itemArray.length] = itemFrame; // hold onto this so it doesn't get garbage collected
+
+				itemList.addSubview( itemFrame );
+				
+				subItem++;
+				itemsAdded++;
+			}
+		}
+
+		function getVideoSearch(what)
+		{
+
+			mySearchData = url.fetch("http://search.yahooapis.com/VideoSearchService/V1/videoSearch?appid=Konfabulator&query=" + escape(what) + "&results=" + howMany);
+			var xml = XMLDOM.parse( mySearchData );
+			
+			var subItem = 0;
+			var itemsAdded = 0;
+			var results = xml.evaluate( "ResultSet/Result" );
+			
+			var heightOffset = 0;
+			
+			itemArray = new Array();
+			itemList.scrollY = 0;
+			
+			maxWidth = 0;
+
+			if (results.length == 0)
+			{
+				noResults.visible = true;
+				return;
+			}
+
+			for (n = 0; n < results.length; n++)
+			{
+				var node = results.item(n);
+				if ( Number(node.evaluate( "string(Thumbnail/Width)" )) > maxWidth) maxWidth = Number(node.evaluate( "string(Thumbnail/Width)" ));
+			}
+
+			for (n = 0; n < results.length; n++)
+			{
+
+				var itemFrame = new Frame();
+				var itemFrameViews = new Array();
+				var image = null;
+				var text = null;
+				
+				var node = results.item(n);
+
+				frameHeight = Number(node.evaluate( "string(Thumbnail/Height)" )) + 16;
+				if ( frameHeight < 70 ) frameHeight = 70;
+
+				rightOffset = (maxWidth - Number(node.evaluate( "string(Thumbnail/Width)" )))/2;
+
+				itemFrame.width = 425;
+
+// -- START FRAME				
+
+				image = new Image();
+				image.hOffset = rightOffset + 5;
+				image.vOffset = 6;
+				image.src = "Images/imageBoxTopLeft.png";
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				image = new Image();
+				image.hOffset = rightOffset + 18;
+				image.vOffset = 6;
+				image.width = Number(node.evaluate( "string(Thumbnail/Width)" )) - 20;
+				image.src = "Images/imageBoxTop.png";
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				image = new Image();
+				image.hOffset = rightOffset + Number(node.evaluate( "string(Thumbnail/Width)" )) - 2;
+				image.vOffset = 6;
+				image.src = "Images/imageBoxTopRight.png";
+
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				image = new Image();
+				image.hOffset = rightOffset + 5;
+				image.vOffset = 18;
+				image.height = Number(node.evaluate( "string(Thumbnail/Height)" )) - 20;
+				image.src = "Images/imageBoxLeft.png";
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				image = new Image();
+				image.hOffset = rightOffset + 18;
+				image.vOffset = 18;
+				image.width = Number(node.evaluate( "string(Thumbnail/Width)" )) - 20;
+				image.height = Number(node.evaluate( "string(Thumbnail/Height)" )) - 20;
+				image.src = "Images/imageBoxFill.png";
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				image = new Image();
+				image.hOffset = rightOffset + Number(node.evaluate( "string(Thumbnail/Width)" )) - 2;
+				image.vOffset = 18;
+				image.height = Number(node.evaluate( "string(Thumbnail/Height)" )) - 20;
+				image.src = "Images/imageBoxRight.png";
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				image = new Image();
+				image.hOffset = rightOffset + 5;
+				image.vOffset = Number(node.evaluate( "string(Thumbnail/Height)" )) - 2;
+				image.src = "Images/imageBoxBottomLeft.png";
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				image = new Image();
+				image.hOffset = rightOffset + 18;
+				image.vOffset = Number(node.evaluate( "string(Thumbnail/Height)" )) - 2;
+				image.width = Number(node.evaluate( "string(Thumbnail/Width)" )) - 20;
+				image.src = "Images/imageBoxBottom.png";
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				image = new Image();
+				image.hOffset = rightOffset + Number(node.evaluate( "string(Thumbnail/Width)" )) - 2;
+				image.vOffset = Number(node.evaluate( "string(Thumbnail/Height)" )) - 2;
+				image.src = "Images/imageBoxBottomRight.png";
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+// -- END FRAME				
+
+				image = new Image();
+				image.hAlign = "center";
+				image.vAlign = "center";
+				image.hOffset = rightOffset + 8 + Math.floor(Number(node.evaluate( "string(Thumbnail/Width)" ))/2);
+				image.vOffset = 8 + Math.floor(Number(node.evaluate( "string(Thumbnail/Height)" ))/2);
+				image.remoteAsync = true;
+				image.loadingSrc = "Images/loading.png";
+				image.src = node.evaluate( "string(Thumbnail/Url)" );
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+
+				text = new Text();
+				text.color = "#000000";
+				text.font = "Arial Bold";
+				text.size = 14;
+				text.data = node.evaluate( "string(Title)" );
+				text.hOffset = maxWidth + 15;
+				text.vOffset = 16;
+				text.width = 245;
+				text.truncation = "end";
+				
+				itemFrame.addSubview( text );
+				itemFrameViews.title = text;
+
+				text = new TextArea();
+				text.color = "#616161";
+				text.font = "Arial";
+				text.size = 11;
+				text.data = node.evaluate( "string(Summary)" );
+				text.hOffset = maxWidth + 10;
+				text.vOffset = 22;
+				text.width = 240;
+				text.editable = false;
+				text.scrollbar = false;
+				tmpTextHeight = text.vOffset + text.height;
+
+				itemFrame.addSubview( text );
+				itemFrameViews.address = text;
+
+				text = new TextArea();
+				text.color = "#108409";
+				text.font = "Arial";
+				text.size = 11;
+				text.data = node.evaluate( "string(Url)" );
+				text.hOffset = maxWidth + 10;
+				text.vOffset = tmpTextHeight + 3;
+				text.width = 240;
+				text.editable = false;
+				text.scrollbar = false;
+				text.onMouseUp = "openURL(\"" + node.evaluate( "string(ClickUrl)" ) + "\");"
+
+				if ( (text.vOffset + text.height) > frameHeight )
+					frameHeight = text.vOffset + text.height + 10;
+
+				itemFrame.addSubview( text );
+				itemFrameViews.city = text;
+
+				// Our list item is complete, add it to the main frame in the right position
+				itemFrame.vOffset = heightOffset;
+
+				if ( subItem%2 )
+				{
+					image = new Image();
+					image.src = "Images/darkRow.png";
+					image.hOffset = 0;
+					image.vOffset = 0;
+					image.width = 425;
+					image.height = frameHeight;
+					image.zOrder = 0;
+					
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+				}
+
+				itemFrame.height = frameHeight;
+
+				heightOffset += frameHeight;
+				
+				itemArray[itemArray.length] = itemFrame; // hold onto this so it doesn't get garbage collected
+
+				itemList.addSubview( itemFrame );
+				
+				subItem++;
+				itemsAdded++;
+			}
+		}
+
+
+		function getLocalSearch(what)
+		{
+			mySearchData = url.fetch("http://local.yahooapis.com/LocalSearchService/V1/localSearch?appid=Konfabulator&query=" + escape(what) + "&location=" + preferences.userLocation.value + "&results=" + howMany);
+
+			var xml = XMLDOM.parse( mySearchData );
+			
+			var subItem = 0;
+			var itemsAdded = 0;
+			var results = xml.evaluate( "ResultSet/Result" );
+			var heightOffset = 0;
+
+			itemArray = new Array();
+			itemList.scrollY = 0;
+
+			if (results.length == 0)
+			{
+				noResults.visible = true;
+				return;
+			}
+
+			for (n = 0; n < results.length; n++)
+			{
+
+				var itemFrame = new Frame();
+				var itemFrameViews = new Array();
+				var image = null;
+				var text = null;
+				
+				var node = results.item(n);
+				
+				itemFrame.width = 425;
+
+				
+				text = new Text();
+				text.color = "#0000c1";
+				text.font = "Arial Bold";
+				text.size = 14;
+				text.data = node.evaluate( "string(Title)" );
+				text.hOffset = 15;
+				text.vOffset = 19;
+				text.width = 275;
+				text.truncation = "end";
+				text.onMouseUp = "openURL(\"" + node.evaluate( "string(ClickUrl)" ) + "\");"
+
+				itemFrame.addSubview( text );
+				itemFrameViews.title = text;
+
+				text = new Text();
+				text.color = "#000000";
+				text.font = "Arial Bold";
+				text.size = 14;
+				text.data = node.evaluate( "string(Phone)" );
+				text.hOffset = 390;
+				text.vOffset = 19;
+				text.alignment = "right";
+				text.width = 385;
+				text.truncation = "end";
+				
+				itemFrame.addSubview( text );
+				itemFrameViews.title = text;
+
+				if ( node.evaluate( "string(Address)" ) != "" )
+				{
+					text = new Text();
+					text.color = "#000000";
+					text.font = "Arial";
+					text.size = 12;
+					text.data = node.evaluate( "string(Address)" );
+					text.hOffset = 15;
+					text.vOffset = 34;
+					text.width = 385;
+					text.truncation = "end";
+
+					itemFrame.addSubview( text );
+					itemFrameViews.address = text;
+
+					text = new Text();
+					text.color = "#000000";
+					text.font = "Arial";
+					text.size = 12;
+					text.data = node.evaluate( "string(City)" ) + ", " + node.evaluate( "string(State)" );
+					text.hOffset = 15;
+					text.vOffset = 47;
+					text.width = 385;
+					text.truncation = "end";
+
+					itemFrame.addSubview( text );
+					itemFrameViews.city = text;
+
+					text = new Text();
+					text.color = "#000000";
+					text.font = "Arial";
+					text.size = 11;
+					text.data = node.evaluate( "string(Distance)" ) + " miles away";
+					text.hOffset = 15;
+					text.vOffset = 60;
+					text.width = 385;
+					text.truncation = "end";
+
+					itemFrame.addSubview( text );
+					itemFrameViews.city = text;
+				}
+				else
+				{
+					text = new Text();
+					text.color = "#000000";
+					text.font = "Arial";
+					text.size = 12;
+					text.data = node.evaluate( "string(City)" ) + ", " + node.evaluate( "string(State)" );
+					text.hOffset = 15;
+					text.vOffset = 34;
+					text.width = 385;
+					text.truncation = "end";
+
+					itemFrame.addSubview( text );
+					itemFrameViews.city = text;
+
+					text = new Text();
+					text.color = "#000000";
+					text.font = "Arial";
+					text.size = 11;
+					text.data = node.evaluate( "string(Distance)" ) + " miles away";
+					text.hOffset = 15;
+					text.vOffset = 47;
+					text.width = 385;
+					text.truncation = "end";
+
+					itemFrame.addSubview( text );
+					itemFrameViews.city = text;
+				}
+
+				rating = node.evaluate( "string(Rating)" );
+				if (rating == "") rating = "none";
+
+				image = new Image();
+				image.src = "Images/" + rating + ".png";
+				image.hOffset = 390;
+				image.vOffset = 26;
+				image.hAlign = "right";
+				
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				image = new Image();
+				image.src = "Images/map.png";
+				image.hOffset = 390;
+				image.vOffset = 41;
+				image.hAlign = "right";
+
+				if ( node.evaluate( "string(MapUrl)" ) != "" )
+					image.onMouseUp = "openURL(\"" + node.evaluate( "string(MapUrl)" ) + "\");"
+				else
+					image.opacity = 80;
+
+				itemFrame.addSubview( image );
+				itemFrameViews.background = image;
+
+				if ( node.evaluate( "string(BusinessUrl)" ) != "" )
+				{
+					text = new Text();
+					text.color = "#108409";
+					text.font = "Arial";
+					text.size = 11;
+					text.data = node.evaluate( "string( BusinessUrl)" );
+					text.hOffset = 15;
+					text.vOffset = 75;
+					text.width = 385;
+					text.truncation = "end";
+					text.zOrder = 3;
+					text.onMouseUp = "openURL(\"" + node.evaluate( "string( BusinessClickUrl)" ) + "\");"
+	
+					itemFrame.addSubview( text );
+					itemFrameViews.city = text;
+					
+					frameHeight = 86;
+				}
+				else
+				{
+					frameHeight = 72;
+				}
+
+				// Our list item is complete, add it to the main frame in the right position
+				itemFrame.vOffset = heightOffset;
+
+				if ( subItem%2 )
+				{
+					image = new Image();
+					image.src = "Images/darkRow.png";
+					image.hOffset = 0;
+					image.vOffset = 0;
+					image.width = 425;
+					image.height = frameHeight;
+					image.zOrder = 0;
+					
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+				}
+
+				itemFrame.height = frameHeight;
+
+				heightOffset += frameHeight;
+
+				itemArray[itemArray.length] = itemFrame; // hold onto this so it doesn't get garbage collected
+
+				itemList.addSubview( itemFrame );
+				
+				subItem++;
+				itemsAdded++;
+			}
+
+
+		}
+
+		function getWebSearch(what)
+		{
+		
+			mySearchData = url.fetch("http://search.yahooapis.com/WebSearchService/V1/webSearch?appid=Konfabulator&query=" + escape(what) + "&results=" + howMany);
+print (mySearchData);
+			var xml = XMLDOM.parse( mySearchData );
+			
+			var subItem = 0;
+			var itemsAdded = 0;
+			var results = xml.evaluate( "ResultSet/Result" );
+			
+			var heightOffset = 0;
+
+			itemArray = new Array();
+			
+			itemList.scrollY = 0;
+
+			if (results.length == 0)
+			{
+				noResults.visible = true;
+				return;
+			}
+
+			for (n = 0; n < results.length; n++)
+			{
+
+				var itemFrame = new Frame();
+				var itemFrameViews = new Array();
+				var image = null;
+				var text = null;
+				
+				var node = results.item(n);
+				
+				itemFrame.width = 425;
+				
+				text = new Text();
+				text.color = "#0000c1";
+				text.font = "Arial Bold";
+				text.size = 14;
+				text.data = node.evaluate( "string(Title)" );
+				text.hOffset = 15;
+				text.vOffset = 19;
+				text.width = 385;
+				text.truncation = "end";
+				text.zOrder = 1;
+				text.onMouseUp = "openURL(\"" + node.evaluate( "string(ClickUrl)" ) + "\");"
+
+				itemFrame.addSubview( text );
+				itemFrameViews.title = text;
+
+				text = new TextArea();
+				text.color = "#000000";
+				text.font = "Arial";
+				text.size = 11;
+				text.data = node.evaluate( "string(Summary)" );
+				text.hOffset = 11;
+				text.vOffset = 25;
+				text.width = 385;
+				text.editable = false;
+				text.scrollbar = false;
+				text.zOrder = 2;
+				tmpTextHeight = text.vOffset + text.height;
+
+				itemFrame.addSubview( text );
+				itemFrameViews.address = text;
+
+				text = new Text();
+				text.color = "#108409";
+				text.font = "Arial";
+				text.size = 11;
+				text.data = node.evaluate( "string(Url)" );
+				text.hOffset = 15;
+				text.vOffset = tmpTextHeight + 12;
+				text.width = 385;
+				text.truncation = "end";
+				text.zOrder = 3;
+				text.onMouseUp = "openURL(\"" + node.evaluate( "string(ClickUrl)" ) + "\");"
+
+				itemFrame.addSubview( text );
+				itemFrameViews.city = text;
+
+				frameHeight = tmpTextHeight + 23;
+
+				if ( subItem%2 )
+				{
+					image = new Image();
+					image.src = "Images/darkRow.png";
+					image.hOffset = 0;
+					image.vOffset = 0;
+					image.width = 425;
+					image.height = frameHeight;
+					image.zOrder = 0;
+					
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+				}
+
+
+
+				// Our list item is complete, add it to the main frame in the right position
+				itemFrame.height = frameHeight;
+				itemFrame.vOffset = heightOffset;
+				
+				heightOffset += frameHeight;
+				itemArray[itemArray.length] = itemFrame; // hold onto this so it doesn't get garbage collected
+
+				itemList.addSubview( itemFrame );
+				
+				subItem++;
+				itemsAdded++;
+			}
+		}
+
+		function getNewsSearch(what)
+		{
+			mySearchData = url.fetch("http://search.yahooapis.com/NewsSearchService/V1/newsSearch?appid=Konfabulator&query=" + escape(what) + "&results=" + howMany);
+			var xml = XMLDOM.parse( mySearchData );
+			
+			var subItem = 0;
+			var itemsAdded = 0;
+			var results = xml.evaluate( "ResultSet/Result" );
+			
+			var heightOffset = 0;
+
+			itemArray = new Array();
+			
+			itemList.scrollY = 0;
+
+			if (results.length == 0)
+			{
+				noResults.visible = true;
+				return;
+			}
+
+			for (n = 0; n < results.length; n++)
+			{
+
+				var itemFrame = new Frame();
+				var itemFrameViews = new Array();
+				var image = null;
+				var text = null;
+				
+				var node = results.item(n);
+				
+				itemFrame.width = 425;
+				
+				text = new Text();
+				text.color = "#0000c1";
+				text.font = "Arial Bold";
+				text.size = 14;
+				text.data = node.evaluate( "string(Title)" );
+				text.hOffset = 15;
+				text.vOffset = 19;
+				text.width = 385;
+				text.truncation = "end";
+				text.zOrder = 1;
+				text.onMouseUp = "openURL(\"" + node.evaluate( "string(ClickUrl)" ) + "\");"
+
+				itemFrame.addSubview( text );
+				itemFrameViews.title = text;
+
+				articleTime = new Date(node.evaluate( "string(PublishDate)" )*1000 );
+
+				myString = node.evaluate( "string(NewsSource)" ) + "   ";
+				
+				if (articleTime.getHours() == "0")
+				{
+					amPM = "AM"
+					myString += "12";
+				}
+				else if (articleTime.getHours() == "12")
+				{
+					amPM = "PM"
+					myString += "12";
+				}
+				else if (articleTime.getHours() > "12")
+				{
+					amPM = "PM"
+					myString += (articleTime.getHours() - 12);
+				}
+				else
+				{
+					amPM = "AM"
+					myString += articleTime.getHours();
+				}
+				
+				if (articleTime.getMinutes().length = 1)
+					myString += ":0" + articleTime.getMinutes();
+				else
+					myString += ":" + articleTime.getMinutes();
+
+				myString += " " + amPM + "   " + (articleTime.getMonth() + 1) + "/" + articleTime.getDate() + "/" + articleTime.getFullYear();
+
+				text = new Text();
+				text.color = "#505050";
+				text.font = "Arial";
+				text.size = 11;
+				text.data = myString; //node.evaluate( "string(NewsSource)" ) + "   " + articleTime.getHours() + ":" + articleTime.getMinutes() + " - " + (articleTime.getMonth() + 1) + "/" + articleTime.getDate();
+				text.hOffset = 15;
+				text.vOffset = 33;
+				text.width = 385;
+				text.truncation = "end";
+				text.zOrder = 1;
+				text.onMouseUp = "openURL(\"" + node.evaluate( "string(NewsSourceUrl)" ) + "\");"
+
+				itemFrame.addSubview( text );
+				itemFrameViews.title = text;
+
+				text = new TextArea();
+				text.color = "#000000";
+				text.font = "Arial";
+				text.size = 11;
+				text.data = node.evaluate( "string(Summary)" );
+				text.hOffset = 10;
+				text.vOffset = 37;
+				text.width = 385;
+				text.editable = false;
+				text.scrollbar = false;
+				text.zOrder = 2;
+				tmpTextHeight = text.vOffset + text.height;
+
+				itemFrame.addSubview( text );
+				itemFrameViews.address = text;
+
+				text = new Text();
+				text.color = "#108409";
+				text.font = "Arial";
+				text.size = 11;
+				text.data = node.evaluate( "string(Url)" );
+				text.hOffset = 15;
+				text.vOffset = tmpTextHeight + 12;
+				text.width = 385;
+				text.truncation = "end";
+				text.zOrder = 3;
+				text.onMouseUp = "openURL(\"" + node.evaluate( "string(ClickUrl)" ) + "\");"
+
+				itemFrame.addSubview( text );
+				itemFrameViews.city = text;
+
+				frameHeight = tmpTextHeight + 23;
+
+				if ( subItem%2 )
+				{
+					image = new Image();
+					image.src = "Images/darkRow.png";
+					image.hOffset = 0;
+					image.vOffset = 0;
+					image.width = 425;
+					image.height = frameHeight;
+					image.zOrder = 0;
+					
+					itemFrame.addSubview( image );
+					itemFrameViews.background = image;
+				}
+
+
+
+				// Our list item is complete, add it to the main frame in the right position
+				itemFrame.vOffset = heightOffset;
+				itemFrame.height = frameHeight;
+
+				heightOffset += frameHeight;
+				itemArray[itemArray.length] = itemFrame; // hold onto this so it doesn't get garbage collected
+
+				itemList.addSubview( itemFrame );
+				
+				subItem++;
+				itemsAdded++;
+			}
+		}
+
+
+		/* Animation Functions */
+
+		function checkLimit(a, b, c)
+		{
+			return a < b ? b : (a > c ? c : a);
+		}
+
+		function startEase()
+		{
+			heightStamp = ( itemList.height + 15 );
+
+			if (system.platform == "windows")
+				theHeight = screen.availHeight + screen.availTop;
+			else
+				theHeight = screen.height;
+
+			doEaseAnimation.ticking = true;
+		}
+
+		function doEase(yFrom, yTo, duration, step)
+		{
+			rightNow =  new Date();
+			if (!startStamp) startStamp = rightNow.getTime();
+			time 	= (checkLimit(rightNow.getTime() - startStamp, 0, duration));
+			percent	= time/duration;
+			yDiff	= yTo - yFrom;
+
+			percent = Math.sin( percent * (Math.PI/2) );
+			myNum = Math.round(yFrom + yDiff * percent);
+			
+			backgroundTop.clipRect = "x:0; y:0; width:437; height:" + (myNum + 20);
+			backgroundBase.vOffset = myNum + 20;
+			growHandle.vOffset = myNum + 20;
+			bottomShadow.vOffset = myNum + 17;
+			moreResults.vOffset = myNum + 22;
+			hideResults.vOffset = myNum + 22;
+
+			if (opening)
+			{
+				growHandle.opacity = percent * 255;
+				moreResults.opacity = percent * 255;
+				hideResults.opacity = percent * 255;
+			}
+			else
+			{
+				growHandle.opacity = (1 - percent) * 255;
+				moreResults.opacity = (1 - percent) * 255;
+				hideResults.opacity = (1 - percent) * 255;
+			}
+
+			if ( myNum > 15)
+			{
+				backgroundMid.opacity = 255;
+				backgroundMid.height = myNum - 15;
+				itemList.height = myNum - 15;
+				if ( myNum < 55 )
+					sb.opacity = 0;
+				else
+					sb.opacity = 255;
+				sb.height = myNum - 25;
+				topShadow.clipRect = "x:0; y:0; width:425; height:" + (myNum - 20);
+			}
+			else
+			{
+				backgroundMid.opacity = 0;
+				backgroundMid.height = 0;
+				itemList.height = 0;
+				sb.opacity = 0;
+				topShadow.clipRect = "x:0; y:0; width:425; height:0";
+			}
+			
+			noResults.vOffset = ( itemList.height / 2 );
+			
+			mainWindow.height = backgroundBase.vOffset + backgroundBase.height;
+			
+
+			if (mainWindow.vOffset > (lastPosition + 5) || mainWindow.vOffset < (lastPosition - 5))
+				collapsedPosition = null;
+			
+			if ( opening )
+			{
+				if (((mainWindow.height + mainWindow.vOffset) > theHeight))
+				{
+					if (!bumpStamp && !collapsedPosition)
+						bumpStamp = mainWindow.vOffset;
+					mainWindow.vOffset = (theHeight - (mainWindow.height))
+				}
+			}
+			else
+			{
+				if (collapsedPosition)
+				{
+					if (((mainWindow.vOffset) < collapsedPosition))
+						mainWindow.vOffset = (theHeight - (mainWindow.height))
+					else
+						collapsedPosition = null;
+				}
+			}
+
+			lastPosition = mainWindow.vOffset;
+
+
+			if (time >= duration)
+			{
+				doEaseAnimation.ticking = false;
+				startStamp = null;
+
+				if (opening)
+					opening = false;
+				else
+					opening = true;
+
+				if (bumpStamp)
+				{
+					collapsedPosition = bumpStamp;
+					bumpStamp = null;
+				}
+			}
+		}
+		
+		if ( preferences.searchPref.value == "Local" )
+		{
+			localDivider.visible = true;
+			textFocus.src="Images/localFocus.png";
+			searchText.width = 120;
+			//locationText.visible = true;
+			locationText.opacity = 255;
+		}
+		
+		locationText.data = preferences.userLocation.value;
+		
+		searchType.data = preferences.searchPref.value.toUpperCase();
+		
+		mainWindow.visible = true;
+		
+	]]>
+	</action>
+
+	<timer name="doEaseAnimation" interval=".01" ticking="false">
+		<onTimerFired>
+		<![CDATA[
+		
+			if (opening)
+				doEase(0,155,450);
+			else
+				doEase(heightStamp,0,450);
+		]]>
+		</onTimerFired>
+	</timer>
+
+	<preference name="userLocation">
+		<hidden>true</hidden>
+		<type>text</type>
+		<defaultValue>Palo Alto, CA</defaultValue>
+	</preference>
+
+	<preference name="searchPref">
+		<hidden>true</hidden>
+		<type>text</type>
+		<defaultValue>Web</defaultValue>
+	</preference>
+
+	<preference name="lastSearchItems">
+		<hidden>true</hidden>
+		<type>text</type>
+		<defaultValue></defaultValue>
+	</preference>
+
+	<about-box>
+		<image>Images/About.png</image>
+		<about-version>
+			<font>Arial</font>
+			<size>10</size>
+			<hOffset>112</hOffset>
+			<vOffset>141</vOffset>
+			<color>#ffffff</color>
+			<shadow>
+				<color>#000000</color>
+				<hOffset>0</hOffset>
+				<vOffset>1</vOffset>
+			</shadow>
+		</about-version>
+		
+		<about-text>
+			<data>Copyright Policy</data>
+			<url>http://docs.yahoo.com/info/copyright/copyright.html</url>
+			<font>Arial</font>
+			<size>10</size>
+			<hOffset>112</hOffset>
+			<vOffset>191</vOffset>
+			<color>#ffffff</color>
+			<shadow>
+				<color>#000000</color>
+				<hOffset>0</hOffset>
+				<vOffset>1</vOffset>
+			</shadow>
+		</about-text>
+
+		<about-text>
+			<data>Terms Of Service</data>
+			<url>http://docs.yahoo.com/info/terms/</url>
+			<font>Arial</font>
+			<size>10</size>
+			<hOffset>202</hOffset>
+			<vOffset>191</vOffset>
+			<color>#ffffff</color>
+			<shadow>
+				<color>#000000</color>
+				<hOffset>0</hOffset>
+				<vOffset>1</vOffset>
+			</shadow>
+		</about-text>
+
+		<about-text>
+			<data>Privacy Policy</data>
+			<url>http://privacy.yahoo.com/privacy/us/ysearch/index.html</url>
+			<font>Arial</font>
+			<size>10</size>
+			<hOffset>299</hOffset>
+			<vOffset>191</vOffset>
+			<color>#ffffff</color>
+			<shadow>
+				<color>#000000</color>
+				<hOffset>0</hOffset>
+				<vOffset>1</vOffset>
+			</shadow>
+		</about-text>
+		
+	</about-box>
+
+</widget>

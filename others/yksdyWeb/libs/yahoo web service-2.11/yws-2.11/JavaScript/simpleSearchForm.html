@@ -1,0 +1,54 @@
+<html>
+<!-- Author: Kent Brewster                          -->
+<!-- Simple Search using JSON and callback function -->
+<head>
+<title>Minimal Instant Search</title>
+</head>
+<body>
+<input id="q">
+<button id="b">Search</button>
+<ul id="r"></ul>
+<script type="text/javascript">
+var obj =
+{
+  init : function()
+  {
+    obj.q = document.getElementById('q');
+    obj.b = document.getElementById('b');
+    obj.r = document.getElementById('r');
+    obj.b.onclick = obj.pingSearch;
+  },
+  pingSearch : function()
+  {
+    if (obj.q.value)
+    {
+      obj.s = document.createElement('script');
+      obj.s.type ='text/javascript';
+      obj.s.charset ='utf-8';
+      obj.s.src = 'http://search.yahooapis.com/WebSearchService/V1/webSearch?appid=YahooDemo&output=json&callback=obj.pongSearch&query=' + obj.q.value;
+      document.getElementsByTagName('head')[0].appendChild(obj.s);
+    }
+  },
+  pongSearch : function(z)
+  {
+    obj.r.innerHTML = '';
+    for (var i = 0; i < z.ResultSet.Result.length; i++)
+    {
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = z.ResultSet.Result[i].Url;
+      a.innerHTML = z.ResultSet.Result[i].Title;
+      li.appendChild(a);
+      obj.r.appendChild(li);
+    }
+  }
+};
+window.onload = function()
+{
+    obj.init();
+};
+</script>
+</body>
+</html>
+
+

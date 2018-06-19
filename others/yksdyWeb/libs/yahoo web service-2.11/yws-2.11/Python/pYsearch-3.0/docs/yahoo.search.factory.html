@@ -1,0 +1,109 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module yahoo.search.factory</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="yahoo.html"><font color="#ffffff">yahoo</font></a>.<a href="yahoo.search.html"><font color="#ffffff">search</font></a>.factory</strong></big></big> (version 1.10, Mon Feb 26 09:01:07 MST 2007)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/leif/hack/pysearch/yahoo/search/factory.py">/home/leif/hack/pysearch/yahoo/search/factory.py</a></font></td></tr></table>
+    <p><tt>Search&nbsp;Factory&nbsp;-&nbsp;simple&nbsp;API&nbsp;to&nbsp;create&nbsp;search&nbsp;objects<br>
+&nbsp;<br>
+This&nbsp;module&nbsp;implements&nbsp;a&nbsp;few&nbsp;convenience&nbsp;functions&nbsp;to&nbsp;make&nbsp;it&nbsp;easy&nbsp;and&nbsp;safe<br>
+to&nbsp;create&nbsp;search&nbsp;objects.&nbsp;This&nbsp;is&nbsp;not&nbsp;the&nbsp;most&nbsp;efficient&nbsp;way&nbsp;to&nbsp;use&nbsp;the&nbsp;web<br>
+services,&nbsp;but&nbsp;it's&nbsp;convenient.&nbsp;Future&nbsp;releases&nbsp;of&nbsp;the&nbsp;APIs&nbsp;will&nbsp;hopefully<br>
+also&nbsp;make&nbsp;this&nbsp;factory&nbsp;implementation&nbsp;less&nbsp;cumbersome.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="yahoo.search.audio.html">yahoo.search.audio</a><br>
+<a href="yahoo.search.image.html">yahoo.search.image</a><br>
+<a href="yahoo.search.local.html">yahoo.search.local</a><br>
+</td><td width="25%" valign=top><a href="yahoo.search.myweb.html">yahoo.search.myweb</a><br>
+<a href="yahoo.search.news.html">yahoo.search.news</a><br>
+<a href="yahoo.search.site.html">yahoo.search.site</a><br>
+</td><td width="25%" valign=top><a href="yahoo.search.term.html">yahoo.search.term</a><br>
+<a href="yahoo.search.video.html">yahoo.search.video</a><br>
+<a href="yahoo.search.web.html">yahoo.search.web</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-create_search"><strong>create_search</strong></a>(name, app_id, xml_parser<font color="#909090">=None</font>, result_factory<font color="#909090">=None</font>, debug_level<font color="#909090">=0</font>, **args)</dt><dd><tt>Create&nbsp;a&nbsp;Yahoo&nbsp;Web&nbsp;Services&nbsp;object,&nbsp;and&nbsp;configure&nbsp;it<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;a&nbsp;simple&nbsp;"factory"&nbsp;function&nbsp;to&nbsp;instantiate&nbsp;and&nbsp;configure<br>
+a&nbsp;Yahoo&nbsp;Web&nbsp;Services&nbsp;object.&nbsp;For&nbsp;example:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;app_id&nbsp;=&nbsp;"YahooDemo"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;srch&nbsp;=&nbsp;<a href="#-create_search">create_search</a>("Web",&nbsp;app_id,&nbsp;query="Yahoo",&nbsp;results=4)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;srch&nbsp;is&nbsp;not&nbsp;None:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dom&nbsp;=&nbsp;srch.get_results()<br>
+&nbsp;<br>
+The&nbsp;first&nbsp;argument&nbsp;is&nbsp;one&nbsp;of&nbsp;the&nbsp;following&nbsp;"classes"&nbsp;of&nbsp;searches:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Web&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Web&nbsp;search<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Context&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Contextual&nbsp;Web&nbsp;search<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Related&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Web&nbsp;search&nbsp;Related&nbsp;Suggestions<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Spelling&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Web&nbsp;search&nbsp;Spelling&nbsp;Suggestions<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Video&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Video&nbsp;search<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Image&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Image&nbsp;search<br>
+&nbsp;&nbsp;&nbsp;&nbsp;News&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;News&nbsp;article&nbsp;search<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Local&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Local&nbsp;search<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Term&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Term&nbsp;extraction&nbsp;service<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ListFolders&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Retrieving&nbsp;public&nbsp;MyWeb&nbsp;folders<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ListUrls&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Retrieving&nbsp;public&nbsp;MyWeb&nbsp;URL&nbsp;stores<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;URLSearch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Search&nbsp;for&nbsp;URLs&nbsp;with&nbsp;particular&nbsp;tags<br>
+&nbsp;&nbsp;&nbsp;&nbsp;TagSearch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Search&nbsp;for&nbsp;tags&nbsp;associated&nbsp;with&nbsp;URL/user<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RelatedTags&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Find&nbsp;tags&nbsp;that&nbsp;appear&nbsp;together&nbsp;on&nbsp;URLs<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Artist&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Find&nbsp;information&nbsp;on&nbsp;a&nbsp;musical&nbsp;performer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Album&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Find&nbsp;information&nbsp;about&nbsp;albums<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Song&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Provide&nbsp;information&nbsp;about&nbsp;songs<br>
+&nbsp;&nbsp;&nbsp;&nbsp;SongDownload&nbsp;&nbsp;&nbsp;-&nbsp;Find&nbsp;links&nbsp;to&nbsp;various&nbsp;song&nbsp;providers&nbsp;of&nbsp;a&nbsp;song<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Podcast&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Search&nbsp;for&nbsp;a&nbsp;Podcast&nbsp;site/feed<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PageData&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Find&nbsp;all&nbsp;pages&nbsp;belonging&nbsp;to&nbsp;a&nbsp;domain<br>
+&nbsp;&nbsp;&nbsp;&nbsp;InlinkData&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Show&nbsp;pages&nbsp;linking&nbsp;to&nbsp;a&nbsp;specific&nbsp;page<br>
+&nbsp;<br>
+&nbsp;<br>
+The&nbsp;second&nbsp;argument,&nbsp;app_id&nbsp;(or&nbsp;appid),&nbsp;is&nbsp;an&nbsp;application&nbsp;specific<br>
+identifier,&nbsp;provided&nbsp;by&nbsp;Yahoo.&nbsp;The&nbsp;web&nbsp;services&nbsp;will&nbsp;not&nbsp;accept&nbsp;any<br>
+requests&nbsp;without&nbsp;a&nbsp;proper&nbsp;AppID.<br>
+&nbsp;<br>
+All&nbsp;other&nbsp;arguments&nbsp;must&nbsp;be&nbsp;valid&nbsp;named&nbsp;arguments,&nbsp;and&nbsp;the&nbsp;allowed<br>
+set&nbsp;of&nbsp;parameters&nbsp;depends&nbsp;on&nbsp;the&nbsp;specific&nbsp;class&nbsp;of&nbsp;search&nbsp;being<br>
+instantiated.&nbsp;See&nbsp;<a href="http://developer.yahoo.net/search/">http://developer.yahoo.net/search/</a>&nbsp;for&nbsp;a&nbsp;more<br>
+comprehensive&nbsp;list&nbsp;and&nbsp;documentation&nbsp;of&nbsp;allowed&nbsp;parameters&nbsp;for&nbsp;all<br>
+types&nbsp;of&nbsp;searches.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>SERVICES</strong> = {'album': (&lt;class 'yahoo.search.audio.AlbumSearch'&gt;, 'Search for a specific music album'), 'artist': (&lt;class 'yahoo.search.audio.ArtistSearch'&gt;, 'Information on a musical performer'), 'context': (&lt;class 'yahoo.search.web.ContextSearch'&gt;, 'Contextual Web Search'), 'image': (&lt;class 'yahoo.search.image.ImageSearch'&gt;, 'Image Search'), 'inlinkdata': (&lt;class 'yahoo.search.site.InlinkData'&gt;, 'Show pages linking to a specific page'), 'listfolders': (&lt;class 'yahoo.search.myweb.ListFolders'&gt;, 'Retrieving public MyWeb folders'), 'listurls': (&lt;class 'yahoo.search.myweb.ListUrls'&gt;, 'Retrieving public MyWeb URL stores'), 'local': (&lt;class 'yahoo.search.local.LocalSearch'&gt;, 'Local Search'), 'news': (&lt;class 'yahoo.search.news.NewsSearch'&gt;, 'News Search'), 'pagedata': (&lt;class 'yahoo.search.site.PageData'&gt;, 'Find all pages belonging to a domain'), ...}<br>
+<strong>__author__</strong> = 'Leif Hedstrom &lt;leif@ogre.com&gt;'<br>
+<strong>__date__</strong> = 'Mon Feb 26 09:01:07 MST 2007'<br>
+<strong>__revision__</strong> = '$Id: factory.py,v 1.10 2007/02/28 05:20:09 zwoop Exp $'<br>
+<strong>__version__</strong> = '$Revision: 1.10 $'</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Leif&nbsp;Hedstrom&nbsp;&lt;leif@ogre.com&gt;</td></tr></table>
+</body></html>

@@ -1,0 +1,16 @@
+Version 2.0  July 25th, 2006
+   Initial release of 2.0
+
+Version 2.01  July 31st, 2006
+   Perl package updated to correct parsing issues.
+   C# directory renamed to Csharp (CVS had problems with the '#' sign)
+
+Version 2.1  March 1st, 2007
+   All languages updated to use yahooapis.com domain for web service calls.
+   ActionScript 3 and Flex examples added to Flash folder
+   ColdFusion example added
+   Python updated with new examples
+   Other minor updates to various sources
+
+Version 2.11  March 5th, 2007
+   ActionScript 3 and Flex examples updated to fix package structure

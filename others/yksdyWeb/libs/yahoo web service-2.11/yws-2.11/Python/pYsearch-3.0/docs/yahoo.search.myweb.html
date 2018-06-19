@@ -1,0 +1,1042 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module yahoo.search.myweb</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="yahoo.html"><font color="#ffffff">yahoo</font></a>.<a href="yahoo.search.html"><font color="#ffffff">search</font></a>.myweb</strong></big></big> (version 1.5, Tue Feb 27 17:06:45 MST 2007)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/leif/hack/pysearch/yahoo/search/myweb.py">/home/leif/hack/pysearch/yahoo/search/myweb.py</a></font></td></tr></table>
+    <p><tt>yahoo.search.myweb&nbsp;-&nbsp;Yahoo&nbsp;Search&nbsp;MyWeb&nbsp;Web&nbsp;Services<br>
+&nbsp;<br>
+This&nbsp;module&nbsp;implements&nbsp;a&nbsp;set&nbsp;of&nbsp;classes&nbsp;and&nbsp;functions&nbsp;to&nbsp;work&nbsp;with&nbsp;the<br>
+Yahoo&nbsp;Search&nbsp;MyWeb&nbsp;Web&nbsp;Services.&nbsp;The&nbsp;supported&nbsp;classes&nbsp;of&nbsp;MyWeb<br>
+and&nbsp;MyWeb2&nbsp;searches&nbsp;are:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ListFolders">ListFolders</a>&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;List&nbsp;(public)&nbsp;MyWeb&nbsp;folders<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ListUrls">ListUrls</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;List&nbsp;the&nbsp;URLs&nbsp;in&nbsp;a&nbsp;MyWeb&nbsp;folder<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#UrlSearch">UrlSearch</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Search&nbsp;for&nbsp;URLs&nbsp;with&nbsp;particular&nbsp;tags<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#TagSearch">TagSearch</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Search&nbsp;for&nbsp;tags&nbsp;associated&nbsp;with&nbsp;URL&nbsp;or&nbsp;user<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#RelatedTags">RelatedTags</a>&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Find&nbsp;tags&nbsp;that&nbsp;appear&nbsp;together&nbsp;on&nbsp;URLs<br>
+&nbsp;<br>
+&nbsp;<br>
+The&nbsp;various&nbsp;sub-classes&nbsp;of&nbsp;MyWeb&nbsp;Search&nbsp;supports&nbsp;different&nbsp;sets&nbsp;of&nbsp;query<br>
+parameters.&nbsp;They&nbsp;all&nbsp;require&nbsp;an&nbsp;application&nbsp;ID&nbsp;parameter&nbsp;(app_id).&nbsp;The<br>
+following&nbsp;tables&nbsp;describes&nbsp;all&nbsp;other&nbsp;allowed&nbsp;parameters&nbsp;for&nbsp;each&nbsp;of&nbsp;the<br>
+supported&nbsp;services:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;Folders&nbsp;&nbsp;List&nbsp;URLs<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;------------&nbsp;&nbsp;---------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;folder&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yahooid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sort_order&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;start&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+MyWeb2&nbsp;also&nbsp;adds&nbsp;the&nbsp;following&nbsp;services:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;URL&nbsp;Search&nbsp;&nbsp;Tag&nbsp;Search&nbsp;&nbsp;Related&nbsp;Tags<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;----------&nbsp;&nbsp;----------&nbsp;&nbsp;------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tag&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yahooid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;reverse_sort&nbsp;&nbsp;&nbsp;&nbsp;[X]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;start&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[X]<br>
+&nbsp;<br>
+&nbsp;<br>
+Each&nbsp;of&nbsp;these&nbsp;parameter&nbsp;is&nbsp;implemented&nbsp;as&nbsp;an&nbsp;attribute&nbsp;of&nbsp;each<br>
+respective&nbsp;class.&nbsp;For&nbsp;example,&nbsp;you&nbsp;can&nbsp;set&nbsp;parameters&nbsp;like:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;yahoo.search.myweb&nbsp;import&nbsp;<a href="#ListFolders">ListFolders</a><br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;app_id&nbsp;=&nbsp;"YahooDemo"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;srch&nbsp;=&nbsp;<a href="#ListFolders">ListFolders</a>(app_id)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;srch.yahooid&nbsp;=&nbsp;"some_valid_yahoo_id"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;srch.results&nbsp;=&nbsp;40</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="types.html">types</a><br>
+</td><td width="25%" valign=top><a href="yahoo.html">yahoo</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="yahoo.search.myweb.html#_MyWeb">_MyWeb</a>(<a href="yahoo.search.html#_Search">yahoo.search._Search</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="yahoo.search.myweb.html#ListFolders">ListFolders</a>
+</font></dt><dt><font face="helvetica, arial"><a href="yahoo.search.myweb.html#ListUrls">ListUrls</a>
+</font></dt><dt><font face="helvetica, arial"><a href="yahoo.search.myweb.html#RelatedTags">RelatedTags</a>
+</font></dt><dt><font face="helvetica, arial"><a href="yahoo.search.myweb.html#TagSearch">TagSearch</a>
+</font></dt><dt><font face="helvetica, arial"><a href="yahoo.search.myweb.html#UrlSearch">UrlSearch</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="ListFolders">class <strong>ListFolders</strong></a>(<a href="yahoo.search.myweb.html#_MyWeb">_MyWeb</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#ListFolders">ListFolders</a>&nbsp;-&nbsp;Retrieving&nbsp;public&nbsp;folders<br>
+&nbsp;<br>
+This&nbsp;class&nbsp;implements&nbsp;the&nbsp;My&nbsp;Web&nbsp;service&nbsp;to&nbsp;retrieve&nbsp;public&nbsp;folders.<br>
+Allowed&nbsp;parameters&nbsp;are:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yahooid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;Yahoo!&nbsp;user&nbsp;who&nbsp;owns&nbsp;the&nbsp;folder&nbsp;being&nbsp;accessed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;number&nbsp;of&nbsp;results&nbsp;to&nbsp;return&nbsp;(1-50).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;start&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;starting&nbsp;result&nbsp;position&nbsp;to&nbsp;return&nbsp;(1-based).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;finishing&nbsp;position&nbsp;(start&nbsp;+&nbsp;results&nbsp;-&nbsp;1)&nbsp;cannot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exceed&nbsp;1000.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;output&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;format&nbsp;for&nbsp;the&nbsp;output&nbsp;result.&nbsp;If&nbsp;json&nbsp;or&nbsp;php&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requested,&nbsp;the&nbsp;result&nbsp;is&nbsp;not&nbsp;XML&nbsp;parseable,&nbsp;so&nbsp;we<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;simply&nbsp;return&nbsp;the&nbsp;"raw"&nbsp;string.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;callback&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;callback&nbsp;function&nbsp;to&nbsp;wrap&nbsp;around<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;JSON&nbsp;data.<br>
+&nbsp;<br>
+&nbsp;<br>
+Full&nbsp;documentation&nbsp;for&nbsp;this&nbsp;service&nbsp;is&nbsp;available&nbsp;at:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://developer.yahoo.net/myweb/V1/listFolders.html">http://developer.yahoo.net/myweb/V1/listFolders.html</a><br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="yahoo.search.myweb.html#ListFolders">ListFolders</a></dd>
+<dd><a href="yahoo.search.myweb.html#_MyWeb">_MyWeb</a></dd>
+<dd><a href="yahoo.search.html#_Search">yahoo.search._Search</a></dd>
+<dd><a href="yahoo.search.debug.html#Debuggable">yahoo.search.debug.Debuggable</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>NAME</strong> = 'listFolders'</dl>
+
+<dl><dt><strong>SERVICE</strong> = 'MyWebService'</dl>
+
+<hr>
+Methods inherited from <a href="yahoo.search.html#_Search">yahoo.search._Search</a>:<br>
+<dl><dt><a name="ListFolders-__getattr__"><strong>__getattr__</strong></a>(self, name)</dt></dl>
+
+<dl><dt><a name="ListFolders-__init__"><strong>__init__</strong></a>(self, app_id, opener<font color="#909090">=None</font>, xml_parser<font color="#909090">=None</font>, result_factory<font color="#909090">=None</font>, debug_level<font color="#909090">=0</font>, **args)</dt><dd><tt>The&nbsp;app_id&nbsp;is&nbsp;a&nbsp;required&nbsp;argument,&nbsp;the&nbsp;Yahoo&nbsp;search&nbsp;services&nbsp;will<br>
+not&nbsp;accept&nbsp;requests&nbsp;without&nbsp;a&nbsp;proper&nbsp;app_id.&nbsp;A&nbsp;valid&nbsp;app_id&nbsp;is&nbsp;a<br>
+combination&nbsp;of&nbsp;8&nbsp;-&nbsp;40&nbsp;characters,&nbsp;matching&nbsp;the&nbsp;regexp<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"^[a-zA-Z0-9&nbsp;_()\[\]*+\-=,.:\\@]{8,40}$"<br>
+&nbsp;<br>
+Please&nbsp;visit&nbsp;<a href="http://developer.yahoo.net/search/">http://developer.yahoo.net/search/</a>&nbsp;to&nbsp;request&nbsp;an&nbsp;App&nbsp;ID<br>
+for&nbsp;your&nbsp;own&nbsp;software&nbsp;or&nbsp;application.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Four&nbsp;optional&nbsp;arguments&nbsp;can&nbsp;also&nbsp;be&nbsp;passed&nbsp;to&nbsp;the&nbsp;constructor:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;opener&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Opener&nbsp;for&nbsp;urllib2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xml_parser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Function&nbsp;to&nbsp;parse&nbsp;XML&nbsp;(default:&nbsp;minidom)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result_factory&nbsp;-&nbsp;Result&nbsp;factory&nbsp;class&nbsp;(default:&nbsp;none)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;debug_devel&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Debug&nbsp;level&nbsp;(if&nbsp;any)<br>
+&nbsp;<br>
+All&nbsp;other&nbsp;"named"&nbsp;arguments&nbsp;are&nbsp;passed&nbsp;into&nbsp;as&nbsp;a&nbsp;dictionary&nbsp;to&nbsp;the<br>
+<a href="#ListFolders-set_params">set_params</a>()&nbsp;method.<br>
+&nbsp;<br>
+The&nbsp;result&nbsp;factory&nbsp;is&nbsp;specific&nbsp;to&nbsp;the&nbsp;particular&nbsp;web&nbsp;service&nbsp;used,<br>
+e.g.&nbsp;the&nbsp;different&nbsp;Yahoo&nbsp;Search&nbsp;services&nbsp;will&nbsp;each&nbsp;implement&nbsp;their<br>
+own&nbsp;factory&nbsp;class.<br>
+&nbsp;<br>
+Both&nbsp;of&nbsp;these&nbsp;settings&nbsp;can&nbsp;be&nbsp;controlled&nbsp;via&nbsp;their&nbsp;respective<br>
+install&nbsp;method&nbsp;(see&nbsp;below).</tt></dd></dl>
+
+<dl><dt><a name="ListFolders-__setattr__"><strong>__setattr__</strong></a>(self, name, value)</dt><dd><tt>#&nbsp;Implement&nbsp;the&nbsp;attribute&nbsp;handlers,&nbsp;to&nbsp;avoid&nbsp;confusion</tt></dd></dl>
+
+<dl><dt><a name="ListFolders-encode_params"><strong>encode_params</strong></a>(self)</dt><dd><tt>URL&nbsp;encode&nbsp;the&nbsp;list&nbsp;of&nbsp;parameter&nbsp;values.</tt></dd></dl>
+
+<dl><dt><a name="ListFolders-get_param"><strong>get_param</strong></a>(self, param)</dt><dd><tt>Get&nbsp;the&nbsp;value&nbsp;of&nbsp;a&nbsp;query&nbsp;parameter,&nbsp;or&nbsp;the&nbsp;default&nbsp;value&nbsp;if&nbsp;unset</tt></dd></dl>
+
+<dl><dt><a name="ListFolders-get_results"><strong>get_results</strong></a>(self, stream<font color="#909090">=None</font>, xml_parser<font color="#909090">=None</font>, close<font color="#909090">=True</font>)</dt><dd><tt>Read&nbsp;the&nbsp;stream&nbsp;(if&nbsp;provided)&nbsp;and&nbsp;either&nbsp;return&nbsp;the&nbsp;raw&nbsp;XML,&nbsp;or<br>
+send&nbsp;the&nbsp;data&nbsp;to&nbsp;the&nbsp;provided&nbsp;XML&nbsp;parser&nbsp;for&nbsp;further&nbsp;processing.<br>
+If&nbsp;no&nbsp;stream&nbsp;is&nbsp;provided,&nbsp;it&nbsp;will&nbsp;call&nbsp;the&nbsp;<a href="#ListFolders-open">open</a>()&nbsp;method&nbsp;using&nbsp;the<br>
+default&nbsp;opener.&nbsp;The&nbsp;stream&nbsp;will&nbsp;be&nbsp;closed&nbsp;upon&nbsp;return&nbsp;from&nbsp;this<br>
+method,&nbsp;unless&nbsp;the&nbsp;close=False&nbsp;is&nbsp;passed&nbsp;as&nbsp;an&nbsp;argument.</tt></dd></dl>
+
+<dl><dt><a name="ListFolders-get_url"><strong>get_url</strong></a>(self, with_params<font color="#909090">=True</font>)</dt><dd><tt>Return&nbsp;the&nbsp;URL&nbsp;for&nbsp;this&nbsp;request&nbsp;object</tt></dd></dl>
+
+<dl><dt><a name="ListFolders-get_valid_params"><strong>get_valid_params</strong></a>(self)</dt><dd><tt>Return&nbsp;a&nbsp;list&nbsp;of&nbsp;all&nbsp;valid&nbsp;parameters&nbsp;for&nbsp;this&nbsp;search</tt></dd></dl>
+
+<dl><dt><a name="ListFolders-install_opener"><strong>install_opener</strong></a>(self, opener)</dt><dd><tt>Install&nbsp;a&nbsp;URL&nbsp;opener&nbsp;(for&nbsp;use&nbsp;with&nbsp;urllib2),&nbsp;overriding&nbsp;the<br>
+default&nbsp;opener.&nbsp;This&nbsp;is&nbsp;rarely&nbsp;required.</tt></dd></dl>
+
+<dl><dt><a name="ListFolders-install_result_factory"><strong>install_result_factory</strong></a>(self, result_factory)</dt><dd><tt>Install&nbsp;a&nbsp;python&nbsp;class&nbsp;(not&nbsp;an&nbsp;instance!)&nbsp;that&nbsp;should&nbsp;be&nbsp;used&nbsp;as&nbsp;a<br>
+factory&nbsp;for&nbsp;creating&nbsp;result(s)&nbsp;objects.</tt></dd></dl>
+
+<dl><dt><a name="ListFolders-install_xml_parser"><strong>install_xml_parser</strong></a>(self, xml_parser)</dt><dd><tt>Install&nbsp;an&nbsp;XML&nbsp;parser&nbsp;that&nbsp;will&nbsp;be&nbsp;used&nbsp;for&nbsp;all&nbsp;results&nbsp;for&nbsp;this<br>
+object.&nbsp;The&nbsp;parser&nbsp;is&nbsp;expected&nbsp;to&nbsp;"read"&nbsp;the&nbsp;data&nbsp;from&nbsp;the&nbsp;supplied<br>
+stream&nbsp;argument.&nbsp;To&nbsp;uninstall&nbsp;the&nbsp;parser&nbsp;(e.g.&nbsp;to&nbsp;make&nbsp;sure&nbsp;we<br>
+return&nbsp;raw&nbsp;XML&nbsp;data)&nbsp;simply&nbsp;call&nbsp;this&nbsp;method&nbsp;with&nbsp;an&nbsp;argument&nbsp;of<br>
+None.</tt></dd></dl>
+
+<dl><dt><a name="ListFolders-missing_params"><strong>missing_params</strong></a>(self)</dt><dd><tt>Validate&nbsp;that&nbsp;the&nbsp;search&nbsp;object&nbsp;is&nbsp;propertly&nbsp;setup&nbsp;with&nbsp;all<br>
+required&nbsp;parameters&nbsp;etc.&nbsp;This&nbsp;is&nbsp;called&nbsp;automatically&nbsp;before&nbsp;a<br>
+search&nbsp;is&nbsp;actually&nbsp;performed,&nbsp;but&nbsp;you&nbsp;can&nbsp;also&nbsp;call&nbsp;it&nbsp;manually<br>
+if&nbsp;desired.&nbsp;It&nbsp;will&nbsp;return&nbsp;a&nbsp;list&nbsp;of&nbsp;zero&nbsp;or&nbsp;more&nbsp;paramters&nbsp;that<br>
+are&nbsp;missing.</tt></dd></dl>
+
+<dl><dt><a name="ListFolders-open"><strong>open</strong></a>(self, opener<font color="#909090">=None</font>, retries<font color="#909090">=2</font>)</dt><dd><tt>Open&nbsp;a&nbsp;connection&nbsp;to&nbsp;the&nbsp;webservice&nbsp;server,&nbsp;and&nbsp;request&nbsp;the&nbsp;URL.<br>
+The&nbsp;return&nbsp;value&nbsp;is&nbsp;a&nbsp;"stream",&nbsp;which&nbsp;can&nbsp;be&nbsp;read&nbsp;calling&nbsp;the<br>
+read(),&nbsp;readline()&nbsp;or&nbsp;readlines()&nbsp;methods.&nbsp;If&nbsp;you&nbsp;override&nbsp;this<br>
+method,&nbsp;please&nbsp;make&nbsp;sure&nbsp;to&nbsp;call&nbsp;the&nbsp;<a href="#ListFolders-missing_params">missing_params</a>()&nbsp;method&nbsp;before<br>
+you&nbsp;try&nbsp;to&nbsp;send&nbsp;a&nbsp;request&nbsp;to&nbsp;the&nbsp;Web&nbsp;server.</tt></dd></dl>
+
+<dl><dt><a name="ListFolders-parse_results"><strong>parse_results</strong></a>(self, xml<font color="#909090">=None</font>)</dt><dd><tt>Get&nbsp;the&nbsp;result&nbsp;from&nbsp;the&nbsp;request,&nbsp;and&nbsp;instantiate&nbsp;the&nbsp;appropriate<br>
+result&nbsp;class.&nbsp;This&nbsp;class&nbsp;will&nbsp;be&nbsp;populated&nbsp;with&nbsp;all&nbsp;the&nbsp;data&nbsp;from<br>
+the&nbsp;XML&nbsp;object.</tt></dd></dl>
+
+<dl><dt><a name="ListFolders-reset"><strong>reset</strong></a>(self)</dt><dd><tt>Reset&nbsp;all&nbsp;the&nbsp;parameter&nbsp;values&nbsp;for&nbsp;the&nbsp;object&nbsp;instance.</tt></dd></dl>
+
+<dl><dt><a name="ListFolders-set_param"><strong>set_param</strong></a>(self, param, value)</dt><dd><tt>Set&nbsp;the&nbsp;value&nbsp;of&nbsp;a&nbsp;query&nbsp;parameter</tt></dd></dl>
+
+<dl><dt><a name="ListFolders-set_params"><strong>set_params</strong></a>(self, args)</dt><dd><tt>Set&nbsp;one&nbsp;or&nbsp;several&nbsp;query&nbsp;parameters&nbsp;from&nbsp;a&nbsp;dictionary</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="yahoo.search.html#_Search">yahoo.search._Search</a>:<br>
+<dl><dt><strong>app_id</strong></dt>
+<dd><tt>Application&nbsp;ID&nbsp;(issued&nbsp;by&nbsp;Yahoo),&nbsp;same&nbsp;ass&nbsp;appid</tt></dd>
+</dl>
+<dl><dt><strong>appid</strong></dt>
+<dd><tt>Application&nbsp;ID&nbsp;(issued&nbsp;by&nbsp;Yahoo)</tt></dd>
+</dl>
+<dl><dt><strong>cc_licenses</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;Creative&nbsp;Commons&nbsp;licenses</tt></dd>
+</dl>
+<dl><dt><strong>countries</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;county&nbsp;codes</tt></dd>
+</dl>
+<dl><dt><strong>debug_level</strong></dt>
+<dd><tt>Set&nbsp;and&nbsp;modify&nbsp;the&nbsp;debug&nbsp;level</tt></dd>
+</dl>
+<dl><dt><strong>languages</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;languages</tt></dd>
+</dl>
+<dl><dt><strong>regions</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;region&nbsp;codes</tt></dd>
+</dl>
+<dl><dt><strong>subscriptions</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;premium&nbsp;subscriptions</tt></dd>
+</dl>
+<dl><dt><strong>svc_name</strong></dt>
+<dd><tt>Descriptive&nbsp;name&nbsp;of&nbsp;the&nbsp;service</tt></dd>
+</dl>
+<dl><dt><strong>svc_protocol</strong></dt>
+<dd><tt>Service&nbsp;protocol&nbsp;(e.g.&nbsp;HTTP)</tt></dd>
+</dl>
+<dl><dt><strong>svc_server</strong></dt>
+<dd><tt>Service&nbsp;server&nbsp;name&nbsp;or&nbsp;IP</tt></dd>
+</dl>
+<dl><dt><strong>svc_service</strong></dt>
+<dd><tt>Service&nbsp;path</tt></dd>
+</dl>
+<dl><dt><strong>svc_version</strong></dt>
+<dd><tt>Service&nbsp;version&nbsp;string</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="yahoo.search.html#_Search">yahoo.search._Search</a>:<br>
+<dl><dt><strong>METHOD</strong> = 'GET'</dl>
+
+<dl><dt><strong>PROTOCOL</strong> = 'http'</dl>
+
+<dl><dt><strong>SERVER</strong> = 'search.yahooapis.com'</dl>
+
+<dl><dt><strong>VERSION</strong> = 'V1'</dl>
+
+<hr>
+Data descriptors inherited from <a href="yahoo.search.debug.html#Debuggable">yahoo.search.debug.Debuggable</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="ListUrls">class <strong>ListUrls</strong></a>(<a href="yahoo.search.myweb.html#_MyWeb">_MyWeb</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#ListUrls">ListUrls</a>&nbsp;-&nbsp;Retrieving&nbsp;public&nbsp;URL&nbsp;stores<br>
+&nbsp;<br>
+This&nbsp;class&nbsp;implements&nbsp;the&nbsp;My&nbsp;Web&nbsp;service&nbsp;to&nbsp;retrieve&nbsp;URLs&nbsp;from&nbsp;a<br>
+public&nbsp;folder.&nbsp;Allowed&nbsp;parameters&nbsp;are:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;folder&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;folder&nbsp;to&nbsp;retreive&nbsp;queries&nbsp;from.&nbsp;The&nbsp;folder<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;must&nbsp;be&nbsp;set&nbsp;to&nbsp;"Public"&nbsp;in&nbsp;order&nbsp;to&nbsp;be&nbsp;accessed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yahooid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;Yahoo!&nbsp;user&nbsp;who&nbsp;owns&nbsp;the&nbsp;folder&nbsp;being&nbsp;accessed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;field&nbsp;by&nbsp;which&nbsp;the&nbsp;results&nbsp;should&nbsp;be&nbsp;sorted.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sort_order&nbsp;&nbsp;&nbsp;-&nbsp;Ascending&nbsp;or&nbsp;descending&nbsp;sort&nbsp;order,&nbsp;"asc"&nbsp;which&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;default,&nbsp;or&nbsp;"desc".<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;number&nbsp;of&nbsp;results&nbsp;to&nbsp;return&nbsp;(1-50).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;start&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;starting&nbsp;result&nbsp;position&nbsp;to&nbsp;return&nbsp;(1-based).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;finishing&nbsp;position&nbsp;(start&nbsp;+&nbsp;results&nbsp;-&nbsp;1)&nbsp;cannot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exceed&nbsp;1000.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;output&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;format&nbsp;for&nbsp;the&nbsp;output&nbsp;result.&nbsp;If&nbsp;json&nbsp;or&nbsp;php&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requested,&nbsp;the&nbsp;result&nbsp;is&nbsp;not&nbsp;XML&nbsp;parseable,&nbsp;so&nbsp;we<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;simply&nbsp;return&nbsp;the&nbsp;"raw"&nbsp;string.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;callback&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;callback&nbsp;function&nbsp;to&nbsp;wrap&nbsp;around<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;JSON&nbsp;data.<br>
+&nbsp;<br>
+The&nbsp;sort&nbsp;parameter&nbsp;can&nbsp;take&nbsp;one&nbsp;of&nbsp;the&nbsp;following&nbsp;values:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;storedate&nbsp;&nbsp;-&nbsp;Date&nbsp;stored&nbsp;(default)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Title<br>
+&nbsp;&nbsp;&nbsp;&nbsp;summary&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Summary<br>
+&nbsp;&nbsp;&nbsp;&nbsp;note&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Note<br>
+&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;URL<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
+Full&nbsp;documentation&nbsp;for&nbsp;this&nbsp;service&nbsp;is&nbsp;available&nbsp;at:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://developer.yahoo.net/myweb/V1/listUrls.html">http://developer.yahoo.net/myweb/V1/listUrls.html</a><br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="yahoo.search.myweb.html#ListUrls">ListUrls</a></dd>
+<dd><a href="yahoo.search.myweb.html#_MyWeb">_MyWeb</a></dd>
+<dd><a href="yahoo.search.html#_Search">yahoo.search._Search</a></dd>
+<dd><a href="yahoo.search.debug.html#Debuggable">yahoo.search.debug.Debuggable</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>NAME</strong> = 'listUrls'</dl>
+
+<dl><dt><strong>SERVICE</strong> = 'MyWebService'</dl>
+
+<hr>
+Methods inherited from <a href="yahoo.search.html#_Search">yahoo.search._Search</a>:<br>
+<dl><dt><a name="ListUrls-__getattr__"><strong>__getattr__</strong></a>(self, name)</dt></dl>
+
+<dl><dt><a name="ListUrls-__init__"><strong>__init__</strong></a>(self, app_id, opener<font color="#909090">=None</font>, xml_parser<font color="#909090">=None</font>, result_factory<font color="#909090">=None</font>, debug_level<font color="#909090">=0</font>, **args)</dt><dd><tt>The&nbsp;app_id&nbsp;is&nbsp;a&nbsp;required&nbsp;argument,&nbsp;the&nbsp;Yahoo&nbsp;search&nbsp;services&nbsp;will<br>
+not&nbsp;accept&nbsp;requests&nbsp;without&nbsp;a&nbsp;proper&nbsp;app_id.&nbsp;A&nbsp;valid&nbsp;app_id&nbsp;is&nbsp;a<br>
+combination&nbsp;of&nbsp;8&nbsp;-&nbsp;40&nbsp;characters,&nbsp;matching&nbsp;the&nbsp;regexp<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"^[a-zA-Z0-9&nbsp;_()\[\]*+\-=,.:\\@]{8,40}$"<br>
+&nbsp;<br>
+Please&nbsp;visit&nbsp;<a href="http://developer.yahoo.net/search/">http://developer.yahoo.net/search/</a>&nbsp;to&nbsp;request&nbsp;an&nbsp;App&nbsp;ID<br>
+for&nbsp;your&nbsp;own&nbsp;software&nbsp;or&nbsp;application.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Four&nbsp;optional&nbsp;arguments&nbsp;can&nbsp;also&nbsp;be&nbsp;passed&nbsp;to&nbsp;the&nbsp;constructor:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;opener&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Opener&nbsp;for&nbsp;urllib2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xml_parser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Function&nbsp;to&nbsp;parse&nbsp;XML&nbsp;(default:&nbsp;minidom)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result_factory&nbsp;-&nbsp;Result&nbsp;factory&nbsp;class&nbsp;(default:&nbsp;none)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;debug_devel&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Debug&nbsp;level&nbsp;(if&nbsp;any)<br>
+&nbsp;<br>
+All&nbsp;other&nbsp;"named"&nbsp;arguments&nbsp;are&nbsp;passed&nbsp;into&nbsp;as&nbsp;a&nbsp;dictionary&nbsp;to&nbsp;the<br>
+<a href="#ListUrls-set_params">set_params</a>()&nbsp;method.<br>
+&nbsp;<br>
+The&nbsp;result&nbsp;factory&nbsp;is&nbsp;specific&nbsp;to&nbsp;the&nbsp;particular&nbsp;web&nbsp;service&nbsp;used,<br>
+e.g.&nbsp;the&nbsp;different&nbsp;Yahoo&nbsp;Search&nbsp;services&nbsp;will&nbsp;each&nbsp;implement&nbsp;their<br>
+own&nbsp;factory&nbsp;class.<br>
+&nbsp;<br>
+Both&nbsp;of&nbsp;these&nbsp;settings&nbsp;can&nbsp;be&nbsp;controlled&nbsp;via&nbsp;their&nbsp;respective<br>
+install&nbsp;method&nbsp;(see&nbsp;below).</tt></dd></dl>
+
+<dl><dt><a name="ListUrls-__setattr__"><strong>__setattr__</strong></a>(self, name, value)</dt><dd><tt>#&nbsp;Implement&nbsp;the&nbsp;attribute&nbsp;handlers,&nbsp;to&nbsp;avoid&nbsp;confusion</tt></dd></dl>
+
+<dl><dt><a name="ListUrls-encode_params"><strong>encode_params</strong></a>(self)</dt><dd><tt>URL&nbsp;encode&nbsp;the&nbsp;list&nbsp;of&nbsp;parameter&nbsp;values.</tt></dd></dl>
+
+<dl><dt><a name="ListUrls-get_param"><strong>get_param</strong></a>(self, param)</dt><dd><tt>Get&nbsp;the&nbsp;value&nbsp;of&nbsp;a&nbsp;query&nbsp;parameter,&nbsp;or&nbsp;the&nbsp;default&nbsp;value&nbsp;if&nbsp;unset</tt></dd></dl>
+
+<dl><dt><a name="ListUrls-get_results"><strong>get_results</strong></a>(self, stream<font color="#909090">=None</font>, xml_parser<font color="#909090">=None</font>, close<font color="#909090">=True</font>)</dt><dd><tt>Read&nbsp;the&nbsp;stream&nbsp;(if&nbsp;provided)&nbsp;and&nbsp;either&nbsp;return&nbsp;the&nbsp;raw&nbsp;XML,&nbsp;or<br>
+send&nbsp;the&nbsp;data&nbsp;to&nbsp;the&nbsp;provided&nbsp;XML&nbsp;parser&nbsp;for&nbsp;further&nbsp;processing.<br>
+If&nbsp;no&nbsp;stream&nbsp;is&nbsp;provided,&nbsp;it&nbsp;will&nbsp;call&nbsp;the&nbsp;<a href="#ListUrls-open">open</a>()&nbsp;method&nbsp;using&nbsp;the<br>
+default&nbsp;opener.&nbsp;The&nbsp;stream&nbsp;will&nbsp;be&nbsp;closed&nbsp;upon&nbsp;return&nbsp;from&nbsp;this<br>
+method,&nbsp;unless&nbsp;the&nbsp;close=False&nbsp;is&nbsp;passed&nbsp;as&nbsp;an&nbsp;argument.</tt></dd></dl>
+
+<dl><dt><a name="ListUrls-get_url"><strong>get_url</strong></a>(self, with_params<font color="#909090">=True</font>)</dt><dd><tt>Return&nbsp;the&nbsp;URL&nbsp;for&nbsp;this&nbsp;request&nbsp;object</tt></dd></dl>
+
+<dl><dt><a name="ListUrls-get_valid_params"><strong>get_valid_params</strong></a>(self)</dt><dd><tt>Return&nbsp;a&nbsp;list&nbsp;of&nbsp;all&nbsp;valid&nbsp;parameters&nbsp;for&nbsp;this&nbsp;search</tt></dd></dl>
+
+<dl><dt><a name="ListUrls-install_opener"><strong>install_opener</strong></a>(self, opener)</dt><dd><tt>Install&nbsp;a&nbsp;URL&nbsp;opener&nbsp;(for&nbsp;use&nbsp;with&nbsp;urllib2),&nbsp;overriding&nbsp;the<br>
+default&nbsp;opener.&nbsp;This&nbsp;is&nbsp;rarely&nbsp;required.</tt></dd></dl>
+
+<dl><dt><a name="ListUrls-install_result_factory"><strong>install_result_factory</strong></a>(self, result_factory)</dt><dd><tt>Install&nbsp;a&nbsp;python&nbsp;class&nbsp;(not&nbsp;an&nbsp;instance!)&nbsp;that&nbsp;should&nbsp;be&nbsp;used&nbsp;as&nbsp;a<br>
+factory&nbsp;for&nbsp;creating&nbsp;result(s)&nbsp;objects.</tt></dd></dl>
+
+<dl><dt><a name="ListUrls-install_xml_parser"><strong>install_xml_parser</strong></a>(self, xml_parser)</dt><dd><tt>Install&nbsp;an&nbsp;XML&nbsp;parser&nbsp;that&nbsp;will&nbsp;be&nbsp;used&nbsp;for&nbsp;all&nbsp;results&nbsp;for&nbsp;this<br>
+object.&nbsp;The&nbsp;parser&nbsp;is&nbsp;expected&nbsp;to&nbsp;"read"&nbsp;the&nbsp;data&nbsp;from&nbsp;the&nbsp;supplied<br>
+stream&nbsp;argument.&nbsp;To&nbsp;uninstall&nbsp;the&nbsp;parser&nbsp;(e.g.&nbsp;to&nbsp;make&nbsp;sure&nbsp;we<br>
+return&nbsp;raw&nbsp;XML&nbsp;data)&nbsp;simply&nbsp;call&nbsp;this&nbsp;method&nbsp;with&nbsp;an&nbsp;argument&nbsp;of<br>
+None.</tt></dd></dl>
+
+<dl><dt><a name="ListUrls-missing_params"><strong>missing_params</strong></a>(self)</dt><dd><tt>Validate&nbsp;that&nbsp;the&nbsp;search&nbsp;object&nbsp;is&nbsp;propertly&nbsp;setup&nbsp;with&nbsp;all<br>
+required&nbsp;parameters&nbsp;etc.&nbsp;This&nbsp;is&nbsp;called&nbsp;automatically&nbsp;before&nbsp;a<br>
+search&nbsp;is&nbsp;actually&nbsp;performed,&nbsp;but&nbsp;you&nbsp;can&nbsp;also&nbsp;call&nbsp;it&nbsp;manually<br>
+if&nbsp;desired.&nbsp;It&nbsp;will&nbsp;return&nbsp;a&nbsp;list&nbsp;of&nbsp;zero&nbsp;or&nbsp;more&nbsp;paramters&nbsp;that<br>
+are&nbsp;missing.</tt></dd></dl>
+
+<dl><dt><a name="ListUrls-open"><strong>open</strong></a>(self, opener<font color="#909090">=None</font>, retries<font color="#909090">=2</font>)</dt><dd><tt>Open&nbsp;a&nbsp;connection&nbsp;to&nbsp;the&nbsp;webservice&nbsp;server,&nbsp;and&nbsp;request&nbsp;the&nbsp;URL.<br>
+The&nbsp;return&nbsp;value&nbsp;is&nbsp;a&nbsp;"stream",&nbsp;which&nbsp;can&nbsp;be&nbsp;read&nbsp;calling&nbsp;the<br>
+read(),&nbsp;readline()&nbsp;or&nbsp;readlines()&nbsp;methods.&nbsp;If&nbsp;you&nbsp;override&nbsp;this<br>
+method,&nbsp;please&nbsp;make&nbsp;sure&nbsp;to&nbsp;call&nbsp;the&nbsp;<a href="#ListUrls-missing_params">missing_params</a>()&nbsp;method&nbsp;before<br>
+you&nbsp;try&nbsp;to&nbsp;send&nbsp;a&nbsp;request&nbsp;to&nbsp;the&nbsp;Web&nbsp;server.</tt></dd></dl>
+
+<dl><dt><a name="ListUrls-parse_results"><strong>parse_results</strong></a>(self, xml<font color="#909090">=None</font>)</dt><dd><tt>Get&nbsp;the&nbsp;result&nbsp;from&nbsp;the&nbsp;request,&nbsp;and&nbsp;instantiate&nbsp;the&nbsp;appropriate<br>
+result&nbsp;class.&nbsp;This&nbsp;class&nbsp;will&nbsp;be&nbsp;populated&nbsp;with&nbsp;all&nbsp;the&nbsp;data&nbsp;from<br>
+the&nbsp;XML&nbsp;object.</tt></dd></dl>
+
+<dl><dt><a name="ListUrls-reset"><strong>reset</strong></a>(self)</dt><dd><tt>Reset&nbsp;all&nbsp;the&nbsp;parameter&nbsp;values&nbsp;for&nbsp;the&nbsp;object&nbsp;instance.</tt></dd></dl>
+
+<dl><dt><a name="ListUrls-set_param"><strong>set_param</strong></a>(self, param, value)</dt><dd><tt>Set&nbsp;the&nbsp;value&nbsp;of&nbsp;a&nbsp;query&nbsp;parameter</tt></dd></dl>
+
+<dl><dt><a name="ListUrls-set_params"><strong>set_params</strong></a>(self, args)</dt><dd><tt>Set&nbsp;one&nbsp;or&nbsp;several&nbsp;query&nbsp;parameters&nbsp;from&nbsp;a&nbsp;dictionary</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="yahoo.search.html#_Search">yahoo.search._Search</a>:<br>
+<dl><dt><strong>app_id</strong></dt>
+<dd><tt>Application&nbsp;ID&nbsp;(issued&nbsp;by&nbsp;Yahoo),&nbsp;same&nbsp;ass&nbsp;appid</tt></dd>
+</dl>
+<dl><dt><strong>appid</strong></dt>
+<dd><tt>Application&nbsp;ID&nbsp;(issued&nbsp;by&nbsp;Yahoo)</tt></dd>
+</dl>
+<dl><dt><strong>cc_licenses</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;Creative&nbsp;Commons&nbsp;licenses</tt></dd>
+</dl>
+<dl><dt><strong>countries</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;county&nbsp;codes</tt></dd>
+</dl>
+<dl><dt><strong>debug_level</strong></dt>
+<dd><tt>Set&nbsp;and&nbsp;modify&nbsp;the&nbsp;debug&nbsp;level</tt></dd>
+</dl>
+<dl><dt><strong>languages</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;languages</tt></dd>
+</dl>
+<dl><dt><strong>regions</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;region&nbsp;codes</tt></dd>
+</dl>
+<dl><dt><strong>subscriptions</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;premium&nbsp;subscriptions</tt></dd>
+</dl>
+<dl><dt><strong>svc_name</strong></dt>
+<dd><tt>Descriptive&nbsp;name&nbsp;of&nbsp;the&nbsp;service</tt></dd>
+</dl>
+<dl><dt><strong>svc_protocol</strong></dt>
+<dd><tt>Service&nbsp;protocol&nbsp;(e.g.&nbsp;HTTP)</tt></dd>
+</dl>
+<dl><dt><strong>svc_server</strong></dt>
+<dd><tt>Service&nbsp;server&nbsp;name&nbsp;or&nbsp;IP</tt></dd>
+</dl>
+<dl><dt><strong>svc_service</strong></dt>
+<dd><tt>Service&nbsp;path</tt></dd>
+</dl>
+<dl><dt><strong>svc_version</strong></dt>
+<dd><tt>Service&nbsp;version&nbsp;string</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="yahoo.search.html#_Search">yahoo.search._Search</a>:<br>
+<dl><dt><strong>METHOD</strong> = 'GET'</dl>
+
+<dl><dt><strong>PROTOCOL</strong> = 'http'</dl>
+
+<dl><dt><strong>SERVER</strong> = 'search.yahooapis.com'</dl>
+
+<dl><dt><strong>VERSION</strong> = 'V1'</dl>
+
+<hr>
+Data descriptors inherited from <a href="yahoo.search.debug.html#Debuggable">yahoo.search.debug.Debuggable</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="RelatedTags">class <strong>RelatedTags</strong></a>(<a href="yahoo.search.myweb.html#_MyWeb">_MyWeb</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#RelatedTags">RelatedTags</a>&nbsp;-&nbsp;Find&nbsp;tags&nbsp;that&nbsp;appear&nbsp;together&nbsp;on&nbsp;URLs<br>
+&nbsp;<br>
+This&nbsp;class&nbsp;implements&nbsp;a&nbsp;MyWeb2&nbsp;service&nbsp;which&nbsp;allows&nbsp;you&nbsp;to&nbsp;find&nbsp;tags&nbsp;that<br>
+appear&nbsp;together&nbsp;on&nbsp;URLs.&nbsp;For&nbsp;example,&nbsp;if&nbsp;a&nbsp;URL&nbsp;is&nbsp;tagger&nbsp;with&nbsp;'yahoo'&nbsp;and<br>
+'music',&nbsp;a&nbsp;search&nbsp;for&nbsp;the&nbsp;tag&nbsp;'yahoo'&nbsp;will&nbsp;return&nbsp;'music'&nbsp;as&nbsp;a&nbsp;related<br>
+tag.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tag&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;tag&nbsp;to&nbsp;search&nbsp;for.&nbsp;Multiple&nbsp;tags&nbsp;may&nbsp;be<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specified&nbsp;(e.g.&nbsp;["tag1",&nbsp;"tag2"]).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yahooid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;Yahoo!&nbsp;user&nbsp;who&nbsp;owns&nbsp;the&nbsp;folder&nbsp;being&nbsp;accessed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;field&nbsp;by&nbsp;which&nbsp;the&nbsp;results&nbsp;should&nbsp;be&nbsp;sorted.&nbsp;Options<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;popularity&nbsp;(default),&nbsp;tag&nbsp;or&nbsp;date.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;reverse_sort&nbsp;-&nbsp;If&nbsp;set&nbsp;to&nbsp;1,&nbsp;reverses&nbsp;the&nbsp;sort&nbsp;order.&nbsp;This&nbsp;has&nbsp;no&nbsp;effect<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;popularity&nbsp;searches.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;number&nbsp;of&nbsp;results&nbsp;to&nbsp;return&nbsp;(1-50).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;start&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;starting&nbsp;result&nbsp;position&nbsp;to&nbsp;return&nbsp;(1-based).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;finishing&nbsp;position&nbsp;(start&nbsp;+&nbsp;results&nbsp;-&nbsp;1)&nbsp;cannot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exceed&nbsp;1000.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;output&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;format&nbsp;for&nbsp;the&nbsp;output&nbsp;result.&nbsp;If&nbsp;json&nbsp;or&nbsp;php&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requested,&nbsp;the&nbsp;result&nbsp;is&nbsp;not&nbsp;XML&nbsp;parseable,&nbsp;so&nbsp;we<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;simply&nbsp;return&nbsp;the&nbsp;"raw"&nbsp;string.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;callback&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;callback&nbsp;function&nbsp;to&nbsp;wrap&nbsp;around<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;JSON&nbsp;data.<br>
+&nbsp;<br>
+&nbsp;<br>
+Full&nbsp;documentation&nbsp;for&nbsp;this&nbsp;service&nbsp;is&nbsp;available&nbsp;at:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://developer.yahoo.net/myweb/V1/relatedTags.html">http://developer.yahoo.net/myweb/V1/relatedTags.html</a><br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="yahoo.search.myweb.html#RelatedTags">RelatedTags</a></dd>
+<dd><a href="yahoo.search.myweb.html#_MyWeb">_MyWeb</a></dd>
+<dd><a href="yahoo.search.html#_Search">yahoo.search._Search</a></dd>
+<dd><a href="yahoo.search.debug.html#Debuggable">yahoo.search.debug.Debuggable</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>NAME</strong> = 'relatedTags'</dl>
+
+<dl><dt><strong>SERVICE</strong> = 'MyWebService'</dl>
+
+<hr>
+Methods inherited from <a href="yahoo.search.html#_Search">yahoo.search._Search</a>:<br>
+<dl><dt><a name="RelatedTags-__getattr__"><strong>__getattr__</strong></a>(self, name)</dt></dl>
+
+<dl><dt><a name="RelatedTags-__init__"><strong>__init__</strong></a>(self, app_id, opener<font color="#909090">=None</font>, xml_parser<font color="#909090">=None</font>, result_factory<font color="#909090">=None</font>, debug_level<font color="#909090">=0</font>, **args)</dt><dd><tt>The&nbsp;app_id&nbsp;is&nbsp;a&nbsp;required&nbsp;argument,&nbsp;the&nbsp;Yahoo&nbsp;search&nbsp;services&nbsp;will<br>
+not&nbsp;accept&nbsp;requests&nbsp;without&nbsp;a&nbsp;proper&nbsp;app_id.&nbsp;A&nbsp;valid&nbsp;app_id&nbsp;is&nbsp;a<br>
+combination&nbsp;of&nbsp;8&nbsp;-&nbsp;40&nbsp;characters,&nbsp;matching&nbsp;the&nbsp;regexp<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"^[a-zA-Z0-9&nbsp;_()\[\]*+\-=,.:\\@]{8,40}$"<br>
+&nbsp;<br>
+Please&nbsp;visit&nbsp;<a href="http://developer.yahoo.net/search/">http://developer.yahoo.net/search/</a>&nbsp;to&nbsp;request&nbsp;an&nbsp;App&nbsp;ID<br>
+for&nbsp;your&nbsp;own&nbsp;software&nbsp;or&nbsp;application.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Four&nbsp;optional&nbsp;arguments&nbsp;can&nbsp;also&nbsp;be&nbsp;passed&nbsp;to&nbsp;the&nbsp;constructor:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;opener&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Opener&nbsp;for&nbsp;urllib2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xml_parser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Function&nbsp;to&nbsp;parse&nbsp;XML&nbsp;(default:&nbsp;minidom)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result_factory&nbsp;-&nbsp;Result&nbsp;factory&nbsp;class&nbsp;(default:&nbsp;none)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;debug_devel&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Debug&nbsp;level&nbsp;(if&nbsp;any)<br>
+&nbsp;<br>
+All&nbsp;other&nbsp;"named"&nbsp;arguments&nbsp;are&nbsp;passed&nbsp;into&nbsp;as&nbsp;a&nbsp;dictionary&nbsp;to&nbsp;the<br>
+<a href="#RelatedTags-set_params">set_params</a>()&nbsp;method.<br>
+&nbsp;<br>
+The&nbsp;result&nbsp;factory&nbsp;is&nbsp;specific&nbsp;to&nbsp;the&nbsp;particular&nbsp;web&nbsp;service&nbsp;used,<br>
+e.g.&nbsp;the&nbsp;different&nbsp;Yahoo&nbsp;Search&nbsp;services&nbsp;will&nbsp;each&nbsp;implement&nbsp;their<br>
+own&nbsp;factory&nbsp;class.<br>
+&nbsp;<br>
+Both&nbsp;of&nbsp;these&nbsp;settings&nbsp;can&nbsp;be&nbsp;controlled&nbsp;via&nbsp;their&nbsp;respective<br>
+install&nbsp;method&nbsp;(see&nbsp;below).</tt></dd></dl>
+
+<dl><dt><a name="RelatedTags-__setattr__"><strong>__setattr__</strong></a>(self, name, value)</dt><dd><tt>#&nbsp;Implement&nbsp;the&nbsp;attribute&nbsp;handlers,&nbsp;to&nbsp;avoid&nbsp;confusion</tt></dd></dl>
+
+<dl><dt><a name="RelatedTags-encode_params"><strong>encode_params</strong></a>(self)</dt><dd><tt>URL&nbsp;encode&nbsp;the&nbsp;list&nbsp;of&nbsp;parameter&nbsp;values.</tt></dd></dl>
+
+<dl><dt><a name="RelatedTags-get_param"><strong>get_param</strong></a>(self, param)</dt><dd><tt>Get&nbsp;the&nbsp;value&nbsp;of&nbsp;a&nbsp;query&nbsp;parameter,&nbsp;or&nbsp;the&nbsp;default&nbsp;value&nbsp;if&nbsp;unset</tt></dd></dl>
+
+<dl><dt><a name="RelatedTags-get_results"><strong>get_results</strong></a>(self, stream<font color="#909090">=None</font>, xml_parser<font color="#909090">=None</font>, close<font color="#909090">=True</font>)</dt><dd><tt>Read&nbsp;the&nbsp;stream&nbsp;(if&nbsp;provided)&nbsp;and&nbsp;either&nbsp;return&nbsp;the&nbsp;raw&nbsp;XML,&nbsp;or<br>
+send&nbsp;the&nbsp;data&nbsp;to&nbsp;the&nbsp;provided&nbsp;XML&nbsp;parser&nbsp;for&nbsp;further&nbsp;processing.<br>
+If&nbsp;no&nbsp;stream&nbsp;is&nbsp;provided,&nbsp;it&nbsp;will&nbsp;call&nbsp;the&nbsp;<a href="#RelatedTags-open">open</a>()&nbsp;method&nbsp;using&nbsp;the<br>
+default&nbsp;opener.&nbsp;The&nbsp;stream&nbsp;will&nbsp;be&nbsp;closed&nbsp;upon&nbsp;return&nbsp;from&nbsp;this<br>
+method,&nbsp;unless&nbsp;the&nbsp;close=False&nbsp;is&nbsp;passed&nbsp;as&nbsp;an&nbsp;argument.</tt></dd></dl>
+
+<dl><dt><a name="RelatedTags-get_url"><strong>get_url</strong></a>(self, with_params<font color="#909090">=True</font>)</dt><dd><tt>Return&nbsp;the&nbsp;URL&nbsp;for&nbsp;this&nbsp;request&nbsp;object</tt></dd></dl>
+
+<dl><dt><a name="RelatedTags-get_valid_params"><strong>get_valid_params</strong></a>(self)</dt><dd><tt>Return&nbsp;a&nbsp;list&nbsp;of&nbsp;all&nbsp;valid&nbsp;parameters&nbsp;for&nbsp;this&nbsp;search</tt></dd></dl>
+
+<dl><dt><a name="RelatedTags-install_opener"><strong>install_opener</strong></a>(self, opener)</dt><dd><tt>Install&nbsp;a&nbsp;URL&nbsp;opener&nbsp;(for&nbsp;use&nbsp;with&nbsp;urllib2),&nbsp;overriding&nbsp;the<br>
+default&nbsp;opener.&nbsp;This&nbsp;is&nbsp;rarely&nbsp;required.</tt></dd></dl>
+
+<dl><dt><a name="RelatedTags-install_result_factory"><strong>install_result_factory</strong></a>(self, result_factory)</dt><dd><tt>Install&nbsp;a&nbsp;python&nbsp;class&nbsp;(not&nbsp;an&nbsp;instance!)&nbsp;that&nbsp;should&nbsp;be&nbsp;used&nbsp;as&nbsp;a<br>
+factory&nbsp;for&nbsp;creating&nbsp;result(s)&nbsp;objects.</tt></dd></dl>
+
+<dl><dt><a name="RelatedTags-install_xml_parser"><strong>install_xml_parser</strong></a>(self, xml_parser)</dt><dd><tt>Install&nbsp;an&nbsp;XML&nbsp;parser&nbsp;that&nbsp;will&nbsp;be&nbsp;used&nbsp;for&nbsp;all&nbsp;results&nbsp;for&nbsp;this<br>
+object.&nbsp;The&nbsp;parser&nbsp;is&nbsp;expected&nbsp;to&nbsp;"read"&nbsp;the&nbsp;data&nbsp;from&nbsp;the&nbsp;supplied<br>
+stream&nbsp;argument.&nbsp;To&nbsp;uninstall&nbsp;the&nbsp;parser&nbsp;(e.g.&nbsp;to&nbsp;make&nbsp;sure&nbsp;we<br>
+return&nbsp;raw&nbsp;XML&nbsp;data)&nbsp;simply&nbsp;call&nbsp;this&nbsp;method&nbsp;with&nbsp;an&nbsp;argument&nbsp;of<br>
+None.</tt></dd></dl>
+
+<dl><dt><a name="RelatedTags-missing_params"><strong>missing_params</strong></a>(self)</dt><dd><tt>Validate&nbsp;that&nbsp;the&nbsp;search&nbsp;object&nbsp;is&nbsp;propertly&nbsp;setup&nbsp;with&nbsp;all<br>
+required&nbsp;parameters&nbsp;etc.&nbsp;This&nbsp;is&nbsp;called&nbsp;automatically&nbsp;before&nbsp;a<br>
+search&nbsp;is&nbsp;actually&nbsp;performed,&nbsp;but&nbsp;you&nbsp;can&nbsp;also&nbsp;call&nbsp;it&nbsp;manually<br>
+if&nbsp;desired.&nbsp;It&nbsp;will&nbsp;return&nbsp;a&nbsp;list&nbsp;of&nbsp;zero&nbsp;or&nbsp;more&nbsp;paramters&nbsp;that<br>
+are&nbsp;missing.</tt></dd></dl>
+
+<dl><dt><a name="RelatedTags-open"><strong>open</strong></a>(self, opener<font color="#909090">=None</font>, retries<font color="#909090">=2</font>)</dt><dd><tt>Open&nbsp;a&nbsp;connection&nbsp;to&nbsp;the&nbsp;webservice&nbsp;server,&nbsp;and&nbsp;request&nbsp;the&nbsp;URL.<br>
+The&nbsp;return&nbsp;value&nbsp;is&nbsp;a&nbsp;"stream",&nbsp;which&nbsp;can&nbsp;be&nbsp;read&nbsp;calling&nbsp;the<br>
+read(),&nbsp;readline()&nbsp;or&nbsp;readlines()&nbsp;methods.&nbsp;If&nbsp;you&nbsp;override&nbsp;this<br>
+method,&nbsp;please&nbsp;make&nbsp;sure&nbsp;to&nbsp;call&nbsp;the&nbsp;<a href="#RelatedTags-missing_params">missing_params</a>()&nbsp;method&nbsp;before<br>
+you&nbsp;try&nbsp;to&nbsp;send&nbsp;a&nbsp;request&nbsp;to&nbsp;the&nbsp;Web&nbsp;server.</tt></dd></dl>
+
+<dl><dt><a name="RelatedTags-parse_results"><strong>parse_results</strong></a>(self, xml<font color="#909090">=None</font>)</dt><dd><tt>Get&nbsp;the&nbsp;result&nbsp;from&nbsp;the&nbsp;request,&nbsp;and&nbsp;instantiate&nbsp;the&nbsp;appropriate<br>
+result&nbsp;class.&nbsp;This&nbsp;class&nbsp;will&nbsp;be&nbsp;populated&nbsp;with&nbsp;all&nbsp;the&nbsp;data&nbsp;from<br>
+the&nbsp;XML&nbsp;object.</tt></dd></dl>
+
+<dl><dt><a name="RelatedTags-reset"><strong>reset</strong></a>(self)</dt><dd><tt>Reset&nbsp;all&nbsp;the&nbsp;parameter&nbsp;values&nbsp;for&nbsp;the&nbsp;object&nbsp;instance.</tt></dd></dl>
+
+<dl><dt><a name="RelatedTags-set_param"><strong>set_param</strong></a>(self, param, value)</dt><dd><tt>Set&nbsp;the&nbsp;value&nbsp;of&nbsp;a&nbsp;query&nbsp;parameter</tt></dd></dl>
+
+<dl><dt><a name="RelatedTags-set_params"><strong>set_params</strong></a>(self, args)</dt><dd><tt>Set&nbsp;one&nbsp;or&nbsp;several&nbsp;query&nbsp;parameters&nbsp;from&nbsp;a&nbsp;dictionary</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="yahoo.search.html#_Search">yahoo.search._Search</a>:<br>
+<dl><dt><strong>app_id</strong></dt>
+<dd><tt>Application&nbsp;ID&nbsp;(issued&nbsp;by&nbsp;Yahoo),&nbsp;same&nbsp;ass&nbsp;appid</tt></dd>
+</dl>
+<dl><dt><strong>appid</strong></dt>
+<dd><tt>Application&nbsp;ID&nbsp;(issued&nbsp;by&nbsp;Yahoo)</tt></dd>
+</dl>
+<dl><dt><strong>cc_licenses</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;Creative&nbsp;Commons&nbsp;licenses</tt></dd>
+</dl>
+<dl><dt><strong>countries</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;county&nbsp;codes</tt></dd>
+</dl>
+<dl><dt><strong>debug_level</strong></dt>
+<dd><tt>Set&nbsp;and&nbsp;modify&nbsp;the&nbsp;debug&nbsp;level</tt></dd>
+</dl>
+<dl><dt><strong>languages</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;languages</tt></dd>
+</dl>
+<dl><dt><strong>regions</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;region&nbsp;codes</tt></dd>
+</dl>
+<dl><dt><strong>subscriptions</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;premium&nbsp;subscriptions</tt></dd>
+</dl>
+<dl><dt><strong>svc_name</strong></dt>
+<dd><tt>Descriptive&nbsp;name&nbsp;of&nbsp;the&nbsp;service</tt></dd>
+</dl>
+<dl><dt><strong>svc_protocol</strong></dt>
+<dd><tt>Service&nbsp;protocol&nbsp;(e.g.&nbsp;HTTP)</tt></dd>
+</dl>
+<dl><dt><strong>svc_server</strong></dt>
+<dd><tt>Service&nbsp;server&nbsp;name&nbsp;or&nbsp;IP</tt></dd>
+</dl>
+<dl><dt><strong>svc_service</strong></dt>
+<dd><tt>Service&nbsp;path</tt></dd>
+</dl>
+<dl><dt><strong>svc_version</strong></dt>
+<dd><tt>Service&nbsp;version&nbsp;string</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="yahoo.search.html#_Search">yahoo.search._Search</a>:<br>
+<dl><dt><strong>METHOD</strong> = 'GET'</dl>
+
+<dl><dt><strong>PROTOCOL</strong> = 'http'</dl>
+
+<dl><dt><strong>SERVER</strong> = 'search.yahooapis.com'</dl>
+
+<dl><dt><strong>VERSION</strong> = 'V1'</dl>
+
+<hr>
+Data descriptors inherited from <a href="yahoo.search.debug.html#Debuggable">yahoo.search.debug.Debuggable</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="TagSearch">class <strong>TagSearch</strong></a>(<a href="yahoo.search.myweb.html#_MyWeb">_MyWeb</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#TagSearch">TagSearch</a>&nbsp;-&nbsp;Search&nbsp;for&nbsp;tags&nbsp;by&nbsp;URL&nbsp;and/or&nbsp;by&nbsp;user<br>
+&nbsp;<br>
+This&nbsp;class&nbsp;implements&nbsp;a&nbsp;MyWeb2&nbsp;service&nbsp;which&nbsp;allows&nbsp;you&nbsp;to&nbsp;find&nbsp;tags&nbsp;that<br>
+have&nbsp;been&nbsp;associated&nbsp;with&nbsp;URLs&nbsp;by&nbsp;MyWeb&nbsp;2.0&nbsp;users.&nbsp;Allowed&nbsp;parameters&nbsp;are:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;If&nbsp;specified,&nbsp;only&nbsp;returns&nbsp;tags&nbsp;associated&nbsp;with&nbsp;this&nbsp;url.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yahooid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;Yahoo!&nbsp;user&nbsp;who&nbsp;owns&nbsp;the&nbsp;folder&nbsp;being&nbsp;accessed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;field&nbsp;by&nbsp;which&nbsp;the&nbsp;results&nbsp;should&nbsp;be&nbsp;sorted.&nbsp;Options<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;popularity&nbsp;(default),&nbsp;tag&nbsp;or&nbsp;date.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;reverse_sort&nbsp;-&nbsp;If&nbsp;set&nbsp;to&nbsp;1,&nbsp;reverses&nbsp;the&nbsp;sort&nbsp;order.&nbsp;This&nbsp;has&nbsp;no&nbsp;effect<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;popularity&nbsp;searches.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;number&nbsp;of&nbsp;results&nbsp;to&nbsp;return&nbsp;(1-50).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;start&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;starting&nbsp;result&nbsp;position&nbsp;to&nbsp;return&nbsp;(1-based).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;finishing&nbsp;position&nbsp;(start&nbsp;+&nbsp;results&nbsp;-&nbsp;1)&nbsp;cannot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exceed&nbsp;1000.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;output&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;format&nbsp;for&nbsp;the&nbsp;output&nbsp;result.&nbsp;If&nbsp;json&nbsp;or&nbsp;php&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requested,&nbsp;the&nbsp;result&nbsp;is&nbsp;not&nbsp;XML&nbsp;parseable,&nbsp;so&nbsp;we<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;simply&nbsp;return&nbsp;the&nbsp;"raw"&nbsp;string.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;callback&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;callback&nbsp;function&nbsp;to&nbsp;wrap&nbsp;around<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;JSON&nbsp;data.<br>
+&nbsp;<br>
+&nbsp;<br>
+Full&nbsp;documentation&nbsp;for&nbsp;this&nbsp;service&nbsp;is&nbsp;available&nbsp;at:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://developer.yahoo.net/myweb/V1/tagSearch.html">http://developer.yahoo.net/myweb/V1/tagSearch.html</a><br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="yahoo.search.myweb.html#TagSearch">TagSearch</a></dd>
+<dd><a href="yahoo.search.myweb.html#_MyWeb">_MyWeb</a></dd>
+<dd><a href="yahoo.search.html#_Search">yahoo.search._Search</a></dd>
+<dd><a href="yahoo.search.debug.html#Debuggable">yahoo.search.debug.Debuggable</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>NAME</strong> = 'tagSearch'</dl>
+
+<dl><dt><strong>SERVICE</strong> = 'MyWebService'</dl>
+
+<hr>
+Methods inherited from <a href="yahoo.search.html#_Search">yahoo.search._Search</a>:<br>
+<dl><dt><a name="TagSearch-__getattr__"><strong>__getattr__</strong></a>(self, name)</dt></dl>
+
+<dl><dt><a name="TagSearch-__init__"><strong>__init__</strong></a>(self, app_id, opener<font color="#909090">=None</font>, xml_parser<font color="#909090">=None</font>, result_factory<font color="#909090">=None</font>, debug_level<font color="#909090">=0</font>, **args)</dt><dd><tt>The&nbsp;app_id&nbsp;is&nbsp;a&nbsp;required&nbsp;argument,&nbsp;the&nbsp;Yahoo&nbsp;search&nbsp;services&nbsp;will<br>
+not&nbsp;accept&nbsp;requests&nbsp;without&nbsp;a&nbsp;proper&nbsp;app_id.&nbsp;A&nbsp;valid&nbsp;app_id&nbsp;is&nbsp;a<br>
+combination&nbsp;of&nbsp;8&nbsp;-&nbsp;40&nbsp;characters,&nbsp;matching&nbsp;the&nbsp;regexp<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"^[a-zA-Z0-9&nbsp;_()\[\]*+\-=,.:\\@]{8,40}$"<br>
+&nbsp;<br>
+Please&nbsp;visit&nbsp;<a href="http://developer.yahoo.net/search/">http://developer.yahoo.net/search/</a>&nbsp;to&nbsp;request&nbsp;an&nbsp;App&nbsp;ID<br>
+for&nbsp;your&nbsp;own&nbsp;software&nbsp;or&nbsp;application.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Four&nbsp;optional&nbsp;arguments&nbsp;can&nbsp;also&nbsp;be&nbsp;passed&nbsp;to&nbsp;the&nbsp;constructor:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;opener&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Opener&nbsp;for&nbsp;urllib2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xml_parser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Function&nbsp;to&nbsp;parse&nbsp;XML&nbsp;(default:&nbsp;minidom)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result_factory&nbsp;-&nbsp;Result&nbsp;factory&nbsp;class&nbsp;(default:&nbsp;none)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;debug_devel&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Debug&nbsp;level&nbsp;(if&nbsp;any)<br>
+&nbsp;<br>
+All&nbsp;other&nbsp;"named"&nbsp;arguments&nbsp;are&nbsp;passed&nbsp;into&nbsp;as&nbsp;a&nbsp;dictionary&nbsp;to&nbsp;the<br>
+<a href="#TagSearch-set_params">set_params</a>()&nbsp;method.<br>
+&nbsp;<br>
+The&nbsp;result&nbsp;factory&nbsp;is&nbsp;specific&nbsp;to&nbsp;the&nbsp;particular&nbsp;web&nbsp;service&nbsp;used,<br>
+e.g.&nbsp;the&nbsp;different&nbsp;Yahoo&nbsp;Search&nbsp;services&nbsp;will&nbsp;each&nbsp;implement&nbsp;their<br>
+own&nbsp;factory&nbsp;class.<br>
+&nbsp;<br>
+Both&nbsp;of&nbsp;these&nbsp;settings&nbsp;can&nbsp;be&nbsp;controlled&nbsp;via&nbsp;their&nbsp;respective<br>
+install&nbsp;method&nbsp;(see&nbsp;below).</tt></dd></dl>
+
+<dl><dt><a name="TagSearch-__setattr__"><strong>__setattr__</strong></a>(self, name, value)</dt><dd><tt>#&nbsp;Implement&nbsp;the&nbsp;attribute&nbsp;handlers,&nbsp;to&nbsp;avoid&nbsp;confusion</tt></dd></dl>
+
+<dl><dt><a name="TagSearch-encode_params"><strong>encode_params</strong></a>(self)</dt><dd><tt>URL&nbsp;encode&nbsp;the&nbsp;list&nbsp;of&nbsp;parameter&nbsp;values.</tt></dd></dl>
+
+<dl><dt><a name="TagSearch-get_param"><strong>get_param</strong></a>(self, param)</dt><dd><tt>Get&nbsp;the&nbsp;value&nbsp;of&nbsp;a&nbsp;query&nbsp;parameter,&nbsp;or&nbsp;the&nbsp;default&nbsp;value&nbsp;if&nbsp;unset</tt></dd></dl>
+
+<dl><dt><a name="TagSearch-get_results"><strong>get_results</strong></a>(self, stream<font color="#909090">=None</font>, xml_parser<font color="#909090">=None</font>, close<font color="#909090">=True</font>)</dt><dd><tt>Read&nbsp;the&nbsp;stream&nbsp;(if&nbsp;provided)&nbsp;and&nbsp;either&nbsp;return&nbsp;the&nbsp;raw&nbsp;XML,&nbsp;or<br>
+send&nbsp;the&nbsp;data&nbsp;to&nbsp;the&nbsp;provided&nbsp;XML&nbsp;parser&nbsp;for&nbsp;further&nbsp;processing.<br>
+If&nbsp;no&nbsp;stream&nbsp;is&nbsp;provided,&nbsp;it&nbsp;will&nbsp;call&nbsp;the&nbsp;<a href="#TagSearch-open">open</a>()&nbsp;method&nbsp;using&nbsp;the<br>
+default&nbsp;opener.&nbsp;The&nbsp;stream&nbsp;will&nbsp;be&nbsp;closed&nbsp;upon&nbsp;return&nbsp;from&nbsp;this<br>
+method,&nbsp;unless&nbsp;the&nbsp;close=False&nbsp;is&nbsp;passed&nbsp;as&nbsp;an&nbsp;argument.</tt></dd></dl>
+
+<dl><dt><a name="TagSearch-get_url"><strong>get_url</strong></a>(self, with_params<font color="#909090">=True</font>)</dt><dd><tt>Return&nbsp;the&nbsp;URL&nbsp;for&nbsp;this&nbsp;request&nbsp;object</tt></dd></dl>
+
+<dl><dt><a name="TagSearch-get_valid_params"><strong>get_valid_params</strong></a>(self)</dt><dd><tt>Return&nbsp;a&nbsp;list&nbsp;of&nbsp;all&nbsp;valid&nbsp;parameters&nbsp;for&nbsp;this&nbsp;search</tt></dd></dl>
+
+<dl><dt><a name="TagSearch-install_opener"><strong>install_opener</strong></a>(self, opener)</dt><dd><tt>Install&nbsp;a&nbsp;URL&nbsp;opener&nbsp;(for&nbsp;use&nbsp;with&nbsp;urllib2),&nbsp;overriding&nbsp;the<br>
+default&nbsp;opener.&nbsp;This&nbsp;is&nbsp;rarely&nbsp;required.</tt></dd></dl>
+
+<dl><dt><a name="TagSearch-install_result_factory"><strong>install_result_factory</strong></a>(self, result_factory)</dt><dd><tt>Install&nbsp;a&nbsp;python&nbsp;class&nbsp;(not&nbsp;an&nbsp;instance!)&nbsp;that&nbsp;should&nbsp;be&nbsp;used&nbsp;as&nbsp;a<br>
+factory&nbsp;for&nbsp;creating&nbsp;result(s)&nbsp;objects.</tt></dd></dl>
+
+<dl><dt><a name="TagSearch-install_xml_parser"><strong>install_xml_parser</strong></a>(self, xml_parser)</dt><dd><tt>Install&nbsp;an&nbsp;XML&nbsp;parser&nbsp;that&nbsp;will&nbsp;be&nbsp;used&nbsp;for&nbsp;all&nbsp;results&nbsp;for&nbsp;this<br>
+object.&nbsp;The&nbsp;parser&nbsp;is&nbsp;expected&nbsp;to&nbsp;"read"&nbsp;the&nbsp;data&nbsp;from&nbsp;the&nbsp;supplied<br>
+stream&nbsp;argument.&nbsp;To&nbsp;uninstall&nbsp;the&nbsp;parser&nbsp;(e.g.&nbsp;to&nbsp;make&nbsp;sure&nbsp;we<br>
+return&nbsp;raw&nbsp;XML&nbsp;data)&nbsp;simply&nbsp;call&nbsp;this&nbsp;method&nbsp;with&nbsp;an&nbsp;argument&nbsp;of<br>
+None.</tt></dd></dl>
+
+<dl><dt><a name="TagSearch-missing_params"><strong>missing_params</strong></a>(self)</dt><dd><tt>Validate&nbsp;that&nbsp;the&nbsp;search&nbsp;object&nbsp;is&nbsp;propertly&nbsp;setup&nbsp;with&nbsp;all<br>
+required&nbsp;parameters&nbsp;etc.&nbsp;This&nbsp;is&nbsp;called&nbsp;automatically&nbsp;before&nbsp;a<br>
+search&nbsp;is&nbsp;actually&nbsp;performed,&nbsp;but&nbsp;you&nbsp;can&nbsp;also&nbsp;call&nbsp;it&nbsp;manually<br>
+if&nbsp;desired.&nbsp;It&nbsp;will&nbsp;return&nbsp;a&nbsp;list&nbsp;of&nbsp;zero&nbsp;or&nbsp;more&nbsp;paramters&nbsp;that<br>
+are&nbsp;missing.</tt></dd></dl>
+
+<dl><dt><a name="TagSearch-open"><strong>open</strong></a>(self, opener<font color="#909090">=None</font>, retries<font color="#909090">=2</font>)</dt><dd><tt>Open&nbsp;a&nbsp;connection&nbsp;to&nbsp;the&nbsp;webservice&nbsp;server,&nbsp;and&nbsp;request&nbsp;the&nbsp;URL.<br>
+The&nbsp;return&nbsp;value&nbsp;is&nbsp;a&nbsp;"stream",&nbsp;which&nbsp;can&nbsp;be&nbsp;read&nbsp;calling&nbsp;the<br>
+read(),&nbsp;readline()&nbsp;or&nbsp;readlines()&nbsp;methods.&nbsp;If&nbsp;you&nbsp;override&nbsp;this<br>
+method,&nbsp;please&nbsp;make&nbsp;sure&nbsp;to&nbsp;call&nbsp;the&nbsp;<a href="#TagSearch-missing_params">missing_params</a>()&nbsp;method&nbsp;before<br>
+you&nbsp;try&nbsp;to&nbsp;send&nbsp;a&nbsp;request&nbsp;to&nbsp;the&nbsp;Web&nbsp;server.</tt></dd></dl>
+
+<dl><dt><a name="TagSearch-parse_results"><strong>parse_results</strong></a>(self, xml<font color="#909090">=None</font>)</dt><dd><tt>Get&nbsp;the&nbsp;result&nbsp;from&nbsp;the&nbsp;request,&nbsp;and&nbsp;instantiate&nbsp;the&nbsp;appropriate<br>
+result&nbsp;class.&nbsp;This&nbsp;class&nbsp;will&nbsp;be&nbsp;populated&nbsp;with&nbsp;all&nbsp;the&nbsp;data&nbsp;from<br>
+the&nbsp;XML&nbsp;object.</tt></dd></dl>
+
+<dl><dt><a name="TagSearch-reset"><strong>reset</strong></a>(self)</dt><dd><tt>Reset&nbsp;all&nbsp;the&nbsp;parameter&nbsp;values&nbsp;for&nbsp;the&nbsp;object&nbsp;instance.</tt></dd></dl>
+
+<dl><dt><a name="TagSearch-set_param"><strong>set_param</strong></a>(self, param, value)</dt><dd><tt>Set&nbsp;the&nbsp;value&nbsp;of&nbsp;a&nbsp;query&nbsp;parameter</tt></dd></dl>
+
+<dl><dt><a name="TagSearch-set_params"><strong>set_params</strong></a>(self, args)</dt><dd><tt>Set&nbsp;one&nbsp;or&nbsp;several&nbsp;query&nbsp;parameters&nbsp;from&nbsp;a&nbsp;dictionary</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="yahoo.search.html#_Search">yahoo.search._Search</a>:<br>
+<dl><dt><strong>app_id</strong></dt>
+<dd><tt>Application&nbsp;ID&nbsp;(issued&nbsp;by&nbsp;Yahoo),&nbsp;same&nbsp;ass&nbsp;appid</tt></dd>
+</dl>
+<dl><dt><strong>appid</strong></dt>
+<dd><tt>Application&nbsp;ID&nbsp;(issued&nbsp;by&nbsp;Yahoo)</tt></dd>
+</dl>
+<dl><dt><strong>cc_licenses</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;Creative&nbsp;Commons&nbsp;licenses</tt></dd>
+</dl>
+<dl><dt><strong>countries</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;county&nbsp;codes</tt></dd>
+</dl>
+<dl><dt><strong>debug_level</strong></dt>
+<dd><tt>Set&nbsp;and&nbsp;modify&nbsp;the&nbsp;debug&nbsp;level</tt></dd>
+</dl>
+<dl><dt><strong>languages</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;languages</tt></dd>
+</dl>
+<dl><dt><strong>regions</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;region&nbsp;codes</tt></dd>
+</dl>
+<dl><dt><strong>subscriptions</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;premium&nbsp;subscriptions</tt></dd>
+</dl>
+<dl><dt><strong>svc_name</strong></dt>
+<dd><tt>Descriptive&nbsp;name&nbsp;of&nbsp;the&nbsp;service</tt></dd>
+</dl>
+<dl><dt><strong>svc_protocol</strong></dt>
+<dd><tt>Service&nbsp;protocol&nbsp;(e.g.&nbsp;HTTP)</tt></dd>
+</dl>
+<dl><dt><strong>svc_server</strong></dt>
+<dd><tt>Service&nbsp;server&nbsp;name&nbsp;or&nbsp;IP</tt></dd>
+</dl>
+<dl><dt><strong>svc_service</strong></dt>
+<dd><tt>Service&nbsp;path</tt></dd>
+</dl>
+<dl><dt><strong>svc_version</strong></dt>
+<dd><tt>Service&nbsp;version&nbsp;string</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="yahoo.search.html#_Search">yahoo.search._Search</a>:<br>
+<dl><dt><strong>METHOD</strong> = 'GET'</dl>
+
+<dl><dt><strong>PROTOCOL</strong> = 'http'</dl>
+
+<dl><dt><strong>SERVER</strong> = 'search.yahooapis.com'</dl>
+
+<dl><dt><strong>VERSION</strong> = 'V1'</dl>
+
+<hr>
+Data descriptors inherited from <a href="yahoo.search.debug.html#Debuggable">yahoo.search.debug.Debuggable</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="UrlSearch">class <strong>UrlSearch</strong></a>(<a href="yahoo.search.myweb.html#_MyWeb">_MyWeb</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#UrlSearch">UrlSearch</a>&nbsp;-&nbsp;Search&nbsp;for&nbsp;URLs&nbsp;with&nbsp;particular&nbsp;tags<br>
+&nbsp;<br>
+This&nbsp;class&nbsp;implements&nbsp;the&nbsp;MyWeb2&nbsp;service&nbsp;to&nbsp;search&nbsp;for&nbsp;URLs&nbsp;that&nbsp;have<br>
+been&nbsp;tagged&nbsp;by&nbsp;particular&nbsp;tags.&nbsp;Allowed&nbsp;parameters&nbsp;are:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tag&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;tag&nbsp;to&nbsp;search&nbsp;for.&nbsp;Multiple&nbsp;tags&nbsp;may&nbsp;be<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specified&nbsp;(e.g.&nbsp;["tag1",&nbsp;"tag2"]).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yahooid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;Yahoo!&nbsp;user&nbsp;who&nbsp;owns&nbsp;the&nbsp;folder&nbsp;being&nbsp;accessed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;field&nbsp;by&nbsp;which&nbsp;the&nbsp;results&nbsp;should&nbsp;be&nbsp;sorted.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date&nbsp;sorts&nbsp;most-recent-first,&nbsp;title&nbsp;and&nbsp;url&nbsp;are<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sorted&nbsp;alphabetically.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;reverse_sort&nbsp;-&nbsp;If&nbsp;set&nbsp;to&nbsp;1,&nbsp;reverses&nbsp;the&nbsp;sort&nbsp;order.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;number&nbsp;of&nbsp;results&nbsp;to&nbsp;return&nbsp;(1-50).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;start&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;starting&nbsp;result&nbsp;position&nbsp;to&nbsp;return&nbsp;(1-based).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;finishing&nbsp;position&nbsp;(start&nbsp;+&nbsp;results&nbsp;-&nbsp;1)&nbsp;cannot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exceed&nbsp;1000.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;output&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;format&nbsp;for&nbsp;the&nbsp;output&nbsp;result.&nbsp;If&nbsp;json&nbsp;or&nbsp;php&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requested,&nbsp;the&nbsp;result&nbsp;is&nbsp;not&nbsp;XML&nbsp;parseable,&nbsp;so&nbsp;we<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;simply&nbsp;return&nbsp;the&nbsp;"raw"&nbsp;string.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;callback&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;callback&nbsp;function&nbsp;to&nbsp;wrap&nbsp;around<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;JSON&nbsp;data.<br>
+&nbsp;<br>
+&nbsp;<br>
+Full&nbsp;documentation&nbsp;for&nbsp;this&nbsp;service&nbsp;is&nbsp;available&nbsp;at:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://developer.yahoo.net/myweb/V1/urlSearch.html">http://developer.yahoo.net/myweb/V1/urlSearch.html</a><br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="yahoo.search.myweb.html#UrlSearch">UrlSearch</a></dd>
+<dd><a href="yahoo.search.myweb.html#_MyWeb">_MyWeb</a></dd>
+<dd><a href="yahoo.search.html#_Search">yahoo.search._Search</a></dd>
+<dd><a href="yahoo.search.debug.html#Debuggable">yahoo.search.debug.Debuggable</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>NAME</strong> = 'urlSearch'</dl>
+
+<dl><dt><strong>SERVICE</strong> = 'MyWebService'</dl>
+
+<hr>
+Methods inherited from <a href="yahoo.search.html#_Search">yahoo.search._Search</a>:<br>
+<dl><dt><a name="UrlSearch-__getattr__"><strong>__getattr__</strong></a>(self, name)</dt></dl>
+
+<dl><dt><a name="UrlSearch-__init__"><strong>__init__</strong></a>(self, app_id, opener<font color="#909090">=None</font>, xml_parser<font color="#909090">=None</font>, result_factory<font color="#909090">=None</font>, debug_level<font color="#909090">=0</font>, **args)</dt><dd><tt>The&nbsp;app_id&nbsp;is&nbsp;a&nbsp;required&nbsp;argument,&nbsp;the&nbsp;Yahoo&nbsp;search&nbsp;services&nbsp;will<br>
+not&nbsp;accept&nbsp;requests&nbsp;without&nbsp;a&nbsp;proper&nbsp;app_id.&nbsp;A&nbsp;valid&nbsp;app_id&nbsp;is&nbsp;a<br>
+combination&nbsp;of&nbsp;8&nbsp;-&nbsp;40&nbsp;characters,&nbsp;matching&nbsp;the&nbsp;regexp<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"^[a-zA-Z0-9&nbsp;_()\[\]*+\-=,.:\\@]{8,40}$"<br>
+&nbsp;<br>
+Please&nbsp;visit&nbsp;<a href="http://developer.yahoo.net/search/">http://developer.yahoo.net/search/</a>&nbsp;to&nbsp;request&nbsp;an&nbsp;App&nbsp;ID<br>
+for&nbsp;your&nbsp;own&nbsp;software&nbsp;or&nbsp;application.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Four&nbsp;optional&nbsp;arguments&nbsp;can&nbsp;also&nbsp;be&nbsp;passed&nbsp;to&nbsp;the&nbsp;constructor:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;opener&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Opener&nbsp;for&nbsp;urllib2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xml_parser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Function&nbsp;to&nbsp;parse&nbsp;XML&nbsp;(default:&nbsp;minidom)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result_factory&nbsp;-&nbsp;Result&nbsp;factory&nbsp;class&nbsp;(default:&nbsp;none)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;debug_devel&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Debug&nbsp;level&nbsp;(if&nbsp;any)<br>
+&nbsp;<br>
+All&nbsp;other&nbsp;"named"&nbsp;arguments&nbsp;are&nbsp;passed&nbsp;into&nbsp;as&nbsp;a&nbsp;dictionary&nbsp;to&nbsp;the<br>
+<a href="#UrlSearch-set_params">set_params</a>()&nbsp;method.<br>
+&nbsp;<br>
+The&nbsp;result&nbsp;factory&nbsp;is&nbsp;specific&nbsp;to&nbsp;the&nbsp;particular&nbsp;web&nbsp;service&nbsp;used,<br>
+e.g.&nbsp;the&nbsp;different&nbsp;Yahoo&nbsp;Search&nbsp;services&nbsp;will&nbsp;each&nbsp;implement&nbsp;their<br>
+own&nbsp;factory&nbsp;class.<br>
+&nbsp;<br>
+Both&nbsp;of&nbsp;these&nbsp;settings&nbsp;can&nbsp;be&nbsp;controlled&nbsp;via&nbsp;their&nbsp;respective<br>
+install&nbsp;method&nbsp;(see&nbsp;below).</tt></dd></dl>
+
+<dl><dt><a name="UrlSearch-__setattr__"><strong>__setattr__</strong></a>(self, name, value)</dt><dd><tt>#&nbsp;Implement&nbsp;the&nbsp;attribute&nbsp;handlers,&nbsp;to&nbsp;avoid&nbsp;confusion</tt></dd></dl>
+
+<dl><dt><a name="UrlSearch-encode_params"><strong>encode_params</strong></a>(self)</dt><dd><tt>URL&nbsp;encode&nbsp;the&nbsp;list&nbsp;of&nbsp;parameter&nbsp;values.</tt></dd></dl>
+
+<dl><dt><a name="UrlSearch-get_param"><strong>get_param</strong></a>(self, param)</dt><dd><tt>Get&nbsp;the&nbsp;value&nbsp;of&nbsp;a&nbsp;query&nbsp;parameter,&nbsp;or&nbsp;the&nbsp;default&nbsp;value&nbsp;if&nbsp;unset</tt></dd></dl>
+
+<dl><dt><a name="UrlSearch-get_results"><strong>get_results</strong></a>(self, stream<font color="#909090">=None</font>, xml_parser<font color="#909090">=None</font>, close<font color="#909090">=True</font>)</dt><dd><tt>Read&nbsp;the&nbsp;stream&nbsp;(if&nbsp;provided)&nbsp;and&nbsp;either&nbsp;return&nbsp;the&nbsp;raw&nbsp;XML,&nbsp;or<br>
+send&nbsp;the&nbsp;data&nbsp;to&nbsp;the&nbsp;provided&nbsp;XML&nbsp;parser&nbsp;for&nbsp;further&nbsp;processing.<br>
+If&nbsp;no&nbsp;stream&nbsp;is&nbsp;provided,&nbsp;it&nbsp;will&nbsp;call&nbsp;the&nbsp;<a href="#UrlSearch-open">open</a>()&nbsp;method&nbsp;using&nbsp;the<br>
+default&nbsp;opener.&nbsp;The&nbsp;stream&nbsp;will&nbsp;be&nbsp;closed&nbsp;upon&nbsp;return&nbsp;from&nbsp;this<br>
+method,&nbsp;unless&nbsp;the&nbsp;close=False&nbsp;is&nbsp;passed&nbsp;as&nbsp;an&nbsp;argument.</tt></dd></dl>
+
+<dl><dt><a name="UrlSearch-get_url"><strong>get_url</strong></a>(self, with_params<font color="#909090">=True</font>)</dt><dd><tt>Return&nbsp;the&nbsp;URL&nbsp;for&nbsp;this&nbsp;request&nbsp;object</tt></dd></dl>
+
+<dl><dt><a name="UrlSearch-get_valid_params"><strong>get_valid_params</strong></a>(self)</dt><dd><tt>Return&nbsp;a&nbsp;list&nbsp;of&nbsp;all&nbsp;valid&nbsp;parameters&nbsp;for&nbsp;this&nbsp;search</tt></dd></dl>
+
+<dl><dt><a name="UrlSearch-install_opener"><strong>install_opener</strong></a>(self, opener)</dt><dd><tt>Install&nbsp;a&nbsp;URL&nbsp;opener&nbsp;(for&nbsp;use&nbsp;with&nbsp;urllib2),&nbsp;overriding&nbsp;the<br>
+default&nbsp;opener.&nbsp;This&nbsp;is&nbsp;rarely&nbsp;required.</tt></dd></dl>
+
+<dl><dt><a name="UrlSearch-install_result_factory"><strong>install_result_factory</strong></a>(self, result_factory)</dt><dd><tt>Install&nbsp;a&nbsp;python&nbsp;class&nbsp;(not&nbsp;an&nbsp;instance!)&nbsp;that&nbsp;should&nbsp;be&nbsp;used&nbsp;as&nbsp;a<br>
+factory&nbsp;for&nbsp;creating&nbsp;result(s)&nbsp;objects.</tt></dd></dl>
+
+<dl><dt><a name="UrlSearch-install_xml_parser"><strong>install_xml_parser</strong></a>(self, xml_parser)</dt><dd><tt>Install&nbsp;an&nbsp;XML&nbsp;parser&nbsp;that&nbsp;will&nbsp;be&nbsp;used&nbsp;for&nbsp;all&nbsp;results&nbsp;for&nbsp;this<br>
+object.&nbsp;The&nbsp;parser&nbsp;is&nbsp;expected&nbsp;to&nbsp;"read"&nbsp;the&nbsp;data&nbsp;from&nbsp;the&nbsp;supplied<br>
+stream&nbsp;argument.&nbsp;To&nbsp;uninstall&nbsp;the&nbsp;parser&nbsp;(e.g.&nbsp;to&nbsp;make&nbsp;sure&nbsp;we<br>
+return&nbsp;raw&nbsp;XML&nbsp;data)&nbsp;simply&nbsp;call&nbsp;this&nbsp;method&nbsp;with&nbsp;an&nbsp;argument&nbsp;of<br>
+None.</tt></dd></dl>
+
+<dl><dt><a name="UrlSearch-missing_params"><strong>missing_params</strong></a>(self)</dt><dd><tt>Validate&nbsp;that&nbsp;the&nbsp;search&nbsp;object&nbsp;is&nbsp;propertly&nbsp;setup&nbsp;with&nbsp;all<br>
+required&nbsp;parameters&nbsp;etc.&nbsp;This&nbsp;is&nbsp;called&nbsp;automatically&nbsp;before&nbsp;a<br>
+search&nbsp;is&nbsp;actually&nbsp;performed,&nbsp;but&nbsp;you&nbsp;can&nbsp;also&nbsp;call&nbsp;it&nbsp;manually<br>
+if&nbsp;desired.&nbsp;It&nbsp;will&nbsp;return&nbsp;a&nbsp;list&nbsp;of&nbsp;zero&nbsp;or&nbsp;more&nbsp;paramters&nbsp;that<br>
+are&nbsp;missing.</tt></dd></dl>
+
+<dl><dt><a name="UrlSearch-open"><strong>open</strong></a>(self, opener<font color="#909090">=None</font>, retries<font color="#909090">=2</font>)</dt><dd><tt>Open&nbsp;a&nbsp;connection&nbsp;to&nbsp;the&nbsp;webservice&nbsp;server,&nbsp;and&nbsp;request&nbsp;the&nbsp;URL.<br>
+The&nbsp;return&nbsp;value&nbsp;is&nbsp;a&nbsp;"stream",&nbsp;which&nbsp;can&nbsp;be&nbsp;read&nbsp;calling&nbsp;the<br>
+read(),&nbsp;readline()&nbsp;or&nbsp;readlines()&nbsp;methods.&nbsp;If&nbsp;you&nbsp;override&nbsp;this<br>
+method,&nbsp;please&nbsp;make&nbsp;sure&nbsp;to&nbsp;call&nbsp;the&nbsp;<a href="#UrlSearch-missing_params">missing_params</a>()&nbsp;method&nbsp;before<br>
+you&nbsp;try&nbsp;to&nbsp;send&nbsp;a&nbsp;request&nbsp;to&nbsp;the&nbsp;Web&nbsp;server.</tt></dd></dl>
+
+<dl><dt><a name="UrlSearch-parse_results"><strong>parse_results</strong></a>(self, xml<font color="#909090">=None</font>)</dt><dd><tt>Get&nbsp;the&nbsp;result&nbsp;from&nbsp;the&nbsp;request,&nbsp;and&nbsp;instantiate&nbsp;the&nbsp;appropriate<br>
+result&nbsp;class.&nbsp;This&nbsp;class&nbsp;will&nbsp;be&nbsp;populated&nbsp;with&nbsp;all&nbsp;the&nbsp;data&nbsp;from<br>
+the&nbsp;XML&nbsp;object.</tt></dd></dl>
+
+<dl><dt><a name="UrlSearch-reset"><strong>reset</strong></a>(self)</dt><dd><tt>Reset&nbsp;all&nbsp;the&nbsp;parameter&nbsp;values&nbsp;for&nbsp;the&nbsp;object&nbsp;instance.</tt></dd></dl>
+
+<dl><dt><a name="UrlSearch-set_param"><strong>set_param</strong></a>(self, param, value)</dt><dd><tt>Set&nbsp;the&nbsp;value&nbsp;of&nbsp;a&nbsp;query&nbsp;parameter</tt></dd></dl>
+
+<dl><dt><a name="UrlSearch-set_params"><strong>set_params</strong></a>(self, args)</dt><dd><tt>Set&nbsp;one&nbsp;or&nbsp;several&nbsp;query&nbsp;parameters&nbsp;from&nbsp;a&nbsp;dictionary</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="yahoo.search.html#_Search">yahoo.search._Search</a>:<br>
+<dl><dt><strong>app_id</strong></dt>
+<dd><tt>Application&nbsp;ID&nbsp;(issued&nbsp;by&nbsp;Yahoo),&nbsp;same&nbsp;ass&nbsp;appid</tt></dd>
+</dl>
+<dl><dt><strong>appid</strong></dt>
+<dd><tt>Application&nbsp;ID&nbsp;(issued&nbsp;by&nbsp;Yahoo)</tt></dd>
+</dl>
+<dl><dt><strong>cc_licenses</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;Creative&nbsp;Commons&nbsp;licenses</tt></dd>
+</dl>
+<dl><dt><strong>countries</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;county&nbsp;codes</tt></dd>
+</dl>
+<dl><dt><strong>debug_level</strong></dt>
+<dd><tt>Set&nbsp;and&nbsp;modify&nbsp;the&nbsp;debug&nbsp;level</tt></dd>
+</dl>
+<dl><dt><strong>languages</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;languages</tt></dd>
+</dl>
+<dl><dt><strong>regions</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;region&nbsp;codes</tt></dd>
+</dl>
+<dl><dt><strong>subscriptions</strong></dt>
+<dd><tt>List&nbsp;of&nbsp;all&nbsp;supported&nbsp;premium&nbsp;subscriptions</tt></dd>
+</dl>
+<dl><dt><strong>svc_name</strong></dt>
+<dd><tt>Descriptive&nbsp;name&nbsp;of&nbsp;the&nbsp;service</tt></dd>
+</dl>
+<dl><dt><strong>svc_protocol</strong></dt>
+<dd><tt>Service&nbsp;protocol&nbsp;(e.g.&nbsp;HTTP)</tt></dd>
+</dl>
+<dl><dt><strong>svc_server</strong></dt>
+<dd><tt>Service&nbsp;server&nbsp;name&nbsp;or&nbsp;IP</tt></dd>
+</dl>
+<dl><dt><strong>svc_service</strong></dt>
+<dd><tt>Service&nbsp;path</tt></dd>
+</dl>
+<dl><dt><strong>svc_version</strong></dt>
+<dd><tt>Service&nbsp;version&nbsp;string</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="yahoo.search.html#_Search">yahoo.search._Search</a>:<br>
+<dl><dt><strong>METHOD</strong> = 'GET'</dl>
+
+<dl><dt><strong>PROTOCOL</strong> = 'http'</dl>
+
+<dl><dt><strong>SERVER</strong> = 'search.yahooapis.com'</dl>
+
+<dl><dt><strong>VERSION</strong> = 'V1'</dl>
+
+<hr>
+Data descriptors inherited from <a href="yahoo.search.debug.html#Debuggable">yahoo.search.debug.Debuggable</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__author__</strong> = 'Leif Hedstrom &lt;leif@ogre.com&gt;'<br>
+<strong>__date__</strong> = 'Tue Feb 27 17:06:45 MST 2007'<br>
+<strong>__revision__</strong> = '$Id: myweb.py,v 1.5 2007/02/28 05:20:09 zwoop Exp $'<br>
+<strong>__version__</strong> = '$Revision: 1.5 $'</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Leif&nbsp;Hedstrom&nbsp;&lt;leif@ogre.com&gt;</td></tr></table>
+</body></html>

@@ -1,0 +1,90 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module yahoo.search.debug</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="yahoo.html"><font color="#ffffff">yahoo</font></a>.<a href="yahoo.search.html"><font color="#ffffff">search</font></a>.debug</strong></big></big> (version 1.7, Wed Oct 26 11:15:36 PDT 2005)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/leif/hack/pysearch/yahoo/search/debug.py">/home/leif/hack/pysearch/yahoo/search/debug.py</a></font></td></tr></table>
+    <p><tt>yahoo.search.debug&nbsp;-&nbsp;Debugging&nbsp;utilities<br>
+&nbsp;<br>
+This&nbsp;module&nbsp;defines&nbsp;and&nbsp;provides&nbsp;some&nbsp;debugging&nbsp;utilities&nbsp;that&nbsp;can<br>
+be&nbsp;used&nbsp;when&nbsp;you&nbsp;encounter&nbsp;problems&nbsp;with&nbsp;the&nbsp;search&nbsp;APIs.&nbsp;Most<br>
+interesting&nbsp;is&nbsp;the&nbsp;various&nbsp;debugging&nbsp;levels:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HTTP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Various&nbsp;HTTP&nbsp;protocol&nbsp;related&nbsp;information.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PARAMS&nbsp;&nbsp;&nbsp;-&nbsp;Show&nbsp;debugging&nbsp;information&nbsp;about&nbsp;CGI&nbsp;parameters.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PARSING&nbsp;&nbsp;-&nbsp;Show&nbsp;parsing&nbsp;processing.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RAWXML&nbsp;&nbsp;&nbsp;-&nbsp;Show&nbsp;the&nbsp;raw&nbsp;XML.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ALL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Show&nbsp;everything.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="yahoo.search.debug.html#Debuggable">Debuggable</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Debuggable">class <strong>Debuggable</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Debuggable">Debuggable</a>&nbsp;-&nbsp;Simple&nbsp;"base"&nbsp;class&nbsp;to&nbsp;implement&nbsp;debugging.&nbsp;You<br>
+should&nbsp;use&nbsp;this&nbsp;instead&nbsp;of&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;as&nbsp;a&nbsp;base&nbsp;class.&nbsp;The&nbsp;only<br>
+useful&nbsp;member&nbsp;function&nbsp;is&nbsp;_debug_msg,&nbsp;intentionally&nbsp;made<br>
+private&nbsp;to&nbsp;avoid&nbsp;exposing&nbsp;it&nbsp;in&nbsp;docs&nbsp;and&nbsp;APIs.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Debuggable-__init__"><strong>__init__</strong></a>(self, debug_level<font color="#909090">=0</font>)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>DEBUG_LEVELS</strong> = {'ALL': 4294967295L, 'HTTP': 1, 'PARAMS': 2, 'PARSING': 4, 'RAWXML': 2147483648L}<br>
+<strong>__author__</strong> = 'Leif Hedstrom &lt;leif@ogre.com&gt;'<br>
+<strong>__date__</strong> = 'Wed Oct 26 11:15:36 PDT 2005'<br>
+<strong>__revision__</strong> = '$Id: debug.py,v 1.7 2005/10/26 20:32:27 zwoop Exp $'<br>
+<strong>__version__</strong> = '$Revision: 1.7 $'</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Leif&nbsp;Hedstrom&nbsp;&lt;leif@ogre.com&gt;</td></tr></table>
+</body></html>

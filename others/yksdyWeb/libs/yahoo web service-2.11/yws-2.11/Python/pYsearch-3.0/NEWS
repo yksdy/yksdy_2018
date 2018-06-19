@@ -1,0 +1,40 @@
+[10/??/06] pYsearch v2.1
+------------------------
+	* Added support for region parameter in Web search.
+	* Updates to documentation (missing new services).
+	* Added support for PHP and JSON responses.
+	* Updated all web services with latest parameters.
+	* Added the following web services:
+		- 
+
+[10/27/05] pYsearch v2.0
+------------------------
+	* Added support for MyWeb2, Audio and Site Explorer.
+	* Major refactoring of all classes/modules.
+	* Updated with all changes to Search APIs, parameters etc.
+	* Improved documentation and examples.
+	* Plenty of bugfixes.... I mean, improvements.
+
+[4/28/05] pYsearch v1.3
+-----------------------
+	* Added support for MyWeb List Folders and List URLs.
+	* Improved parameter handling.
+
+[3/31/05] pYsearch v1.2
+-----------------------
+	* Added support for Term extraction.
+	* Added support for contextual searches.
+	* Added support for Creative Commons license parameter.
+	* Added some basic unit tests.
+	* Modified debug levels slightly.
+
+[3/14/05] pYsearch v1.1
+-----------------------
+	* Added support for new Local Search features: Long/lat and sort order.
+	* Added support for new Web Search feature: County parameter.
+	* Added support for new Image search feature: Coloration parameter.
+        * LANGUAGE and COUNTRY "globals" are now dictionaries.
+
+[2/28/05] pYsearch v1.0
+-----------------------
+	* First public release, moderately tested .

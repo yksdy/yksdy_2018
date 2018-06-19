@@ -1,0 +1,122 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module yahoo.search.dom.term</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="yahoo.html"><font color="#ffffff">yahoo</font></a>.<a href="yahoo.search.html"><font color="#ffffff">search</font></a>.<a href="yahoo.search.dom.html"><font color="#ffffff">dom</font></a>.term</strong></big></big> (version 1.1, Sat Oct 15 15:44:48 PDT 2005)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/leif/hack/pysearch/yahoo/search/dom/term.py">/home/leif/hack/pysearch/yahoo/search/dom/term.py</a></font></td></tr></table>
+    <p><tt>DOM&nbsp;parser&nbsp;for&nbsp;Term&nbsp;Extraction&nbsp;search&nbsp;results<br>
+&nbsp;<br>
+Implement&nbsp;a&nbsp;simple&nbsp;DOM&nbsp;parser&nbsp;for&nbsp;the&nbsp;Yahoo&nbsp;Search&nbsp;Web&nbsp;Services<br>
+term&nbsp;extraction&nbsp;search&nbsp;APIs.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="yahoo.search.dom.html">yahoo.search.dom</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="yahoo.search.dom.html#DOMResultParser">yahoo.search.dom.DOMResultParser</a>(<a href="yahoo.search.parser.html#ResultParser">yahoo.search.parser.ResultParser</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="yahoo.search.dom.term.html#TermExtraction">TermExtraction</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="TermExtraction">class <strong>TermExtraction</strong></a>(<a href="yahoo.search.dom.html#DOMResultParser">yahoo.search.dom.DOMResultParser</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#TermExtraction">TermExtraction</a>&nbsp;-&nbsp;DOM&nbsp;parser&nbsp;for&nbsp;Term&nbsp;Extraction&nbsp;queries<br>
+&nbsp;<br>
+Return&nbsp;the&nbsp;list&nbsp;of&nbsp;words&nbsp;and&nbsp;phrases&nbsp;related&nbsp;to&nbsp;the&nbsp;context&nbsp;and<br>
+the&nbsp;optional&nbsp;query&nbsp;string.&nbsp;The&nbsp;results&nbsp;from&nbsp;this&nbsp;search&nbsp;are&nbsp;slightly<br>
+different&nbsp;compared&nbsp;to&nbsp;other&nbsp;services,&nbsp;it's&nbsp;just&nbsp;a&nbsp;simple&nbsp;list&nbsp;of<br>
+words&nbsp;and&nbsp;phrases.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="yahoo.search.dom.term.html#TermExtraction">TermExtraction</a></dd>
+<dd><a href="yahoo.search.dom.html#DOMResultParser">yahoo.search.dom.DOMResultParser</a></dd>
+<dd><a href="yahoo.search.parser.html#ResultParser">yahoo.search.parser.ResultParser</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods inherited from <a href="yahoo.search.dom.html#DOMResultParser">yahoo.search.dom.DOMResultParser</a>:<br>
+<dl><dt><a name="TermExtraction-parse_results"><strong>parse_results</strong></a>(self, dom_object)</dt><dd><tt>This&nbsp;is&nbsp;a&nbsp;simple&nbsp;DOM&nbsp;parser&nbsp;for&nbsp;all&nbsp;Yahoo&nbsp;Search&nbsp;services.&nbsp;It<br>
+expects&nbsp;to&nbsp;find&nbsp;a&nbsp;top-level&nbsp;node&nbsp;named&nbsp;ResultSet.&nbsp;This&nbsp;is&nbsp;the&nbsp;main<br>
+entry&nbsp;point&nbsp;for&nbsp;the&nbsp;DOM&nbsp;parser,&nbsp;and&nbsp;it&nbsp;requires&nbsp;a&nbsp;properly&nbsp;con-<br>
+structed&nbsp;DOM&nbsp;object&nbsp;(e.g.&nbsp;using&nbsp;minidom).</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="yahoo.search.parser.html#ResultParser">yahoo.search.parser.ResultParser</a>:<br>
+<dl><dt><a name="TermExtraction-__init__"><strong>__init__</strong></a>(self, service, res_dict<font color="#909090">=&lt;class 'yahoo.search.parser.ResultDict'&gt;</font>)</dt></dl>
+
+<dl><dt><a name="TermExtraction-__iter__"><strong>__iter__</strong></a>(self)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="yahoo.search.parser.html#ResultParser">yahoo.search.parser.ResultParser</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>firstResultPosition</strong></dt>
+<dd><tt>The&nbsp;first&nbsp;result&nbsp;position</tt></dd>
+</dl>
+<dl><dt><strong>first_result_position</strong></dt>
+<dd><tt>The&nbsp;first&nbsp;result&nbsp;position</tt></dd>
+</dl>
+<dl><dt><strong>results</strong></dt>
+<dd><tt>The&nbsp;list&nbsp;of&nbsp;all&nbsp;results</tt></dd>
+</dl>
+<dl><dt><strong>service</strong></dt>
+<dd><tt>The&nbsp;Search&nbsp;Web&nbsp;Service&nbsp;object&nbsp;for&nbsp;this&nbsp;results&nbsp;parser</tt></dd>
+</dl>
+<dl><dt><strong>totalResultsAvailable</strong></dt>
+<dd><tt>Total&nbsp;number&nbsp;of&nbsp;results&nbsp;for&nbsp;the&nbsp;query</tt></dd>
+</dl>
+<dl><dt><strong>totalResultsReturned</strong></dt>
+<dd><tt>The&nbsp;number&nbsp;of&nbsp;results&nbsp;returned</tt></dd>
+</dl>
+<dl><dt><strong>total_results_available</strong></dt>
+<dd><tt>Total&nbsp;number&nbsp;of&nbsp;results&nbsp;for&nbsp;the&nbsp;query</tt></dd>
+</dl>
+<dl><dt><strong>total_results_returned</strong></dt>
+<dd><tt>The&nbsp;number&nbsp;of&nbsp;results&nbsp;returned</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__author__</strong> = 'Leif Hedstrom &lt;leif@ogre.com&gt;'<br>
+<strong>__date__</strong> = 'Sat Oct 15 15:44:48 PDT 2005'<br>
+<strong>__revision__</strong> = '$Id: term.py,v 1.1 2005/10/17 01:41:47 zwoop Exp $'<br>
+<strong>__version__</strong> = '$Revision: 1.1 $'</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Leif&nbsp;Hedstrom&nbsp;&lt;leif@ogre.com&gt;</td></tr></table>
+</body></html>

@@ -1,0 +1,236 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: package yahoo.search</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="yahoo.html"><font color="#ffffff">yahoo</font></a>.search</strong></big></big> (version 1.16, Thu Jul  7 14:22:16 PDT 2005)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/leif/hack/pysearch/yahoo/search/__init__.py">/home/leif/hack/pysearch/yahoo/search/__init__.py</a></font></td></tr></table>
+    <p><tt>Yahoo&nbsp;Search&nbsp;Web&nbsp;Services<br>
+&nbsp;<br>
+This&nbsp;module&nbsp;implements&nbsp;a&nbsp;set&nbsp;of&nbsp;classes&nbsp;and&nbsp;functions&nbsp;to&nbsp;work&nbsp;with&nbsp;the<br>
+Yahoo&nbsp;Search&nbsp;Web&nbsp;Services.&nbsp;All&nbsp;results&nbsp;from&nbsp;these&nbsp;services&nbsp;are&nbsp;properly<br>
+formatted&nbsp;XML,&nbsp;and&nbsp;this&nbsp;package&nbsp;facilitates&nbsp;for&nbsp;proper&nbsp;parsing&nbsp;of&nbsp;these<br>
+result&nbsp;sets.&nbsp;Some&nbsp;of&nbsp;the&nbsp;features&nbsp;include:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Extendandable&nbsp;API,&nbsp;with&nbsp;replaceable&nbsp;backend&nbsp;XML&nbsp;parsers,&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I/O&nbsp;interface.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Type&nbsp;and&nbsp;value&nbsp;checking&nbsp;on&nbsp;search&nbsp;parameters,&nbsp;including<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;automatic&nbsp;type&nbsp;conversion&nbsp;(when&nbsp;appropriate&nbsp;and&nbsp;possible)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Flexible&nbsp;return&nbsp;format,&nbsp;including&nbsp;DOM&nbsp;objects,&nbsp;or&nbsp;fully<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parsed&nbsp;result&nbsp;objects<br>
+&nbsp;<br>
+&nbsp;<br>
+You&nbsp;can&nbsp;either&nbsp;instantiate&nbsp;a&nbsp;search&nbsp;object&nbsp;directly,&nbsp;or&nbsp;use&nbsp;the&nbsp;factory<br>
+function&nbsp;create_search()&nbsp;from&nbsp;the&nbsp;factory&nbsp;module.&nbsp;The&nbsp;supported&nbsp;classes<br>
+of&nbsp;searches&nbsp;are:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;NewsSearch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;News&nbsp;article&nbsp;search<br>
+&nbsp;&nbsp;&nbsp;&nbsp;VideoSearch&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Video&nbsp;and&nbsp;movie&nbsp;search<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ImageSearch&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Image&nbsp;search<br>
+&nbsp;&nbsp;&nbsp;&nbsp;LocalSearch&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Local&nbsp;area&nbsp;search<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;WebSearch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Web&nbsp;search<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ContextSearch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Web&nbsp;search&nbsp;with&nbsp;a&nbsp;context<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RelatedSuggestion&nbsp;&nbsp;&nbsp;-&nbsp;Web&nbsp;search&nbsp;Related&nbsp;Suggestion<br>
+&nbsp;&nbsp;&nbsp;&nbsp;SpellingSuggestion&nbsp;&nbsp;-&nbsp;Web&nbsp;search&nbsp;Spelling&nbsp;Suggestion<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;TermExtraction&nbsp;-&nbsp;Term&nbsp;Extraction&nbsp;service<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ListFolders&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;List&nbsp;(public)&nbsp;MyWeb&nbsp;folders<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ListUrls&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;List&nbsp;the&nbsp;URLs&nbsp;in&nbsp;a&nbsp;MyWeb&nbsp;folder<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;URLSearch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Search&nbsp;for&nbsp;URLs&nbsp;with&nbsp;particular&nbsp;tags<br>
+&nbsp;&nbsp;&nbsp;&nbsp;TagSearch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Search&nbsp;for&nbsp;tags&nbsp;associated&nbsp;with&nbsp;URL&nbsp;or&nbsp;user<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RelatedTags&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Find&nbsp;tags&nbsp;that&nbsp;appear&nbsp;together&nbsp;on&nbsp;URLs<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;AlbumSearch&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Find&nbsp;information&nbsp;about&nbsp;albums<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ArtistSearch&nbsp;&nbsp;&nbsp;-&nbsp;Information&nbsp;on&nbsp;a&nbsp;particular&nbsp;musical&nbsp;performer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;SongDownload&nbsp;&nbsp;&nbsp;-&nbsp;Find&nbsp;links&nbsp;to&nbsp;various&nbsp;song&nbsp;providers&nbsp;of&nbsp;a&nbsp;song<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PodcastSearch&nbsp;&nbsp;-&nbsp;Search&nbsp;for&nbsp;a&nbsp;Podcast&nbsp;site/feed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;SongSearch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Provide&nbsp;information&nbsp;about&nbsp;songs<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PageData&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Shows&nbsp;a&nbsp;list&nbsp;of&nbsp;all&nbsp;pages&nbsp;belonging&nbsp;to&nbsp;a&nbsp;domain<br>
+&nbsp;&nbsp;&nbsp;&nbsp;InlinkData&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Shows&nbsp;the&nbsp;pages&nbsp;from&nbsp;other&nbsp;sites&nbsp;linking&nbsp;to&nbsp;a&nbsp;page<br>
+&nbsp;<br>
+&nbsp;<br>
+The&nbsp;different&nbsp;sub-classes&nbsp;of&nbsp;search&nbsp;supports&nbsp;different&nbsp;sets&nbsp;of&nbsp;query<br>
+parameters.&nbsp;For&nbsp;details&nbsp;on&nbsp;all&nbsp;allowed&nbsp;parameters,&nbsp;please&nbsp;consult&nbsp;the<br>
+specific&nbsp;module&nbsp;documentation.<br>
+&nbsp;<br>
+Each&nbsp;of&nbsp;these&nbsp;parameter&nbsp;is&nbsp;implemented&nbsp;as&nbsp;an&nbsp;attribute&nbsp;of&nbsp;each<br>
+respective&nbsp;class.&nbsp;For&nbsp;example,&nbsp;you&nbsp;can&nbsp;set&nbsp;parameters&nbsp;like:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;import&nbsp;yahoo.search.web&nbsp;import&nbsp;WebSearch<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;app_id&nbsp;=&nbsp;"YahooDemo"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;srch&nbsp;=&nbsp;WebSearch(app_id)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;srch.query&nbsp;=&nbsp;"Leif&nbsp;Hedstrom"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;srch.results&nbsp;=&nbsp;40<br>
+&nbsp;<br>
+or,&nbsp;if&nbsp;you&nbsp;are&nbsp;using&nbsp;the&nbsp;factory&nbsp;function:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;yahoo.search.factory&nbsp;import&nbsp;create_search<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;app_id&nbsp;=&nbsp;"YahooDemo"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;srch&nbsp;=&nbsp;create_search("Web",&nbsp;app_id,&nbsp;query="Leif&nbsp;Hedstrom",&nbsp;results=40)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;srch&nbsp;is&nbsp;not&nbsp;None:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;srch&nbsp;object&nbsp;ready&nbsp;to&nbsp;use<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;"error"<br>
+&nbsp;<br>
+or,&nbsp;the&nbsp;last&nbsp;alternative,&nbsp;a&nbsp;combination&nbsp;of&nbsp;the&nbsp;previous&nbsp;two:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;import&nbsp;yahoo.search.web<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;app_id&nbsp;=&nbsp;"YahooDemo"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;srch&nbsp;=&nbsp;web.WebSearch(app_id,&nbsp;query="Leif&nbsp;Hedstrom",&nbsp;results=40)<br>
+&nbsp;<br>
+To&nbsp;retrieve&nbsp;a&nbsp;certain&nbsp;parameter&nbsp;value,&nbsp;simply&nbsp;access&nbsp;it&nbsp;as&nbsp;any&nbsp;normal<br>
+attribute:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;"Searched&nbsp;for&nbsp;",&nbsp;srch.query<br>
+&nbsp;<br>
+&nbsp;<br>
+For&nbsp;more&nbsp;information&nbsp;on&nbsp;these&nbsp;parameters,&nbsp;and&nbsp;their&nbsp;allowed&nbsp;values,&nbsp;please<br>
+see&nbsp;the&nbsp;official&nbsp;Yahoo&nbsp;Search&nbsp;Services&nbsp;documentation&nbsp;available&nbsp;at<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://developer.yahoo.net/">http://developer.yahoo.net/</a><br>
+&nbsp;<br>
+Once&nbsp;the&nbsp;webservice&nbsp;object&nbsp;has&nbsp;been&nbsp;created,&nbsp;you&nbsp;can&nbsp;retrieve&nbsp;a&nbsp;parsed<br>
+object&nbsp;(typically&nbsp;a&nbsp;DOM&nbsp;object)&nbsp;using&nbsp;the&nbsp;get_results()&nbsp;method:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dom&nbsp;=&nbsp;srch.get_results()<br>
+&nbsp;<br>
+This&nbsp;DOM&nbsp;object&nbsp;contains&nbsp;all&nbsp;results,&nbsp;and&nbsp;can&nbsp;be&nbsp;used&nbsp;as&nbsp;is.&nbsp;For&nbsp;easier<br>
+use&nbsp;of&nbsp;the&nbsp;results,&nbsp;you&nbsp;can&nbsp;use&nbsp;the&nbsp;built-in&nbsp;results&nbsp;factory,&nbsp;which&nbsp;will<br>
+traverse&nbsp;the&nbsp;entire&nbsp;DOM&nbsp;object,&nbsp;and&nbsp;create&nbsp;a&nbsp;list&nbsp;of&nbsp;results&nbsp;objects.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;=&nbsp;srch.parse_results(dom)<br>
+&nbsp;<br>
+or,&nbsp;by&nbsp;using&nbsp;the&nbsp;implicit&nbsp;call&nbsp;to&nbsp;get_results():<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;=&nbsp;srch.parse_results()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+The&nbsp;default&nbsp;XML&nbsp;parser&nbsp;and&nbsp;results&nbsp;factories&nbsp;should&nbsp;be&nbsp;adequate&nbsp;for&nbsp;most<br>
+users,&nbsp;so&nbsp;use&nbsp;the&nbsp;parse_results()&nbsp;when&nbsp;possible.&nbsp;However,&nbsp;both&nbsp;the&nbsp;XML<br>
+parser&nbsp;and&nbsp;the&nbsp;results&nbsp;parser&nbsp;can&nbsp;easily&nbsp;be&nbsp;overriden.&nbsp;See&nbsp;the&nbsp;examples<br>
+below&nbsp;for&nbsp;details.&nbsp;More&nbsp;information&nbsp;about&nbsp;the&nbsp;DOM&nbsp;parsers&nbsp;are&nbsp;available<br>
+in&nbsp;the&nbsp;yahoo.search.dom&nbsp;module,&nbsp;and&nbsp;it's&nbsp;subclasses.<br>
+&nbsp;<br>
+&nbsp;<br>
+EXAMPLES:<br>
+&nbsp;<br>
+This&nbsp;simple&nbsp;application&nbsp;will&nbsp;create&nbsp;a&nbsp;search&nbsp;object&nbsp;using&nbsp;the&nbsp;first<br>
+command&nbsp;line&nbsp;argument&nbsp;as&nbsp;the&nbsp;"type"&nbsp;(e.g.&nbsp;"web"&nbsp;or&nbsp;"news"),&nbsp;and&nbsp;all<br>
+subsequent&nbsp;arguments&nbsp;forms&nbsp;the&nbsp;query&nbsp;string:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#!/usr/bin/python<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;import&nbsp;sys<br>
+&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;yahoo.search.factory&nbsp;import&nbsp;create_search<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;service&nbsp;=&nbsp;sys.argv[1]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;query&nbsp;=&nbsp;"&nbsp;".join(sys.argv[2:])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;app_id&nbsp;=&nbsp;"YahooDemo"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;srch&nbsp;=&nbsp;create_search(service,&nbsp;app_id,&nbsp;query=query,&nbsp;results=5)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;srch&nbsp;is&nbsp;None:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;srch&nbsp;=&nbsp;create_search("Web",&nbsp;app_id,&nbsp;query=query,&nbsp;results=5)<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dom&nbsp;=&nbsp;srch.get_results()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;=&nbsp;srch.parse_results(dom)<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;res&nbsp;in&nbsp;results:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;res.Url<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;summary&nbsp;=&nbsp;res['Summary']<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;"%s&nbsp;-&gt;&nbsp;%s"&nbsp;(summary,&nbsp;url)<br>
+&nbsp;<br>
+&nbsp;<br>
+The&nbsp;same&nbsp;example&nbsp;using&nbsp;the&nbsp;PyXML&nbsp;4DOM&nbsp;parser:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#!/usr/bin/python<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;import&nbsp;sys<br>
+&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;yahoo.search.factory&nbsp;import&nbsp;create_search<br>
+&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;xml.dom.ext.reader&nbsp;import&nbsp;Sax2<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;query&nbsp;=&nbsp;"&nbsp;".join(sys.argv[2:])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;srch&nbsp;=&nbsp;create_search(sys.argv[1],&nbsp;"YahooDemo",&nbsp;query=query,&nbsp;results=5)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;srch&nbsp;is&nbsp;not&nbsp;None:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reader&nbsp;=&nbsp;Sax2.Reader()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;srch.install_xml_parser(reader.fromStream)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br>
+&nbsp;<br>
+&nbsp;<br>
+The&nbsp;last&nbsp;example&nbsp;will&nbsp;produce&nbsp;the&nbsp;same&nbsp;query,&nbsp;but&nbsp;uses&nbsp;an&nbsp;HTTP&nbsp;proxy<br>
+for&nbsp;the&nbsp;request:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#!/usr/bin/python<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;import&nbsp;sys<br>
+&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;yahoo.search.factory&nbsp;import&nbsp;create_search<br>
+&nbsp;&nbsp;&nbsp;&nbsp;import&nbsp;urllib2<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;query&nbsp;=&nbsp;"&nbsp;".join(sys.argv[2:])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;srch&nbsp;=&nbsp;create_search(sys.argv[1],&nbsp;"YahooDemo",&nbsp;query=query,&nbsp;results=5)<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;srch&nbsp;is&nbsp;not&nbsp;None:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;proxy&nbsp;=&nbsp;urllib2.ProxyHandler({"http"&nbsp;:&nbsp;"<a href="http://octopus:3128">http://octopus:3128</a>"})<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;opener&nbsp;=&nbsp;urllib2.build_opener(proxy)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;srch.install_opener(opener)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br>
+&nbsp;<br>
+&nbsp;<br>
+You&nbsp;can&nbsp;obviously&nbsp;"mix&nbsp;and&nbsp;match"&nbsp;as&nbsp;necessary&nbsp;here.&nbsp;I'm&nbsp;using&nbsp;the<br>
+installer&nbsp;methods&nbsp;above&nbsp;for&nbsp;clarity,&nbsp;the&nbsp;APIs&nbsp;allows&nbsp;you&nbsp;to&nbsp;pass&nbsp;those<br>
+custom&nbsp;handlers&nbsp;as&nbsp;arguments&nbsp;as&nbsp;well&nbsp;(see&nbsp;the&nbsp;documentation&nbsp;below).</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Package Contents</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="yahoo.search.audio.html">audio</a><br>
+<a href="yahoo.search.debug.html">debug</a><br>
+<a href="yahoo.search.dom.html"><strong>dom</strong>&nbsp;(package)</a><br>
+<a href="yahoo.search.factory.html">factory</a><br>
+</td><td width="25%" valign=top><a href="yahoo.search.image.html">image</a><br>
+<a href="yahoo.search.local.html">local</a><br>
+<a href="yahoo.search.myweb.html">myweb</a><br>
+<a href="yahoo.search.news.html">news</a><br>
+</td><td width="25%" valign=top><a href="yahoo.search.parser.html">parser</a><br>
+<a href="yahoo.search.site.html">site</a><br>
+<a href="yahoo.search.term.html">term</a><br>
+<a href="yahoo.search.version.html">version</a><br>
+</td><td width="25%" valign=top><a href="yahoo.search.video.html">video</a><br>
+<a href="yahoo.search.web.html">web</a><br>
+<a href="yahoo.search.webservices.html">webservices</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__all__</strong> = ['web', 'news', 'video', 'image', 'local', 'term', 'myweb', 'audio', 'site']<br>
+<strong>__author__</strong> = 'Leif Hedstrom &lt;leif@ogre.com&gt;'<br>
+<strong>__date__</strong> = 'Thu Jul  7 14:22:16 PDT 2005'<br>
+<strong>__revision__</strong> = '$Id: __init__.py,v 1.16 2007/02/28 05:20:09 zwoop Exp $'<br>
+<strong>__version__</strong> = '$Revision: 1.16 $'</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Leif&nbsp;Hedstrom&nbsp;&lt;leif@ogre.com&gt;</td></tr></table>
+</body></html>
