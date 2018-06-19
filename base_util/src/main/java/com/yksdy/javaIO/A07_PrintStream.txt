@@ -1,0 +1,3 @@
+Hello World!hahaha
+000000
+str = what's up! man, age = 26, score = 98 
