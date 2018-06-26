@@ -1,4 +1,4 @@
-package main.java.yksdy.meng.JAVA_EXAMINSTION_src;
+package yksdy.meng.JAVA_EXAMINSTION_src;
 public class ExaminiationRun {
 
   public static void main(String[] args) {

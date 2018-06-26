@@ -1,5 +1,4 @@
-package test.java.yksdy.meng;
-
+package yksdy.meng;
 
 public class Examination1 {
 	  public int getMaxSnest(int[][] envelopes) {
@@ -13,16 +12,15 @@ public class Examination1 {
 			  for(int j=0;j<i;j++){
 				  if(envelopes[i][0]>envelopes[j][0]&&envelopes[i][1]>envelopes[j][1]
 								  ||envelopes[i][0]>envelopes[j][1]&&envelopes[i][1]>envelopes[j][0]
-										  )
-					  tmp[i]=Math.max(tmp[i],tmp[j]+1);
-					  
-			  }
-			  count=Math.max(count,tmp[i]);
-		  }
-
+										)
+					tmp[i]=Math.max(tmp[i],tmp[j]+1);
+					
+			}
+			count=Math.max(count,tmp[i]);
+		}
 	    return count+1;
 	  }
-
+	  
 	  public static void main(String[] args) {
 	    Examination1 e = new Examination1();
 	    int[][] testData1 = new int[][] { { 5, 4 }, { 6, 4 }, { 6, 7 }, { 2, 3 }, { 3, 4 }, { 4, 5 }, { 5, 6 } };

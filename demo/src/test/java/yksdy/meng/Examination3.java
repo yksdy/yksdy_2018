@@ -1,4 +1,4 @@
-package test.java.yksdy.meng;
+package yksdy.meng;
 
 import java.util.Iterator;
 import java.util.Map;

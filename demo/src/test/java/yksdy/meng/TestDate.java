@@ -1,4 +1,4 @@
-package test.java.yksdy.meng;
+package yksdy.meng;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

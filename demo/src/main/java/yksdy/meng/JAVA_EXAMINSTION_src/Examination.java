@@ -1,4 +1,4 @@
-package main.java.yksdy.meng.JAVA_EXAMINSTION_src;
+package yksdy.meng.JAVA_EXAMINSTION_src;
 
 import java.util.Arrays;
 import java.util.Comparator;
