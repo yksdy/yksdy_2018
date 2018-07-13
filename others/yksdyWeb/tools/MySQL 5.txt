@@ -1,4 +1,0 @@
-MySQL，免费、开源的数据库。
-
-
-下载地址：  http://mysql.com

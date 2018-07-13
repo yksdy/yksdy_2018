@@ -1,4 +1,0 @@
-JavaFX
-================
-
-Java FX Exercises
