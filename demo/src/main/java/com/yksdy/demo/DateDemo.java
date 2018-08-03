@@ -9,6 +9,7 @@ public class DateDemo {
 		long time2 = System.currentTimeMillis();
 		System.out.println(time1);
 		System.out.println(time2);
+		System.out.println(time1);
 		
 	}
 	
