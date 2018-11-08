@@ -1,3 +1,0 @@
-#python3 µÄprintĞèÒªÀ¨ºÅ
-print('hellw world')
-print(2**8)
